@@ -85,17 +85,17 @@ export function AccessControlPage() {
   };
 
   return (
-    <Stack spacing={2.2}>
+    <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 1.2 }}>
         <Box>
-          <Typography sx={{ color: "#a7afd6", fontSize: 14, mb: 0.2 }}>نظام إدارة الموارد</Typography>
+          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>الإعدادات / الصلاحيات</Typography>
           <Typography variant="h4" sx={{ fontSize: { xs: 28, md: 40 }, color: "#111a6a", fontWeight: 800, lineHeight: 1.1 }}>
             إدارة المستخدمين والصلاحيات
           </Typography>
           <Typography sx={{ color: "text.secondary", mt: 0.8 }}>مراقبة دقيقة للصلاحيات، والوصول، والتدقيق عبر النظام.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="contained" startIcon={<GroupAddIcon />} sx={{ bgcolor: "#0a1589", minWidth: 200, boxShadow: "0 12px 28px rgba(10, 21, 137, 0.22)" }}>
+          <Button variant="contained" startIcon={<GroupAddIcon />} sx={{ bgcolor: "#000666", minWidth: 200, boxShadow: "0 12px 28px rgba(0, 6, 102, 0.22)" }}>
             إضافة مستخدم جديد
           </Button>
           <Button variant="outlined" startIcon={<TuneIcon />} sx={{ minWidth: 180 }}>
@@ -218,7 +218,7 @@ export function AccessControlPage() {
       </Box>
 
       <Box sx={{ position: "fixed", bottom: 22, right: 28 }}>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={() => navigate("/erp/users/new")} sx={{ minWidth: 230, py: 1.5, borderRadius: 2, bgcolor: "#0a1589", boxShadow: "0 12px 28px rgba(10, 21, 137, 0.24)" }}>
+        <Button variant="contained" startIcon={<AddIcon />} onClick={() => navigate("/erp/users/new")} sx={{ minWidth: 230, py: 1.5, borderRadius: 2, bgcolor: "#000666", boxShadow: "0 12px 28px rgba(0, 6, 102, 0.24)" }}>
           إنشاء دور جديد
         </Button>
       </Box>

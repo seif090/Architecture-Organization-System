@@ -70,7 +70,7 @@ export function PropertiesPage({
           const statusLabel = property.status || "متاح";
           const statusBg = statusLabel === "متاح" ? "#16a34a" : statusLabel === "محجوز" ? "#d97706" : "#be123c";
           return (
-            <Card key={property.id || `${property.name}-${idx}`} sx={{ borderRadius: 3.5, overflow: "hidden", border: `1px solid ${palette.border}`, boxShadow: "0 8px 32px rgba(0, 6, 102, 0.06)" }}>
+            <Card key={property.id || `${property.name}-${idx}`} sx={{ borderRadius: 3, overflow: "hidden", border: `1px solid ${palette.border}` }}>
               <Box sx={{ height: 210, position: "relative", backgroundImage: `url(${property.image})`, backgroundPosition: "center", backgroundSize: "cover" }}>
                 <Chip label={statusLabel} size="small" sx={{ position: "absolute", top: 12, right: 12, bgcolor: statusBg, color: "white", fontWeight: 800 }} />
                 <Box sx={{ position: "absolute", insetInline: 12, bottom: 12, p: 1.1, borderRadius: 2, bgcolor: "rgba(0,0,0,0.45)", color: "white" }}>

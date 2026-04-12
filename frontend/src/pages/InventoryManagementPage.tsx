@@ -23,10 +23,11 @@ const suppliers = [
 
 export function InventoryManagementPage() {
   return (
-    <Stack spacing={3.1}>
+    <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
         <Box>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 44 }, lineHeight: 1.1 }}>إدارة المخازن والمستودعات</Typography>
+          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>المخازن / الإمداد</Typography>
+          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة المخازن والمستودعات</Typography>
           <Typography sx={{ color: "#6f7587", mt: 1 }}>مراقبة دقيقة للخامات الإنشائية، إدارة الموردين، وتخصيص الموارد للمشاريع الجارية.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
@@ -36,10 +37,10 @@ export function InventoryManagementPage() {
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
-        <Card sx={{ borderRadius: 3 }}><CardContent><MonetizationOnIcon sx={{ color: "#380b00" }} /><Typography sx={{ fontSize: 44, color: "#000666", fontWeight: 900 }}>1.2M</Typography><Typography sx={{ color: "#6f7587" }}>قيمة المخزون الإجمالية (ر.س)</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3 }}><CardContent><LocalShippingIcon sx={{ color: "#000666" }} /><Typography sx={{ fontSize: 44, color: "#000666", fontWeight: 900 }}>8</Typography><Typography sx={{ color: "#6f7587" }}>توريدات قادمة</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3 }}><CardContent><WarningIcon sx={{ color: "#ba1a1a" }} /><Typography sx={{ fontSize: 44, color: "#ba1a1a", fontWeight: 900 }}>12</Typography><Typography sx={{ color: "#6f7587" }}>تنبيهات مخزون منخفض</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Inventory2Icon sx={{ color: "#964900" }} /><Typography sx={{ fontSize: 44, color: "#000666", fontWeight: 900 }}>4,280</Typography><Typography sx={{ color: "#6f7587" }}>إجمالي الخامات المسجلة</Typography></CardContent></Card>
+        <Card sx={{ borderRadius: 3 }}><CardContent><MonetizationOnIcon sx={{ color: "#380b00" }} /><Typography sx={{ fontSize: 42, color: "#000666", fontWeight: 900 }}>1.2M</Typography><Typography sx={{ color: "#6f7587" }}>قيمة المخزون الإجمالية (ر.س)</Typography></CardContent></Card>
+        <Card sx={{ borderRadius: 3 }}><CardContent><LocalShippingIcon sx={{ color: "#000666" }} /><Typography sx={{ fontSize: 42, color: "#000666", fontWeight: 900 }}>8</Typography><Typography sx={{ color: "#6f7587" }}>توريدات قادمة</Typography></CardContent></Card>
+        <Card sx={{ borderRadius: 3 }}><CardContent><WarningIcon sx={{ color: "#ba1a1a" }} /><Typography sx={{ fontSize: 42, color: "#ba1a1a", fontWeight: 900 }}>12</Typography><Typography sx={{ color: "#6f7587" }}>تنبيهات مخزون منخفض</Typography></CardContent></Card>
+        <Card sx={{ borderRadius: 3 }}><CardContent><Inventory2Icon sx={{ color: "#964900" }} /><Typography sx={{ fontSize: 42, color: "#000666", fontWeight: 900 }}>4,280</Typography><Typography sx={{ color: "#6f7587" }}>إجمالي الخامات المسجلة</Typography></CardContent></Card>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", lg: "280px 1fr" } }}>

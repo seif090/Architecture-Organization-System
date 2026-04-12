@@ -5,7 +5,6 @@ import PaymentsIcon from "@mui/icons-material/Payments";
 import BuildIcon from "@mui/icons-material/Build";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
-import SettingsIcon from "@mui/icons-material/Settings";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Box, Button, Card, CardContent, Chip, IconButton, LinearProgress, Stack, Typography } from "@mui/material";
@@ -62,34 +61,26 @@ const notifications = [
 
 export function NotificationsPage() {
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "#f6f7fb" }}>
-      <Box sx={{ height: 64, bgcolor: "#000666", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", px: 3, position: "sticky", top: 0, zIndex: 20, boxShadow: "0 8px 32px rgba(0,6,102,0.12)" }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2.5 }}>
-          <Typography sx={{ fontWeight: 900, fontSize: 22 }}>مركز التنبيهات</Typography>
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
-            <Typography sx={{ color: "#fc820c", fontWeight: 800, borderBottom: "2px solid #fc820c", pb: 0.5 }}>الرئيسية</Typography>
-            <Typography sx={{ color: "rgba(255,255,255,0.7)" }}>الأرشيف</Typography>
-            <Typography sx={{ color: "rgba(255,255,255,0.7)" }}>الجدولة</Typography>
-          </Box>
+    <Stack spacing={3.2}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
+        <Box>
+          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>مركز التنبيهات والتحديثات</Typography>
+          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>مركز التنبيهات</Typography>
+          <Typography sx={{ color: "#6f7587", mt: 1 }}>متابعة فورية للتنبيهات الحرجة والمالية والتشغيلية.</Typography>
         </Box>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
-          <Box sx={{ display: { xs: "none", sm: "flex" }, alignItems: "center", gap: 1, bgcolor: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.08)", px: 1.5, py: 0.8, borderRadius: 999 }}>
-            <SearchIcon />
-            <Typography sx={{ color: "rgba(255,255,255,0.55)", minWidth: 180 }}>بحث في التنبيهات...</Typography>
-          </Box>
-          <NotificationsIcon />
-          <SettingsIcon />
-          <Box sx={{ width: 32, height: 32, borderRadius: "50%", bgcolor: "#d9ddef" }} />
-        </Box>
+        <Stack direction="row" spacing={1.2}>
+          <Button variant="outlined" startIcon={<SearchIcon />}>بحث</Button>
+          <Button variant="contained" startIcon={<DoneAllIcon />} sx={{ bgcolor: "#000666" }}>تحديد الكل كمقروء</Button>
+        </Stack>
       </Box>
 
-      <Box sx={{ px: { xs: 2, md: 4 }, py: 4, maxWidth: 1280, mx: "auto" }}>
+      <Box>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap", mb: 4 }}>
           <Box>
             <Typography sx={{ fontSize: { xs: 28, md: 40 }, fontWeight: 900, color: "#000666" }}>مرحباً بك في مركز التحكم</Typography>
             <Typography sx={{ color: "#6f7587", mt: 1 }}>لديك اليوم 12 تنبيهاً يتطلب إجراءً فورياً</Typography>
           </Box>
-          <Button variant="contained" startIcon={<DoneAllIcon />} sx={{ bgcolor: "#000666" }}>تحديد الكل كمقروء</Button>
+          <Button variant="contained" startIcon={<NotificationsIcon />} sx={{ bgcolor: "#1a237e" }}>إدارة الإشعارات</Button>
         </Box>
 
         <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" }, mb: 4 }}>
@@ -156,6 +147,6 @@ export function NotificationsPage() {
           </CardContent>
         </Card>
       </Box>
-    </Box>
+    </Stack>
   );
 }

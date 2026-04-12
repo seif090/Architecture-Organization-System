@@ -19,7 +19,8 @@ export function SuppliersPage() {
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
         <Box>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 44 }, lineHeight: 1.1 }}>إدارة الموردين والشركاء</Typography>
+          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>إدارة الموارد والتوريد</Typography>
+          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة الموردين والشركاء</Typography>
           <Typography sx={{ color: "#6f7587", mt: 1 }}>نظام مراقبة الأداء المالي والتشغيلي لسلسلة التوريد الخاصة بالمشاريع الإنشائية.</Typography>
         </Box>
         <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 210 }}>إضافة مورد جديد</Button>

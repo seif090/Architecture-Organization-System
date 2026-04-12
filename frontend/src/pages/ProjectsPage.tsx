@@ -67,14 +67,14 @@ export function ProjectsPage({ data }: { data: any[]; onRefresh: () => void }) {
           <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة المشاريع</Typography>
           <Typography sx={{ color: "text.secondary", mt: 1 }}>مراقبة تقدم العمليات الإنشائية، إدارة الميزانيات، وتتبع الجداول الزمنية لمشاريع المجموعة.</Typography>
         </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#0a1589", minWidth: 200, py: 1.3, boxShadow: "0 12px 28px rgba(10,21,137,0.22)" }}>
+        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 200, py: 1.3, boxShadow: "0 12px 28px rgba(0,6,102,0.22)" }}>
           إضافة مشروع جديد
         </Button>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
         {metrics.map((metric, index) => (
-          <Card key={metric.title} sx={{ borderRadius: 3, minHeight: 144, boxShadow: "0 8px 32px rgba(0,6,102,0.06)", bgcolor: metric.dark ? "#000666" : "white", color: metric.dark ? "white" : "inherit" }}>
+          <Card key={metric.title} sx={{ borderRadius: 3, minHeight: 144, bgcolor: metric.dark ? "#000666" : "white", color: metric.dark ? "white" : "inherit" }}>
             <CardContent sx={{ p: 3, display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
               <Typography sx={{ color: metric.dark ? "rgba(255,255,255,0.8)" : "#7f8597", fontSize: 12, fontWeight: 700 }}>{metric.title}</Typography>
               <Box sx={{ display: "flex", alignItems: "baseline", justifyContent: metric.dark ? "flex-end" : "flex-start", gap: 1, mt: 2 }}>

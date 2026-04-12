@@ -10,12 +10,12 @@ export const appTheme = createTheme({
       main: "#964900"
     },
     background: {
-      default: "#f1f4f9",
+      default: "#f9f9fd",
       paper: "#ffffff"
     }
   },
   shape: {
-    borderRadius: 10
+    borderRadius: 12
   },
   typography: {
     fontFamily: "'IBM Plex Sans Arabic', 'Manrope', sans-serif",
@@ -33,16 +33,24 @@ export const appTheme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: "0 8px 32px rgba(0, 6, 102, 0.06)",
-          border: "none"
+          border: "1px solid #edf0f6"
         }
       }
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
+          borderRadius: 10,
           textTransform: "none",
           fontWeight: 600
+        }
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        h4: {
+          fontWeight: 900,
+          color: "#000666"
         }
       }
     }

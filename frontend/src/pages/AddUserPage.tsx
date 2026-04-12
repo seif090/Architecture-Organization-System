@@ -9,7 +9,7 @@ import { Box, Button, Card, CardContent, Checkbox, Chip, MenuItem, Stack, TextFi
 
 export function AddUserPage() {
   return (
-    <Stack spacing={2.6}>
+    <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
         <Box>
           <Typography sx={{ color: "#8d94ae", fontSize: 12 }}>الإعدادات &gt; إدارة المستخدمين &gt; إضافة مستخدم جديد</Typography>
