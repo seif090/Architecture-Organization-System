@@ -9,6 +9,7 @@ import type { DataScope } from "./types";
 
 const AppLayout = lazy(() => import("./layout/AppLayout").then((m) => ({ default: m.AppLayout })));
 const LoginPage = lazy(() => import("./pages/LoginPage").then((m) => ({ default: m.LoginPage })));
+const RegistrationPage = lazy(() => import("./pages/RegistrationPage").then((m) => ({ default: m.RegistrationPage })));
 const BusinessIntelligencePage = lazy(() => import("./pages/BusinessIntelligencePage").then((m) => ({ default: m.BusinessIntelligencePage })));
 const DashboardPage = lazy(() => import("./pages/DashboardPage").then((m) => ({ default: m.DashboardPage })));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage").then((m) => ({ default: m.ProjectsPage })));
@@ -80,6 +81,7 @@ function ERPApp() {
     >
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegistrationPage />} />
         <Route
           path="/"
           element={

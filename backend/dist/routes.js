@@ -16,6 +16,13 @@ const loginSchema = zod_1.z.object({
     email: zod_1.z.string().email(),
     password: zod_1.z.string().min(6)
 });
+const selfRegisterRoleSchema = zod_1.z.enum(["project_manager", "accountant", "engineer", "viewer"]);
+const registerSchema = zod_1.z.object({
+    name: zod_1.z.string().min(2),
+    email: zod_1.z.string().email(),
+    password: zod_1.z.string().min(6),
+    role: selfRegisterRoleSchema
+});
 const scopeToClause = (scope) => {
     if (scope === "demo") {
         return "is_demo = true";
@@ -240,6 +247,34 @@ exports.router.post("/auth/login", async (req, res) => {
             name: found.name,
             email: found.email,
             role: found.role
+        }
+    });
+});
+exports.router.post("/auth/register", async (req, res) => {
+    const parsed = registerSchema.safeParse(req.body);
+    if (!parsed.success) {
+        return res.status(400).json({ message: "بيانات التسجيل غير صحيحة" });
+    }
+    const { name, email, password, role } = parsed.data;
+    const existing = await (0, db_1.query)("SELECT id FROM users WHERE email = $1", [email]);
+    if (existing.rows.length) {
+        return res.status(409).json({ message: "البريد الإلكتروني مستخدم بالفعل" });
+    }
+    const passwordHash = await bcryptjs_1.default.hash(password, 10);
+    const inserted = await (0, db_1.query)(`INSERT INTO users (name, email, password_hash, role, is_demo)
+     VALUES ($1,$2,$3,$4,false)
+     RETURNING id, name, email, role`, [name, email, passwordHash, role]);
+    const created = inserted.rows[0];
+    const token = jsonwebtoken_1.default.sign({ userId: created.id, role: created.role, name: created.name }, config_1.config.jwtSecret, {
+        expiresIn: "8h"
+    });
+    return res.status(201).json({
+        token,
+        user: {
+            id: created.id,
+            name: created.name,
+            email: created.email,
+            role: created.role
         }
     });
 });

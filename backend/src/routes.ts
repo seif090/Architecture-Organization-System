@@ -13,6 +13,15 @@ const loginSchema = z.object({
   password: z.string().min(6)
 });
 
+const selfRegisterRoleSchema = z.enum(["project_manager", "accountant", "engineer", "viewer"] as const);
+
+const registerSchema = z.object({
+  name: z.string().min(2),
+  email: z.string().email(),
+  password: z.string().min(6),
+  role: selfRegisterRoleSchema
+});
+
 const scopeToClause = (scope: DataScope) => {
   if (scope === "demo") {
     return "is_demo = true";
@@ -283,6 +292,47 @@ router.post("/auth/login", async (req, res) => {
       name: found.name,
       email: found.email,
       role: found.role
+    }
+  });
+});
+
+router.post("/auth/register", async (req, res) => {
+  const parsed = registerSchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(400).json({ message: "بيانات التسجيل غير صحيحة" });
+  }
+
+  const { name, email, password, role } = parsed.data;
+  const existing = await query<{ id: number }>("SELECT id FROM users WHERE email = $1", [email]);
+  if (existing.rows.length) {
+    return res.status(409).json({ message: "البريد الإلكتروني مستخدم بالفعل" });
+  }
+
+  const passwordHash = await bcrypt.hash(password, 10);
+  const inserted = await query<{
+    id: number;
+    name: string;
+    email: string;
+    role: string;
+  }>(
+    `INSERT INTO users (name, email, password_hash, role, is_demo)
+     VALUES ($1,$2,$3,$4,false)
+     RETURNING id, name, email, role`,
+    [name, email, passwordHash, role]
+  );
+
+  const created = inserted.rows[0];
+  const token = jwt.sign({ userId: created.id, role: created.role as Role, name: created.name }, config.jwtSecret, {
+    expiresIn: "8h"
+  });
+
+  return res.status(201).json({
+    token,
+    user: {
+      id: created.id,
+      name: created.name,
+      email: created.email,
+      role: created.role
     }
   });
 });

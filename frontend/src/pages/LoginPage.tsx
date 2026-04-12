@@ -88,6 +88,10 @@ export function LoginPage() {
             <Button variant="outlined" startIcon={<MailIcon />} sx={{ borderColor: "#d7dceb", color: "#2a324d", height: 52 }} onClick={() => window.alert("تسجيل Google Workspace سيتم تفعيله قريبًا") }>
               Login with Google Workspace
             </Button>
+
+            <Button variant="text" sx={{ color: "#000666", fontWeight: 800 }} onClick={() => navigate("/register")}>
+              إنشاء حساب جديد
+            </Button>
           </Stack>
         </Box>
       </Box>
