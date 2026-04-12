@@ -75,6 +75,9 @@ export function NotificationsPage() {
   }, [items, search]);
 
   const removeNotification = (title: string) => {
+    if (!window.confirm("هل تريد حذف هذا التنبيه؟")) {
+      return;
+    }
     setItems((prev) => prev.filter((n) => n.title !== title));
   };
 
@@ -91,8 +94,8 @@ export function NotificationsPage() {
           <Typography sx={{ color: "#6f7587", mt: 1 }}>متابعة فورية للتنبيهات الحرجة والمالية والتشغيلية.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<SearchIcon />} onClick={() => setSearch(window.prompt("ابحث في التنبيهات:", search) ?? search)}>بحث</Button>
-          <Button variant="contained" startIcon={<DoneAllIcon />} sx={{ bgcolor: "#000666" }} onClick={markAllAsRead}>تحديد الكل كمقروء</Button>
+          <Button type="button" variant="outlined" startIcon={<SearchIcon />} onClick={() => setSearch(window.prompt("ابحث في التنبيهات:", search) ?? search)}>بحث</Button>
+          <Button type="button" variant="contained" startIcon={<DoneAllIcon />} sx={{ bgcolor: "#000666" }} onClick={markAllAsRead}>تحديد الكل كمقروء</Button>
         </Stack>
       </Box>
 
@@ -102,7 +105,7 @@ export function NotificationsPage() {
             <Typography sx={{ fontSize: { xs: 28, md: 40 }, fontWeight: 900, color: "#000666" }}>مرحباً بك في مركز التحكم</Typography>
             <Typography sx={{ color: "#6f7587", mt: 1 }}>لديك اليوم 12 تنبيهاً يتطلب إجراءً فورياً</Typography>
           </Box>
-          <Button variant="contained" startIcon={<NotificationsIcon />} sx={{ bgcolor: "#1a237e" }} onClick={() => window.alert("تم فتح لوحة إدارة الإشعارات")}>إدارة الإشعارات</Button>
+          <Button type="button" variant="contained" startIcon={<NotificationsIcon />} sx={{ bgcolor: "#1a237e" }} onClick={() => window.alert("تم فتح لوحة إدارة الإشعارات")}>إدارة الإشعارات</Button>
         </Box>
 
         <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" }, mb: 4 }}>
@@ -147,6 +150,7 @@ export function NotificationsPage() {
                     <Box sx={{ mt: 2, display: "flex", gap: 1.2, flexWrap: "wrap" }}>
                       {notification.actions.map((action, index) => (
                         <Button
+                          type="button"
                           key={action}
                           variant={index === 0 ? "contained" : "text"}
                           sx={{ bgcolor: index === 0 ? notification.color : "transparent", color: index === 0 ? "white" : "#6f7587" }}
@@ -163,7 +167,7 @@ export function NotificationsPage() {
                       ))}
                     </Box>
                   </Box>
-                  <IconButton onClick={() => removeNotification(notification.title)}><DeleteIcon /></IconButton>
+                  <IconButton aria-label="حذف التنبيه" onClick={() => removeNotification(notification.title)}><DeleteIcon /></IconButton>
                 </Box>
               </CardContent>
             </Card>
@@ -176,7 +180,7 @@ export function NotificationsPage() {
               <Typography sx={{ fontSize: 20, fontWeight: 800 }}>حالة التنبيهات اللحظية</Typography>
               <Typography sx={{ color: "rgba(255,255,255,0.8)", mt: 0.5 }}>المتابعة الفورية لمخاطر المشروع والمالية والمخزون.</Typography>
             </Box>
-            <Button variant="contained" sx={{ bgcolor: "#fc820c", color: "white" }} onClick={() => navigate("/erp/maintenance")}>الانتقال إلى الجدولة</Button>
+            <Button type="button" variant="contained" sx={{ bgcolor: "#fc820c", color: "white" }} onClick={() => navigate("/erp/maintenance")}>الانتقال إلى الجدولة</Button>
           </CardContent>
         </Card>
       </Box>

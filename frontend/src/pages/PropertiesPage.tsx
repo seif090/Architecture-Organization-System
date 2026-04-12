@@ -304,8 +304,8 @@ export function PropertiesPage({
                   {statusLabel === "مباع" ? "عرض تفاصيل العقد" : "حجز الوحدة الآن"}
                 </Button>
                 <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
-                  <Button size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditProperty(property)}>تعديل</Button>
-                  <Button size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeProperty(property.id)}>حذف</Button>
+                  <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditProperty(property)}>تعديل</Button>
+                  <Button type="button" size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeProperty(property.id)}>حذف</Button>
                 </Stack>
               </CardContent>
             </Card>
@@ -327,8 +327,8 @@ export function PropertiesPage({
                 <Box sx={{ textAlign: "left" }}>
                   <Chip label={item.is_paid ? "مدفوع" : "مستحق"} size="small" sx={{ bgcolor: item.is_paid ? "#e8f8ef" : "#fff1e2" }} />
                   <Stack direction="row" spacing={1} sx={{ mt: 0.8 }}>
-                    <Button size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditInstallment(item)}>تعديل</Button>
-                    <Button size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeInstallment(item.id)}>حذف</Button>
+                    <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditInstallment(item)}>تعديل</Button>
+                    <Button type="button" size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeInstallment(item.id)}>حذف</Button>
                   </Stack>
                 </Box>
               </Box>

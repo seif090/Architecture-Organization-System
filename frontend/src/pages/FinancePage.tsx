@@ -296,8 +296,8 @@ export function FinancePage({
                     <Chip label={record.record_type === "revenue" ? "إيراد" : "مصروف"} size="small" sx={{ bgcolor: record.record_type === "revenue" ? "#e8f8ef" : "#ffebee" }} />
                     <Typography sx={{ mt: 0.6, color: "#000666", fontWeight: 900 }}>{Number(record.amount).toLocaleString("ar-EG")} ج.م</Typography>
                     <Stack direction="row" spacing={0.7} sx={{ mt: 0.8 }}>
-                      <Button size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditRecord(record)}>تعديل</Button>
-                      <Button size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeRecord(record.id)}>حذف</Button>
+                      <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditRecord(record)}>تعديل</Button>
+                      <Button type="button" size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeRecord(record.id)}>حذف</Button>
                     </Stack>
                   </Box>
                 </Box>
@@ -346,8 +346,8 @@ export function FinancePage({
                         <Typography sx={{ color: "#000666", fontWeight: 900 }}>{Number(invoice.total).toLocaleString("ar-EG")} ج.م</Typography>
                         <Chip size="small" label={invoice.status} sx={{ mt: 0.5, bgcolor: invoice.status === "مدفوعة" ? "#e8f8ef" : "#fff1e2" }} />
                         <Stack direction="row" spacing={0.7} sx={{ mt: 0.8 }}>
-                          <Button size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditInvoice(invoice)}>تعديل</Button>
-                          <Button size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeInvoice(invoice.id)}>حذف</Button>
+                          <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditInvoice(invoice)}>تعديل</Button>
+                          <Button type="button" size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeInvoice(invoice.id)}>حذف</Button>
                         </Stack>
                       </Box>
                     </Box>

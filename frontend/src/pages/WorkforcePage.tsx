@@ -153,8 +153,8 @@ export function WorkforcePage({ data, onRefresh }: { data: any[]; onRefresh: () 
                   <Typography sx={{ color: "#7f8597", fontSize: 13 }}>مستحقات: {Number(row.payment_due || 0).toLocaleString()}</Typography>
                 </Box>
                 <Stack direction="row" spacing={1}>
-                  <Button size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEdit(row)}>تعديل</Button>
-                  <Button size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => deleteWorker(row.id)}>حذف</Button>
+                  <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEdit(row)}>تعديل</Button>
+                  <Button type="button" size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => deleteWorker(row.id)}>حذف</Button>
                 </Stack>
               </Box>
             ))}

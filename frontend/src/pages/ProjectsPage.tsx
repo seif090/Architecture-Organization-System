@@ -136,8 +136,8 @@ export function ProjectsPage({ data, onRefresh }: { data: any[]; onRefresh: () =
                   <Typography sx={{ color: "#7f8597", fontSize: 13 }}>{row.type} · {row.status} · {row.expected_cost} </Typography>
                 </Box>
                 <Stack direction="row" spacing={1}>
-                  <Button size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEdit(row)}>تعديل</Button>
-                  <Button size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => deleteProject(row.id)}>حذف</Button>
+                  <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEdit(row)}>تعديل</Button>
+                  <Button type="button" size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => deleteProject(row.id)}>حذف</Button>
                 </Stack>
               </Box>
             ))}

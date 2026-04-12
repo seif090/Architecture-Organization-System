@@ -129,8 +129,8 @@ export function ClientsPage({ clients, onRefresh }: { clients: any[]; onRefresh:
                   </Box>
                 </Box>
                 <Stack direction="row" spacing={1}>
-                  <Button size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditDialog(client)}>تعديل</Button>
-                  <Button size="small" color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => deleteClient(client.id)}>حذف</Button>
+                  <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditDialog(client)}>تعديل</Button>
+                  <Button type="button" size="small" color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => deleteClient(client.id)}>حذف</Button>
                 </Stack>
               </Box>
             ))}

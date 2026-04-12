@@ -151,8 +151,8 @@ export function InventoryManagementPage({ items, onRefresh }: { items: any[]; on
                     <Typography sx={{ color: low ? "#ba1a1a" : "#16a34a", fontSize: 13 }}>{low ? "مخزون منخفض" : "متوفر"}</Typography>
                   </Box>
                   <Stack direction="row" spacing={1}>
-                    <Button size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEdit(item)}>تعديل</Button>
-                    <Button size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => remove(item.id)}>حذف</Button>
+                    <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEdit(item)}>تعديل</Button>
+                    <Button type="button" size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => remove(item.id)}>حذف</Button>
                   </Stack>
                 </Box>
               );
