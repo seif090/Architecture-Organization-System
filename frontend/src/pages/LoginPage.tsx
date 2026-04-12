@@ -19,7 +19,7 @@ export function LoginPage() {
     setError("");
     try {
       await login(email, password);
-      navigate("/");
+      navigate("/erp/dashboard");
     } catch {
       setError("فشل تسجيل الدخول. تحقق من البريد وكلمة المرور");
     }

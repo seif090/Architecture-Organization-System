@@ -75,7 +75,7 @@ function ERPApp() {
           path="/"
           element={
             <RequireAuth>
-              <BusinessIntelligencePage />
+              <Navigate to="/erp/dashboard" replace />
             </RequireAuth>
           }
         />
@@ -88,6 +88,7 @@ function ERPApp() {
           }
         >
           <Route index element={<DashboardPage data={dashboard} />} />
+          <Route path="bi" element={<BusinessIntelligencePage />} />
           <Route path="dashboard" element={<DashboardPage data={dashboard} />} />
           <Route path="projects" element={<ProjectsPage data={projects} onRefresh={loadAll} />} />
           <Route path="procurement" element={<ProcurementPage />} />
@@ -113,7 +114,7 @@ function ERPApp() {
           />
           <Route path="properties" element={<PropertiesPage properties={properties.properties} installments={properties.installments} />} />
         </Route>
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/erp/dashboard" replace />} />
       </Routes>
     </Suspense>
   );
