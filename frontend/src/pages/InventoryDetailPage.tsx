@@ -4,6 +4,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { QuickActionsCard } from "../components/QuickActionsCard";
 import { StatusChip } from "../components/StatusChip";
 
 const warehouseZones = [
@@ -116,16 +117,11 @@ export function InventoryDetailPage() {
             </CardContent>
           </Card>
 
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 20 }}>إجراءات سريعة</Typography>
-              <Stack spacing={1.2} sx={{ mt: 1.4 }}>
-                <Button variant="outlined" startIcon={<WarningAmberIcon />} onClick={() => navigate("/erp/notifications")}>فتح تنبيه منخفض</Button>
-                <Button variant="outlined" startIcon={<SwapHorizIcon />} onClick={() => navigate("/erp/projects")}>تحويل بين المشاريع</Button>
-                <Button variant="outlined" startIcon={<WarehouseIcon />} onClick={() => navigate("/erp/inventory")}>جرد مخزن فرعي</Button>
-              </Stack>
-            </CardContent>
-          </Card>
+          <QuickActionsCard>
+            <Button variant="outlined" startIcon={<WarningAmberIcon />} onClick={() => navigate("/erp/notifications")}>فتح تنبيه منخفض</Button>
+            <Button variant="outlined" startIcon={<SwapHorizIcon />} onClick={() => navigate("/erp/projects")}>تحويل بين المشاريع</Button>
+            <Button variant="outlined" startIcon={<WarehouseIcon />} onClick={() => navigate("/erp/inventory")}>جرد مخزن فرعي</Button>
+          </QuickActionsCard>
         </Stack>
       </Box>
 

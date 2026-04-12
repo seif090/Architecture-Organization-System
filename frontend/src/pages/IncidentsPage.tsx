@@ -3,7 +3,9 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import ForumIcon from "@mui/icons-material/Forum";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
-import { Box, Button, Card, CardContent, Chip, Divider, LinearProgress, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
+import { ProcessFlowCard } from "../components/ProcessFlowCard";
+import { QuickActionsCard } from "../components/QuickActionsCard";
 import { StatusChip } from "../components/StatusChip";
 
 const incidentItems = [
@@ -41,6 +43,13 @@ const slaCards = [
   { title: "تحت SLA", value: "11", color: "#16a34a" },
   { title: "متأخرة", value: "3", color: "#ba1a1a" },
   { title: "مغلقة اليوم", value: "8", color: "#964900" }
+];
+
+const serviceFlow = [
+  { title: "استقبال", description: "تم توثيق البلاغ من المشرف" },
+  { title: "التعيين", description: "أُحيل إلى الفريق المختص" },
+  { title: "المتابعة", description: "جاري تنفيذ الإجراء بالموقع" },
+  { title: "الإغلاق", description: "تمت المراجعة واعتماد الحل" }
 ];
 
 export function IncidentsPage() {
@@ -108,36 +117,13 @@ export function IncidentsPage() {
         </Card>
 
         <Stack spacing={2}>
-          <Card sx={{ borderRadius: 3, bgcolor: "#000666", color: "white" }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 20, fontWeight: 900 }}>مسار الخدمة</Typography>
-              <Stack spacing={1.2} sx={{ mt: 1.4 }}>
-                {[
-                  ["استقبال", "تم توثيق البلاغ من المشرف"],
-                  ["التعيين", "أُحيل إلى الفريق المختص"],
-                  ["المتابعة", "جاري تنفيذ الإجراء بالموقع"],
-                  ["الإغلاق", "تمت المراجعة واعتماد الحل"]
-                ].map(([step, desc]) => (
-                  <Box key={String(step)} sx={{ p: 1.2, borderRadius: 2, bgcolor: "rgba(255,255,255,0.08)" }}>
-                    <Typography sx={{ fontWeight: 800, color: "#fc820c" }}>{step}</Typography>
-                    <Typography sx={{ fontSize: 13, color: "rgba(255,255,255,0.88)", mt: 0.4 }}>{desc}</Typography>
-                  </Box>
-                ))}
-              </Stack>
-            </CardContent>
-          </Card>
+          <ProcessFlowCard title="مسار الخدمة" items={serviceFlow} />
 
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 20 }}>إجراءات سريعة</Typography>
-              <Divider sx={{ my: 1.5 }} />
-              <Stack spacing={1.2}>
-                <Button variant="outlined" startIcon={<SupportAgentIcon />} onClick={() => window.alert("تم إسناد البلاغ لفريق الدعم مبدئيًا")}>إسناد لفريق الدعم</Button>
-                <Button variant="outlined" startIcon={<AssignmentTurnedInIcon />} onClick={() => window.alert("تم إغلاق البلاغ مبدئيًا")}>إغلاق بلاغ</Button>
-                <Button variant="outlined" startIcon={<ReportProblemIcon />} onClick={() => window.alert("تم تصعيد البلاغ للإدارة مبدئيًا")}>تصعيد للإدارة</Button>
-              </Stack>
-            </CardContent>
-          </Card>
+          <QuickActionsCard showDivider>
+            <Button variant="outlined" startIcon={<SupportAgentIcon />} onClick={() => window.alert("تم إسناد البلاغ لفريق الدعم مبدئيًا")}>إسناد لفريق الدعم</Button>
+            <Button variant="outlined" startIcon={<AssignmentTurnedInIcon />} onClick={() => window.alert("تم إغلاق البلاغ مبدئيًا")}>إغلاق بلاغ</Button>
+            <Button variant="outlined" startIcon={<ReportProblemIcon />} onClick={() => window.alert("تم تصعيد البلاغ للإدارة مبدئيًا")}>تصعيد للإدارة</Button>
+          </QuickActionsCard>
         </Stack>
       </Box>
     </Stack>

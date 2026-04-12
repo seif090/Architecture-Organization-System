@@ -5,6 +5,8 @@ import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturi
 import SpeedIcon from "@mui/icons-material/Speed";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { ProcessFlowCard } from "../components/ProcessFlowCard";
+import { QuickActionsCard } from "../components/QuickActionsCard";
 import { StatusChip } from "../components/StatusChip";
 
 const faultCards = [
@@ -26,6 +28,13 @@ const partsNeeded = [
   ["فلتر زيت", "8 قطع", "مخزن الكهرباء"],
   ["بطارية تشغيل", "2 قطعة", "مخزن الطاقة"],
   ["حساس حرارة", "4 قطع", "المخزن الرئيسي"]
+];
+
+const operationFlow = [
+  { title: "البلاغات", description: "تلقّي العطل من مركز البلاغات واعتماد الأولوية" },
+  { title: "الصيانة", description: "تحويل العطل إلى أمر عمل مباشر" },
+  { title: "المخازن", description: "تأكيد توفر قطع الغيار قبل التنفيذ" },
+  { title: "الإغلاق", description: "اعتماد الإصلاح وتحديث الحالة" }
 ];
 
 export function EquipmentFaultsPage() {
@@ -88,36 +97,14 @@ export function EquipmentFaultsPage() {
         </Card>
 
         <Stack spacing={2}>
-          <Card sx={{ borderRadius: 3, bgcolor: "#000666", color: "white" }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 20, fontWeight: 900 }}>الربط التشغيلي</Typography>
-              <Stack spacing={1.2} sx={{ mt: 1.4 }}>
-                {[
-                  ["البلاغات", "تلقّي العطل من مركز البلاغات واعتماد الأولوية"],
-                  ["الصيانة", "تحويل العطل إلى أمر عمل مباشر"],
-                  ["المخازن", "تأكيد توفر قطع الغيار قبل التنفيذ"],
-                  ["الإغلاق", "اعتماد الإصلاح وتحديث الحالة" ]
-                ].map(([title, desc]) => (
-                  <Box key={String(title)} sx={{ p: 1.2, borderRadius: 2, bgcolor: "rgba(255,255,255,0.08)" }}>
-                    <Typography sx={{ fontWeight: 800, color: "#fc820c" }}>{title}</Typography>
-                    <Typography sx={{ fontSize: 13, color: "rgba(255,255,255,0.88)", mt: 0.4 }}>{desc}</Typography>
-                  </Box>
-                ))}
-              </Stack>
-            </CardContent>
-          </Card>
+          <ProcessFlowCard title="الربط التشغيلي" items={operationFlow} />
 
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 20 }}>إجراءات سريعة</Typography>
-              <Stack spacing={1.2} sx={{ mt: 1.4 }}>
-                <Button component={NavLink} to="/erp/incidents" variant="outlined" startIcon={<ReportProblemIcon />}>فتح بلاغ مرتبط</Button>
-                <Button component={NavLink} to="/erp/inventory-detail" variant="outlined" startIcon={<Inventory2Icon />}>حجز قطع الغيار</Button>
-                <Button component={NavLink} to="/erp/maintenance-detail" variant="outlined" startIcon={<BuildCircleIcon />}>فتح أمر صيانة</Button>
-                <Button variant="outlined" startIcon={<SpeedIcon />} component={NavLink} to="/erp/sla">تحديث KPI الأعطال</Button>
-              </Stack>
-            </CardContent>
-          </Card>
+          <QuickActionsCard>
+            <Button component={NavLink} to="/erp/incidents" variant="outlined" startIcon={<ReportProblemIcon />}>فتح بلاغ مرتبط</Button>
+            <Button component={NavLink} to="/erp/inventory-detail" variant="outlined" startIcon={<Inventory2Icon />}>حجز قطع الغيار</Button>
+            <Button component={NavLink} to="/erp/maintenance-detail" variant="outlined" startIcon={<BuildCircleIcon />}>فتح أمر صيانة</Button>
+            <Button variant="outlined" startIcon={<SpeedIcon />} component={NavLink} to="/erp/sla">تحديث KPI الأعطال</Button>
+          </QuickActionsCard>
         </Stack>
       </Box>
 

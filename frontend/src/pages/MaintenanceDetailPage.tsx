@@ -5,6 +5,8 @@ import ScheduleIcon from "@mui/icons-material/Schedule";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { ProcessFlowCard } from "../components/ProcessFlowCard";
+import { QuickActionsCard } from "../components/QuickActionsCard";
 import { StatusChip } from "../components/StatusChip";
 
 const maintenanceJobs = [
@@ -39,6 +41,13 @@ const spareParts = [
   ["سيور نقل", "مخزن المعدات", "6 قطع"],
   ["خراطيم هيدروليك", "المخزن الرئيسي", "12 قطعة"],
   ["زيوت تشحيم", "مخزن السوائل", "42 عبوة"]
+];
+
+const opsLoop = [
+  { title: "البلاغات", description: "استقبال البلاغ وتصنيفه حسب العطل" },
+  { title: "المخازن", description: "التحقق من توفر القطع الاستهلاكية" },
+  { title: "التنفيذ", description: "تخصيص الفني وبدء أمر العمل" },
+  { title: "الإغلاق", description: "تأكيد الإصلاح وتحديث حالة الأصل" }
 ];
 
 export function MaintenanceDetailPage() {
@@ -111,36 +120,14 @@ export function MaintenanceDetailPage() {
         </Card>
 
         <Stack spacing={2}>
-          <Card sx={{ borderRadius: 3, bgcolor: "#000666", color: "white" }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 20, fontWeight: 900 }}>حلقة الربط التشغيلية</Typography>
-              <Stack spacing={1.2} sx={{ mt: 1.4 }}>
-                {[
-                  ["البلاغات", "استقبال البلاغ وتصنيفه حسب العطل"],
-                  ["المخازن", "التحقق من توفر القطع الاستهلاكية"],
-                  ["التنفيذ", "تخصيص الفني وبدء أمر العمل"],
-                  ["الإغلاق", "تأكيد الإصلاح وتحديث حالة الأصل"]
-                ].map(([title, desc]) => (
-                  <Box key={String(title)} sx={{ p: 1.2, borderRadius: 2, bgcolor: "rgba(255,255,255,0.08)" }}>
-                    <Typography sx={{ fontWeight: 800, color: "#fc820c" }}>{title}</Typography>
-                    <Typography sx={{ fontSize: 13, color: "rgba(255,255,255,0.88)", mt: 0.4 }}>{desc}</Typography>
-                  </Box>
-                ))}
-              </Stack>
-            </CardContent>
-          </Card>
+          <ProcessFlowCard title="حلقة الربط التشغيلية" items={opsLoop} />
 
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 20 }}>إجراءات سريعة</Typography>
-              <Stack spacing={1.2} sx={{ mt: 1.4 }}>
-                <Button component={NavLink} to="/erp/incidents" variant="outlined" startIcon={<ReportProblemIcon />}>فتح البلاغ المرتبط</Button>
-                <Button component={NavLink} to="/erp/inventory-detail" variant="outlined" startIcon={<Inventory2Icon />}>حجز قطع غيار</Button>
-                <Button variant="outlined" startIcon={<ScheduleIcon />} component={NavLink} to="/erp/maintenance">جدولة زيارة ميدانية</Button>
-                <Button variant="outlined" startIcon={<VerifiedIcon />} component={NavLink} to="/erp/sla">اعتماد الإغلاق</Button>
-              </Stack>
-            </CardContent>
-          </Card>
+          <QuickActionsCard>
+            <Button component={NavLink} to="/erp/incidents" variant="outlined" startIcon={<ReportProblemIcon />}>فتح البلاغ المرتبط</Button>
+            <Button component={NavLink} to="/erp/inventory-detail" variant="outlined" startIcon={<Inventory2Icon />}>حجز قطع غيار</Button>
+            <Button variant="outlined" startIcon={<ScheduleIcon />} component={NavLink} to="/erp/maintenance">جدولة زيارة ميدانية</Button>
+            <Button variant="outlined" startIcon={<VerifiedIcon />} component={NavLink} to="/erp/sla">اعتماد الإغلاق</Button>
+          </QuickActionsCard>
         </Stack>
       </Box>
 

@@ -6,6 +6,7 @@ import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { StatusChip } from "../components/StatusChip";
+import { QuickActionsCard } from "../components/QuickActionsCard";
 
 const requests = [
   { title: "بلاغ صيانة مضخة الخرسانة", location: "مشروع برج المجد", priority: "عاجل", status: "قيد التنفيذ", progress: 82 },
@@ -105,16 +106,11 @@ export function MaintenancePage() {
             </CardContent>
           </Card>
 
-          <Card sx={{ borderRadius: 3 }}>
-            <CardContent>
-              <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 20, mb: 1.5 }}>إجراء سريع</Typography>
-              <Stack spacing={1.2}>
-                <Button variant="outlined" startIcon={<BuildIcon />} onClick={() => navigate("/erp/maintenance-detail")}>إحالة لفني</Button>
-                <Button variant="outlined" startIcon={<EventAvailableIcon />} onClick={() => navigate("/erp/maintenance-detail")}>جدولة صيانة</Button>
-                <Button variant="outlined" startIcon={<ReportProblemIcon />} onClick={() => navigate("/erp/incidents")}>تسجيل بلاغ عاجل</Button>
-              </Stack>
-            </CardContent>
-          </Card>
+          <QuickActionsCard title="إجراء سريع">
+            <Button variant="outlined" startIcon={<BuildIcon />} onClick={() => navigate("/erp/maintenance-detail")}>إحالة لفني</Button>
+            <Button variant="outlined" startIcon={<EventAvailableIcon />} onClick={() => navigate("/erp/maintenance-detail")}>جدولة صيانة</Button>
+            <Button variant="outlined" startIcon={<ReportProblemIcon />} onClick={() => navigate("/erp/incidents")}>تسجيل بلاغ عاجل</Button>
+          </QuickActionsCard>
         </Stack>
       </Box>
     </Stack>
