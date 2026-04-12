@@ -6,9 +6,11 @@ import EngineeringIcon from "@mui/icons-material/Engineering";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SecurityIcon from "@mui/icons-material/Security";
+import AssessmentIcon from "@mui/icons-material/Assessment";
 import DescriptionIcon from "@mui/icons-material/Description";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
+import BuildIcon from "@mui/icons-material/Build";
 import WorkIcon from "@mui/icons-material/Work";
 import { AppBar, Avatar, Badge, Box, Button, Divider, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, Toolbar, Typography } from "@mui/material";
 import { NavLink, Outlet } from "react-router-dom";
@@ -26,6 +28,8 @@ const navItems = [
   { to: "/erp/clients", label: "العملاء", icon: <AssignmentIndIcon fontSize="small" /> },
   { to: "/erp/inventory", label: "المخازن", icon: <Inventory2Icon fontSize="small" /> },
   { to: "/erp/notifications", label: "التنبيهات", icon: <NotificationsIcon fontSize="small" /> },
+  { to: "/erp/reports", label: "التقارير", icon: <AssessmentIcon fontSize="small" /> },
+  { to: "/erp/maintenance", label: "الصيانة", icon: <BuildIcon fontSize="small" /> },
   { to: "/erp/finance", label: "الحسابات", icon: <MonetizationOnIcon fontSize="small" /> },
   { to: "/erp/properties", label: "العقارات", icon: <ApartmentIcon fontSize="small" /> },
   { to: "/erp/access-control", label: "إدارة المستخدمين", icon: <SecurityIcon fontSize="small" /> },

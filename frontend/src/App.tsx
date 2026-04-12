@@ -24,6 +24,8 @@ const ClientsPage = lazy(() => import("./pages/ClientsPage").then((m) => ({ defa
 const InventoryManagementPage = lazy(() => import("./pages/InventoryManagementPage").then((m) => ({ default: m.InventoryManagementPage })));
 const FinancePage = lazy(() => import("./pages/FinancePage").then((m) => ({ default: m.FinancePage })));
 const PropertiesPage = lazy(() => import("./pages/PropertiesPage").then((m) => ({ default: m.PropertiesPage })));
+const ReportsPage = lazy(() => import("./pages/ReportsPage").then((m) => ({ default: m.ReportsPage })));
+const MaintenancePage = lazy(() => import("./pages/MaintenancePage").then((m) => ({ default: m.MaintenancePage })));
 
 function ERPApp() {
   const [scope, setScope] = useState<DataScope>("all");
@@ -89,6 +91,8 @@ function ERPApp() {
           <Route path="users/new" element={<AddUserPage />} />
           <Route path="assets" element={<AssetsPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
+          <Route path="reports" element={<ReportsPage />} />
+          <Route path="maintenance" element={<MaintenancePage />} />
           <Route path="access-control" element={<AccessControlPage />} />
           <Route path="contracts" element={<ContractsPage />} />
           <Route path="clients" element={<ClientsPage clients={clients} />} />
