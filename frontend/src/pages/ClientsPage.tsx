@@ -1,9 +1,14 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import GroupsIcon from "@mui/icons-material/Groups";
+import PersonOffIcon from "@mui/icons-material/PersonOff";
 import { Alert, Avatar, Box, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { api } from "../api";
+import { EmptyStateCard } from "../components/EmptyStateCard";
+import { PageHero } from "../components/PageHero";
+import { StatCard } from "../components/StatCard";
 
 type ClientForm = {
   name: string;
@@ -96,30 +101,28 @@ export function ClientsPage({ clients, onRefresh }: { clients: any[]; onRefresh:
 
   return (
     <Stack spacing={3}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>الرئيسية / إدارة العملاء</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة العملاء</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>إنشاء وتعديل وحذف العملاء وربطهم بالمشاريع بشكل مباشر.</Typography>
-        </Box>
-        <Button variant="contained" startIcon={<PersonAddAlt1Icon />} sx={{ bgcolor: "#000666" }} onClick={openCreateDialog}>
-          إضافة عميل جديد
-        </Button>
-      </Box>
+      <PageHero
+        eyebrow="الرئيسية / إدارة العملاء"
+        title="إدارة العملاء"
+        subtitle="إنشاء وتعديل وحذف العملاء وربطهم بالمشاريع بشكل مباشر."
+        actions={<Button type="button" variant="contained" startIcon={<PersonAddAlt1Icon />} onClick={openCreateDialog}>إضافة عميل جديد</Button>}
+      />
 
       {error && <Alert severity="error">{error}</Alert>}
       {success && <Alert severity="success">{success}</Alert>}
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" } }}>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>إجمالي العملاء</Typography><Typography sx={{ color: "#000666", fontSize: 38, fontWeight: 900 }}>{clients.length}</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>عملاء لديهم مشاريع</Typography><Typography sx={{ color: "#000666", fontSize: 38, fontWeight: 900 }}>{clients.filter((c) => Number(c.projects_count) > 0).length}</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>بدون مشاريع</Typography><Typography sx={{ color: "#964900", fontSize: 38, fontWeight: 900 }}>{clients.filter((c) => Number(c.projects_count) === 0).length}</Typography></CardContent></Card>
+        <StatCard title="إجمالي العملاء" value={String(clients.length)} icon={<GroupsIcon />} accent="#123b5d" />
+        <StatCard title="عملاء لديهم مشاريع" value={String(clients.filter((c) => Number(c.projects_count) > 0).length)} accent="#1f8a4c" />
+        <StatCard title="بدون مشاريع" value={String(clients.filter((c) => Number(c.projects_count) === 0).length)} icon={<PersonOffIcon />} accent="#cc7a24" />
       </Box>
 
       <Card sx={{ borderRadius: 3 }}>
         <CardContent>
           <Box sx={{ display: "grid", gap: 1.2 }}>
-            {rows.map((client) => (
+            {rows.length === 0 ? (
+              <EmptyStateCard title="لا يوجد عملاء حتى الآن" description="ابدأ بإضافة أول عميل لربطه بالمشاريع والعقود." />
+            ) : rows.map((client) => (
               <Box key={client.id} sx={{ p: 1.5, borderRadius: 2, bgcolor: "#fafbff", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 1 }}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
                   <Avatar sx={{ bgcolor: "#e7ecff", color: "#000666" }}>{String(client.name || "ع").slice(0, 1)}</Avatar>

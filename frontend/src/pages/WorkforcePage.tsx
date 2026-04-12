@@ -6,6 +6,9 @@ import PaymentsIcon from "@mui/icons-material/Payments";
 import { Alert, Box, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { api } from "../api";
+import { EmptyStateCard } from "../components/EmptyStateCard";
+import { PageHero } from "../components/PageHero";
+import { StatCard } from "../components/StatCard";
 
 type WorkforceForm = {
   name: string;
@@ -106,46 +109,26 @@ export function WorkforcePage({ data, onRefresh }: { data: any[]; onRefresh: () 
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>القوى العاملة / المقاولين</Typography>
-          <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, color: "#000666", lineHeight: 1.1 }}>إدارة المقاولين والقوى العاملة</Typography>
-        </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={openCreate}>إضافة عامل</Button>
-      </Box>
+      <PageHero
+        eyebrow="القوى العاملة / المقاولين"
+        title="إدارة المقاولين والقوى العاملة"
+        subtitle="تتبع التقييمات والمستحقات وسجل فرق التنفيذ في المشاريع."
+        actions={<Button type="button" variant="contained" startIcon={<AddIcon />} onClick={openCreate}>إضافة عامل</Button>}
+      />
 
       {error && <Alert severity="error">{error}</Alert>}
       {success && <Alert severity="success">{success}</Alert>}
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" } }}>
-        <Card sx={{ borderRadius: 3 }}>
-          <CardContent>
-            <GroupsIcon sx={{ color: "#000666" }} />
-            <Typography sx={{ fontSize: 38, color: "#000666", fontWeight: 900 }}>{data.length}</Typography>
-            <Typography sx={{ color: "#6f7587" }}>إجمالي العمال</Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ borderRadius: 3 }}>
-          <CardContent>
-            <PaymentsIcon sx={{ color: "#964900" }} />
-            <Typography sx={{ fontSize: 38, color: "#000666", fontWeight: 900 }}>{totalDue.toLocaleString()}</Typography>
-            <Typography sx={{ color: "#6f7587" }}>إجمالي المستحقات</Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ borderRadius: 3 }}>
-          <CardContent>
-            <Typography sx={{ color: "#6f7587" }}>متوسط التقييم</Typography>
-            <Typography sx={{ fontSize: 38, color: "#000666", fontWeight: 900 }}>
-              {data.length ? (data.reduce((sum, row) => sum + Number(row.rating || 0), 0) / data.length).toFixed(1) : "0.0"}
-            </Typography>
-          </CardContent>
-        </Card>
+        <StatCard title="إجمالي العمال" value={String(data.length)} icon={<GroupsIcon />} accent="#123b5d" />
+        <StatCard title="إجمالي المستحقات" value={totalDue.toLocaleString()} icon={<PaymentsIcon />} accent="#cc7a24" />
+        <StatCard title="متوسط التقييم" value={data.length ? (data.reduce((sum, row) => sum + Number(row.rating || 0), 0) / data.length).toFixed(1) : "0.0"} accent="#1f8a4c" />
       </Box>
 
       <Card sx={{ borderRadius: 3 }}>
         <CardContent sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
           <Stack spacing={1.2} sx={{ width: "100%" }}>
-            {rows.map((row) => (
+            {rows.length === 0 ? <EmptyStateCard title="لا توجد بيانات عمالة" description="ابدأ بإضافة أفراد الفريق والمقاولين لإدارة العمليات." /> : rows.map((row) => (
               <Box key={row.id} sx={{ p: 1.5, borderRadius: 2, bgcolor: "#fafbff", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
                 <Box>
                   <Typography sx={{ color: "#000666", fontWeight: 800 }}>{row.name}</Typography>

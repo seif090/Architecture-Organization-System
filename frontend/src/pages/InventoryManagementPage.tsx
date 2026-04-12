@@ -6,6 +6,9 @@ import WarningIcon from "@mui/icons-material/Warning";
 import { Alert, Box, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { api } from "../api";
+import { EmptyStateCard } from "../components/EmptyStateCard";
+import { PageHero } from "../components/PageHero";
+import { StatCard } from "../components/StatCard";
 
 type InventoryForm = {
   name: string;
@@ -103,45 +106,27 @@ export function InventoryManagementPage({ items, onRefresh }: { items: any[]; on
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>المخازن / الإمداد</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة المخازن والمستودعات</Typography>
-        </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={openCreate}>إضافة خامة</Button>
-      </Box>
+      <PageHero
+        eyebrow="المخازن / الإمداد"
+        title="إدارة المخازن والمستودعات"
+        subtitle="راقب الكميات، حد التنبيه، والموردين من شاشة واحدة."
+        actions={<Button type="button" variant="contained" startIcon={<AddIcon />} onClick={openCreate}>إضافة خامة</Button>}
+      />
 
       {error && <Alert severity="error">{error}</Alert>}
       {success && <Alert severity="success">{success}</Alert>}
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" } }}>
-        <Card sx={{ borderRadius: 3 }}>
-          <CardContent>
-            <Inventory2Icon sx={{ color: "#000666" }} />
-            <Typography sx={{ fontSize: 38, color: "#000666", fontWeight: 900 }}>{items.length}</Typography>
-            <Typography sx={{ color: "#6f7587" }}>إجمالي الخامات</Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ borderRadius: 3 }}>
-          <CardContent>
-            <Typography sx={{ color: "#6f7587" }}>إجمالي الكميات</Typography>
-            <Typography sx={{ fontSize: 38, color: "#000666", fontWeight: 900 }}>{totalQuantity.toLocaleString()}</Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ borderRadius: 3 }}>
-          <CardContent>
-            <WarningIcon sx={{ color: "#ba1a1a" }} />
-            <Typography sx={{ fontSize: 38, color: "#ba1a1a", fontWeight: 900 }}>{lowStockCount}</Typography>
-            <Typography sx={{ color: "#6f7587" }}>تنبيهات مخزون منخفض</Typography>
-          </CardContent>
-        </Card>
+        <StatCard title="إجمالي الخامات" value={String(items.length)} icon={<Inventory2Icon />} accent="#123b5d" />
+        <StatCard title="إجمالي الكميات" value={totalQuantity.toLocaleString()} accent="#cc7a24" />
+        <StatCard title="تنبيهات مخزون منخفض" value={String(lowStockCount)} icon={<WarningIcon />} accent="#c0342b" />
       </Box>
 
       <Card sx={{ borderRadius: 3 }}>
         <CardContent>
           <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 24, mb: 2 }}>سجل الخامات</Typography>
           <Stack spacing={1.2}>
-            {items.map((item) => {
+            {items.length === 0 ? <EmptyStateCard title="لا توجد خامات في المخزون" description="أضف أول خامة لبدء إدارة مستويات المخزون." /> : items.map((item) => {
               const low = Number(item.quantity || 0) <= Number(item.min_quantity || 0);
               return (
                 <Box key={item.id} sx={{ p: 1.4, borderRadius: 2, bgcolor: "#fafbff", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 1, flexWrap: "wrap" }}>

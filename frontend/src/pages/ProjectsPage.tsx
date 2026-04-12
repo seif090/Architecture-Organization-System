@@ -1,9 +1,14 @@
 import AddIcon from "@mui/icons-material/Add";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import WorkIcon from "@mui/icons-material/Work";
 import { Alert, Box, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { api } from "../api";
+import { EmptyStateCard } from "../components/EmptyStateCard";
+import { PageHero } from "../components/PageHero";
+import { StatCard } from "../components/StatCard";
 
 type ProjectForm = {
   name: string;
@@ -107,29 +112,28 @@ export function ProjectsPage({ data, onRefresh }: { data: any[]; onRefresh: () =
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>المشاريع</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة المشاريع</Typography>
-        </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={openCreate}>
-          إضافة مشروع
-        </Button>
-      </Box>
+      <PageHero
+        eyebrow="المشاريع"
+        title="إدارة المشاريع"
+        subtitle="متابعة حالة كل مشروع وتكاليفه وربطه بالعميل والفريق."
+        actions={<Button type="button" variant="contained" startIcon={<AddIcon />} onClick={openCreate}>إضافة مشروع</Button>}
+      />
 
       {error && <Alert severity="error">{error}</Alert>}
       {success && <Alert severity="success">{success}</Alert>}
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" } }}>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>إجمالي المشاريع</Typography><Typography sx={{ color: "#000666", fontSize: 38, fontWeight: 900 }}>{data.length}</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>المشاريع النشطة</Typography><Typography sx={{ color: "#964900", fontSize: 38, fontWeight: 900 }}>{data.filter((d) => d.status === "نشط").length}</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>المكتملة</Typography><Typography sx={{ color: "#16a34a", fontSize: 38, fontWeight: 900 }}>{data.filter((d) => d.status !== "نشط").length}</Typography></CardContent></Card>
+        <StatCard title="إجمالي المشاريع" value={String(data.length)} icon={<WorkIcon />} accent="#123b5d" />
+        <StatCard title="المشاريع النشطة" value={String(data.filter((d) => d.status === "نشط").length)} accent="#cc7a24" />
+        <StatCard title="المكتملة" value={String(data.filter((d) => d.status !== "نشط").length)} icon={<DoneAllIcon />} accent="#1f8a4c" />
       </Box>
 
       <Card sx={{ borderRadius: 3 }}>
         <CardContent>
           <Stack spacing={1.2}>
-            {rows.map((row) => (
+            {rows.length === 0 ? (
+              <EmptyStateCard title="لا توجد مشاريع" description="أنشئ مشروعًا جديدًا لبدء تتبع المراحل والتكلفة." />
+            ) : rows.map((row) => (
               <Box key={row.id} sx={{ p: 1.4, borderRadius: 2, bgcolor: "#fafbff", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 1 }}>
                 <Box>
                   <Typography sx={{ color: "#000666", fontWeight: 800 }}>{row.name}</Typography>
