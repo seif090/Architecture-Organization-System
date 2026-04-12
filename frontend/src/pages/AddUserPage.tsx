@@ -1,5 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import DeleteIcon from "@mui/icons-material/Delete";
 import PersonIcon from "@mui/icons-material/Person";
 import SaveIcon from "@mui/icons-material/Save";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
@@ -33,7 +33,7 @@ export function AddUserPage() {
                 <TextField label="البريد الإلكتروني" placeholder="name@company.com" fullWidth />
                 <TextField label="رقم الهاتف" placeholder="+966 50 000 0000" fullWidth />
                 <TextField label="الجنسية" placeholder="مثال: سعودي" fullWidth />
-                <TextField type="date" label="تاريخ الانضمام" InputLabelProps={{ shrink: true }} fullWidth />
+                <TextField type="date" label="تاريخ الانضمام" fullWidth />
                 <TextField label="العنوان السكني" placeholder="الشارع، الحي، المدينة" fullWidth sx={{ gridColumn: { md: "1 / span 2" } }} />
               </Box>
             </CardContent>
@@ -47,13 +47,13 @@ export function AddUserPage() {
                   <Box sx={{ display: "grid", gap: 1.4, gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" } }}>
                     <TextField label="اسم الشركة" placeholder="أدخل اسم الشركة السابقة" />
                     <TextField label="المسمى الوظيفي" placeholder="مثال: مهندس موقع" />
-                    <TextField type="date" label="فترة العمل من" InputLabelProps={{ shrink: true }} />
-                    <TextField type="date" label="فترة العمل إلى" InputLabelProps={{ shrink: true }} />
+                    <TextField type="date" label="فترة العمل من" />
+                    <TextField type="date" label="فترة العمل إلى" />
                     <TextField label="وصف المهام" multiline minRows={3} sx={{ gridColumn: { md: "1 / span 2" } }} />
                   </Box>
                   <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Button startIcon={<AddIcon />} variant="outlined">إضافة خبرة أخرى</Button>
-                    <Button startIcon={<DeleteOutlineIcon />} color="error">حذف</Button>
+                    <Button startIcon={<DeleteIcon />} color="error">حذف</Button>
                   </Box>
                 </Stack>
               </Box>
@@ -67,7 +67,7 @@ export function AddUserPage() {
                 <Box sx={{ display: "grid", gap: 1.4, gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" } }}>
                   <TextField label="اسم المهارة/الدورة" placeholder="مثال: إدارة مشاريع PMP" />
                   <TextField label="جهة الإصدار" placeholder="مثال: معهد إدارة المشاريع PMI" />
-                  <TextField type="date" label="تاريخ الحصول عليها" InputLabelProps={{ shrink: true }} sx={{ gridColumn: { md: "1 / span 2" } }} />
+                  <TextField type="date" label="تاريخ الحصول عليها" sx={{ gridColumn: { md: "1 / span 2" } }} />
                   <TextField label="وصف مختصر" multiline minRows={3} sx={{ gridColumn: { md: "1 / span 2" } }} />
                 </Box>
                 <Button startIcon={<AddIcon />} variant="outlined" sx={{ mt: 1.6 }}>إضافة مهارة/دورة أخرى</Button>

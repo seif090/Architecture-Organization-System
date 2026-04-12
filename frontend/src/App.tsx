@@ -1,6 +1,5 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import type { GridColDef } from "@mui/x-data-grid";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { fetchByScope } from "./api";
 import { AuthProvider, useAuth } from "./auth/AuthContext";
@@ -11,15 +10,17 @@ import { AccessControlPage } from "./pages/AccessControlPage";
 import { AddUserPage } from "./pages/AddUserPage";
 import { AssetsPage } from "./pages/AssetsPage";
 import { BusinessIntelligencePage } from "./pages/BusinessIntelligencePage";
+import { ClientsPage } from "./pages/ClientsPage";
 import { DashboardPage } from "./pages/DashboardPage";
+import { FinancePage } from "./pages/FinancePage";
 import { InventoryManagementPage } from "./pages/InventoryManagementPage";
 import { NotificationsPage } from "./pages/NotificationsPage";
 import { ProcurementPage } from "./pages/ProcurementPage";
 import { LoginPage } from "./pages/LoginPage";
+import { PropertiesPage } from "./pages/PropertiesPage";
 import { ProjectsPage } from "./pages/ProjectsPage";
 import { SuppliersPage } from "./pages/SuppliersPage";
 import { WorkforcePage } from "./pages/WorkforcePage";
-import { SimpleTablePage } from "./pages/SimpleTablePage";
 import { appTheme } from "./theme";
 import type { DataScope } from "./types";
 
@@ -28,17 +29,15 @@ function ERPApp() {
   const [dashboard, setDashboard] = useState<any>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [clients, setClients] = useState<any[]>([]);
-  const [inventory, setInventory] = useState<any[]>([]);
   const [finance, setFinance] = useState<{ records: any[]; invoices: any[] }>({ records: [], invoices: [] });
   const [properties, setProperties] = useState<{ properties: any[]; installments: any[] }>({ properties: [], installments: [] });
   const { user } = useAuth();
 
   const loadAll = async () => {
-    const [dashData, projectsData, clientsData, inventoryData, financeData, propertiesData] = await Promise.all([
+    const [dashData, projectsData, clientsData, financeData, propertiesData] = await Promise.all([
       fetchByScope<any>("/dashboard", scope),
       fetchByScope<any[]>("/projects", scope),
       fetchByScope<any[]>("/clients", scope),
-      fetchByScope<any[]>("/inventory", scope),
       fetchByScope<{ records: any[]; invoices: any[] }>("/finance", scope).catch(() => ({ records: [], invoices: [] })),
       fetchByScope<{ properties: any[]; installments: any[] }>("/properties", scope)
     ]);
@@ -46,7 +45,6 @@ function ERPApp() {
     setDashboard(dashData);
     setProjects(projectsData);
     setClients(clientsData);
-    setInventory(inventoryData);
     setFinance(financeData);
     setProperties(propertiesData);
   };
@@ -54,56 +52,6 @@ function ERPApp() {
   useEffect(() => {
     loadAll().catch(() => undefined);
   }, [scope]);
-
-  const clientColumns = useMemo<GridColDef[]>(
-    () => [
-      { field: "name", headerName: "الاسم", flex: 1 },
-      { field: "phone", headerName: "الهاتف", flex: 0.8 },
-      { field: "address", headerName: "العنوان", flex: 1.2 },
-      { field: "projects_count", headerName: "المشاريع", flex: 0.6 },
-      { field: "notes", headerName: "ملاحظات", flex: 1.1 }
-    ],
-    []
-  );
-
-  const inventoryColumns = useMemo<GridColDef[]>(
-    () => [
-      { field: "name", headerName: "الخامة", flex: 1 },
-      { field: "unit", headerName: "الوحدة", flex: 0.5 },
-      { field: "quantity", headerName: "الكمية", flex: 0.7 },
-      { field: "min_quantity", headerName: "الحد الأدنى", flex: 0.7 },
-      { field: "supplier", headerName: "المورد", flex: 1 },
-      {
-        field: "alert",
-        headerName: "تنبيه",
-        flex: 0.6,
-        valueGetter: (_value, row) => (Number(row.quantity) <= Number(row.min_quantity) ? "نقص" : "آمن")
-      }
-    ],
-    []
-  );
-
-  const financeColumns = useMemo<GridColDef[]>(
-    () => [
-      { field: "record_type", headerName: "النوع", flex: 0.7 },
-      { field: "project_name", headerName: "المشروع", flex: 1 },
-      { field: "description", headerName: "الوصف", flex: 1.3 },
-      { field: "amount", headerName: "القيمة", flex: 0.8 },
-      { field: "record_date", headerName: "التاريخ", flex: 0.8 }
-    ],
-    []
-  );
-
-  const propertiesColumns = useMemo<GridColDef[]>(
-    () => [
-      { field: "name", headerName: "العقار", flex: 1 },
-      { field: "property_type", headerName: "النوع", flex: 0.8 },
-      { field: "status", headerName: "الحالة", flex: 0.7 },
-      { field: "location", headerName: "الموقع", flex: 1 },
-      { field: "price", headerName: "السعر", flex: 0.9 }
-    ],
-    []
-  );
 
   return (
     <Routes>
@@ -135,19 +83,19 @@ function ERPApp() {
         <Route path="notifications" element={<NotificationsPage />} />
         <Route path="access-control" element={<AccessControlPage />} />
         <Route path="contracts" element={<ContractsPage />} />
-        <Route path="clients" element={<SimpleTablePage title="إدارة العملاء" rows={clients} columns={clientColumns} />} />
+        <Route path="clients" element={<ClientsPage clients={clients} />} />
         <Route path="inventory" element={<InventoryManagementPage />} />
         <Route
           path="finance"
           element={
-            <SimpleTablePage
-              title={user?.role === "viewer" ? "لا توجد صلاحية للحسابات" : "الحسابات والتقارير المالية"}
-              rows={user?.role === "viewer" ? [] : finance.records}
-              columns={financeColumns}
+            <FinancePage
+              isViewer={user?.role === "viewer"}
+              records={finance.records}
+              invoices={finance.invoices}
             />
           }
         />
-        <Route path="properties" element={<SimpleTablePage title="إدارة العقارات" rows={properties.properties} columns={propertiesColumns} />} />
+        <Route path="properties" element={<PropertiesPage properties={properties.properties} installments={properties.installments} />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

@@ -1,7 +1,4 @@
 import AddIcon from "@mui/icons-material/Add";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import StarIcon from "@mui/icons-material/Star";
 import { Avatar, Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
