@@ -24,16 +24,16 @@ export function AssetsPage() {
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
         <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 13, mb: 0.5 }}>إدارة الأصول والتشغيل</Typography>
-          <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, color: "#000666", lineHeight: 1.1 }}>الأصول والمعدات</Typography>
-          <Typography sx={{ color: "text.secondary", mt: 1 }}>متابعة المعدات الثقيلة، الحالة الفنية، وقيمة الأصول ومواقعها داخل المشاريع.</Typography>
+          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>الأصول / التشغيل</Typography>
+          <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, color: "#000666", lineHeight: 1.1 }}>إدارة الأصول والمعدات</Typography>
+          <Typography sx={{ color: "text.secondary", mt: 1 }}>تتبع، صيانة، وتوزيع الأصول عبر جميع المواقع الإنشائية.</Typography>
         </Box>
         <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }}>إضافة أصل جديد</Button>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
-        {categories.map((category) => (
-          <Card key={category.title} sx={{ borderRadius: 3 }}>
+        {categories.map((category, idx) => (
+          <Card key={category.title} sx={{ borderRadius: 3, borderInlineStart: idx === 0 ? "4px solid #000666" : idx === 1 ? "4px solid #964900" : idx === 2 ? "4px solid #380b00" : "4px solid #1a237e" }}>
             <CardContent>
               <Typography sx={{ color: "#7f8597", fontSize: 13 }}>{category.title}</Typography>
               <Typography sx={{ fontWeight: 900, fontSize: 38, color: category.color, lineHeight: 1.1, mt: 1 }}>{category.value}</Typography>

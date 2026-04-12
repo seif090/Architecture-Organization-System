@@ -30,11 +30,15 @@ export function WorkforcePage() {
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
         <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 13, mb: 0.5 }}>الموارد البشرية والتشغيل</Typography>
-          <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, color: "#000666", lineHeight: 1.1 }}>إدارة الموظفين والعمال</Typography>
-          <Typography sx={{ color: "text.secondary", mt: 1 }}>متابعة الحضور، التكليفات، الرواتب، ومؤشرات الأداء اليومية للمواقع.</Typography>
+          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>القوى العاملة / المقاولين</Typography>
+          <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, color: "#000666", lineHeight: 1.1 }}>إدارة المقاولين والقوى العاملة</Typography>
+          <Typography sx={{ color: "text.secondary", mt: 1 }}>متابعة بيانات المقاولين، سجلات الحضور، وتوزيع العمالة على المشاريع.</Typography>
         </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }}>إضافة موظف جديد</Button>
+        <Stack direction="row" spacing={1.2}>
+          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }}>إضافة مقاول جديد</Button>
+          <Button variant="contained" startIcon={<BadgeIcon />} sx={{ bgcolor: "#fc820c", color: "#311300" }}>تسجيل حضور</Button>
+          <Button variant="outlined" startIcon={<PaymentsIcon />}>تصدير كشف الأجور</Button>
+        </Stack>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>

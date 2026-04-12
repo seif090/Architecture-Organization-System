@@ -2,7 +2,6 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { Avatar, Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
@@ -62,21 +61,20 @@ export function ProcurementPage() {
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
         <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 13, mb: 0.5 }}>إدارة الموارد</Typography>
-          <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, color: "#000666", lineHeight: 1.1 }}>إدارة المشتريات والموردين</Typography>
+          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>المشتريات الاستراتيجية</Typography>
+          <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, color: "#000666", lineHeight: 1.1 }}>إدارة المشتريات</Typography>
           <Typography sx={{ color: "text.secondary", mt: 1 }}>متابعة أوامر الشراء، أداء الموردين، واحتياجات المواد الحرجة للمواقع النشطة.</Typography>
         </Box>
         <Box sx={{ display: "flex", gap: 1.2, flexWrap: "wrap" }}>
-          <Button variant="outlined" startIcon={<ReceiptLongIcon />}>تقرير المشتريات</Button>
-          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }}>إنشاء أمر شراء</Button>
+          <Button variant="outlined" startIcon={<LocalShippingIcon />}>تتبع الشحنات</Button>
+          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }}>طلب شراء جديد</Button>
         </Box>
       </Box>
 
-      <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>أوامر شراء معلقة</Typography><Typography sx={{ fontSize: 38, fontWeight: 900, color: "#000666" }}>14</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>الموردون النشطون</Typography><Typography sx={{ fontSize: 38, fontWeight: 900, color: "#964900" }}>26</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>مواد حرجة</Typography><Typography sx={{ fontSize: 38, fontWeight: 900, color: "#c62828" }}>5</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3, bgcolor: "#000666", color: "white" }}><CardContent><Typography sx={{ color: "rgba(255,255,255,0.8)" }}>نسبة الالتزام بالموردين</Typography><Typography sx={{ fontSize: 38, fontWeight: 900 }}>91%</Typography></CardContent></Card>
+      <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" } }}>
+        <Card sx={{ borderInlineStart: "4px solid #000666" }}><CardContent><Typography sx={{ color: "#7f8597" }}>إجمالي المشتريات (الشهر)</Typography><Typography sx={{ fontSize: 34, fontWeight: 900, color: "#000666" }}>450,230 ر.س</Typography></CardContent></Card>
+        <Card sx={{ borderInlineStart: "4px solid #964900" }}><CardContent><Typography sx={{ color: "#7f8597" }}>في انتظار الاعتماد</Typography><Typography sx={{ fontSize: 34, fontWeight: 900, color: "#964900" }}>12,400 ر.س</Typography></CardContent></Card>
+        <Card sx={{ borderInlineStart: "4px solid #380b00" }}><CardContent><Typography sx={{ color: "#7f8597" }}>طلبات قيد التوريد</Typography><Typography sx={{ fontSize: 34, fontWeight: 900, color: "#380b00" }}>15 شحنة</Typography></CardContent></Card>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", lg: "1.2fr 0.8fr" } }}>

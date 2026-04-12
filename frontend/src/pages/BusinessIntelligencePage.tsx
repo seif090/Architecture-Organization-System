@@ -111,7 +111,7 @@ export function BusinessIntelligencePage() {
         <Box sx={{ p: { xs: 2, md: 4 }, minWidth: 0 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap", mb: 5 }}>
             <Box>
-              <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 28, md: 38 }, lineHeight: 1.1, mb: 0.8 }}>لوحة استخبارات الأعمال</Typography>
+              <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1, mb: 0.8 }}>لوحة استخبارات الأعمال</Typography>
               <Typography sx={{ color: "#6f7587" }}>نظرة عامة تحليلية على الأداء المالي والإنشائي للمجموعة</Typography>
             </Box>
             <FlexRow gap={1.2}>
@@ -121,7 +121,7 @@ export function BusinessIntelligencePage() {
           </Box>
 
           <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" }, mb: 5 }}>
-            <Card sx={{ borderRadius: 2.5, boxShadow: "0 8px 32px rgba(0,6,102,0.06)", borderRight: "4px solid #000666" }}>
+            <Card sx={{ borderRadius: 3, borderRight: "4px solid #000666" }}>
               <CardContent sx={{ p: 3.3 }}>
                 <Typography sx={{ color: "#7f8597", letterSpacing: 2, fontSize: 11, fontWeight: 800, mb: 2 }}>إجمالي الإيرادات</Typography>
                 <Box sx={{ display: "flex", alignItems: "baseline", gap: 1 }}>
@@ -136,7 +136,7 @@ export function BusinessIntelligencePage() {
               </CardContent>
             </Card>
 
-            <Card sx={{ borderRadius: 2.5, boxShadow: "0 8px 32px rgba(0,6,102,0.06)", borderRight: "4px solid #964900" }}>
+            <Card sx={{ borderRadius: 3, borderRight: "4px solid #964900" }}>
               <CardContent sx={{ p: 3.3 }}>
                 <Typography sx={{ color: "#7f8597", letterSpacing: 2, fontSize: 11, fontWeight: 800, mb: 2 }}>صافي الأرباح</Typography>
                 <Box sx={{ display: "flex", alignItems: "baseline", gap: 1 }}>
@@ -151,7 +151,7 @@ export function BusinessIntelligencePage() {
               </CardContent>
             </Card>
 
-            <Card sx={{ borderRadius: 2.5, boxShadow: "0 8px 32px rgba(0,6,102,0.06)", borderRight: "4px solid #380b00" }}>
+            <Card sx={{ borderRadius: 3, borderRight: "4px solid #380b00" }}>
               <CardContent sx={{ p: 3.3 }}>
                 <Typography sx={{ color: "#7f8597", letterSpacing: 2, fontSize: 11, fontWeight: 800, mb: 2 }}>العائد على الاستثمار (ROI)</Typography>
                 <Box sx={{ display: "flex", alignItems: "baseline", gap: 1 }}>
@@ -166,7 +166,7 @@ export function BusinessIntelligencePage() {
           </Box>
 
           <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", lg: "2fr 1fr" }, mb: 5 }}>
-            <Card sx={{ borderRadius: 2.5 }}>
+            <Card sx={{ borderRadius: 3 }}>
               <CardContent sx={{ p: 3 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3, flexWrap: "wrap", gap: 1 }}>
                   <Box>
@@ -193,7 +193,7 @@ export function BusinessIntelligencePage() {
               </CardContent>
             </Card>
 
-            <Card sx={{ borderRadius: 2.5, overflow: "hidden", bgcolor: "#fff" }}>
+            <Card sx={{ borderRadius: 3, overflow: "hidden", bgcolor: "#fff" }}>
               <CardContent sx={{ p: 3, position: "relative" }}>
                 <Typography sx={{ fontWeight: 800, color: "#000666", fontSize: 20, mb: 1.5 }}>الربحية حسب القطاع</Typography>
                 <Box sx={{ display: "grid", gap: 2.2 }}>
@@ -252,7 +252,7 @@ export function BusinessIntelligencePage() {
             </Box>
           </Box>
 
-          <Card sx={{ borderRadius: 2.5 }}>
+          <Card sx={{ borderRadius: 3 }}>
             <CardContent sx={{ p: 0 }}>
               <Box sx={{ p: 2.5, borderBottom: "1px solid #eef0f6", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <Typography sx={{ fontWeight: 800, color: "#000666", fontSize: 18 }}>سجل العمليات المالية الحديثة</Typography>

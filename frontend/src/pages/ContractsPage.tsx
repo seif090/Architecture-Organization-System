@@ -28,26 +28,27 @@ const docs = [
 
 export function ContractsPage() {
   return (
-    <Stack spacing={2.4}>
+    <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 2, flexWrap: "wrap" }}>
         <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 13, mb: 0.5 }}>نظام إدارة الموارد القانونية</Typography>
-          <Typography sx={{ fontSize: { xs: 28, md: 42 }, fontWeight: 800, lineHeight: 1.1, color: "#101a6d" }}>
+          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>الرئيسية / إدارة العقود القانونية</Typography>
+          <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, lineHeight: 1.1, color: "#000666" }}>
             إدارة العقود والمستندات
           </Typography>
-          <Typography sx={{ color: "text.secondary", mt: 1 }}>توثيق العقود، ومتابعة صلاحية المستندات، وتنظيم الموافقات بدقة.</Typography>
+          <Typography sx={{ color: "#6f7587", mt: 1 }}>تحكم في دورة حياة العقود والمستندات القانونية للمشاريع.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="contained" startIcon={<UploadFileIcon />} sx={{ bgcolor: "#0a1589", minWidth: 180 }}>رفع عقد جديد</Button>
+          <Button variant="outlined" startIcon={<UploadFileIcon />} sx={{ minWidth: 180 }}>رفع عقد خارجي</Button>
+          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 180 }}>إنشاء عقد جديد</Button>
           <Button variant="outlined" startIcon={<DownloadIcon />} sx={{ minWidth: 160 }}>تصدير التقرير</Button>
         </Stack>
       </Box>
 
       <Box sx={{ display: "grid", gap: 1.6, gridTemplateColumns: { xs: "1fr", md: "repeat(4, minmax(180px, 1fr))" } }}>
-        <Card><CardContent><Typography color="text.secondary">إجمالي العقود</Typography><Typography sx={{ fontSize: 38, fontWeight: 800, color: "#101a6d" }}>1,248</Typography></CardContent></Card>
-        <Card><CardContent><Typography color="text.secondary">العقود النشطة</Typography><Typography sx={{ fontSize: 38, fontWeight: 800, color: "#101a6d" }}>34</Typography></CardContent></Card>
-        <Card><CardContent><Typography color="text.secondary">تنبيهات قرب الانتهاء</Typography><Typography sx={{ fontSize: 38, fontWeight: 800, color: "#a55a00" }}>12</Typography></CardContent></Card>
-        <Card><CardContent><Typography color="text.secondary">مستندات مؤرشفة</Typography><Typography sx={{ fontSize: 38, fontWeight: 800, color: "#101a6d" }}>910</Typography></CardContent></Card>
+        <Card sx={{ borderInlineStart: "4px solid #000666" }}><CardContent><Typography color="text.secondary">إجمالي العقود</Typography><Typography sx={{ fontSize: 38, fontWeight: 900, color: "#000666" }}>1,248</Typography></CardContent></Card>
+        <Card sx={{ borderInlineStart: "4px solid #fc820c" }}><CardContent><Typography color="text.secondary">بانتظار التوقيع</Typography><Typography sx={{ fontSize: 38, fontWeight: 900, color: "#000666" }}>34</Typography></CardContent></Card>
+        <Card sx={{ borderInlineStart: "4px solid #380b00" }}><CardContent><Typography color="text.secondary">تنتهي قريبًا</Typography><Typography sx={{ fontSize: 38, fontWeight: 900, color: "#a55a00" }}>12</Typography></CardContent></Card>
+        <Card sx={{ borderInlineStart: "4px solid #1a237e" }}><CardContent><Typography color="text.secondary">القوالب الجاهزة</Typography><Typography sx={{ fontSize: 38, fontWeight: 900, color: "#000666" }}>45</Typography></CardContent></Card>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", lg: "320px 1fr 300px" } }}>
