@@ -39,7 +39,7 @@ export function SuppliersPage() {
           <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة الموردين والشركاء</Typography>
           <Typography sx={{ color: "#6f7587", mt: 1 }}>نظام مراقبة الأداء المالي والتشغيلي لسلسلة التوريد الخاصة بالمشاريع الإنشائية.</Typography>
         </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 210 }} onClick={() => navigate("/erp/procurement")}>إضافة مورد جديد</Button>
+        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 210 }} onClick={() => window.alert("سيتم فتح نموذج إضافة مورد داخل شاشة الموردين لاحقًا")}>إضافة مورد جديد</Button>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "260px 1fr" } }}>
@@ -86,7 +86,7 @@ export function SuppliersPage() {
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1.8, flexWrap: "wrap", gap: 1 }}>
                 <Typography sx={{ color: "#000666", fontSize: 36, fontWeight: 900 }}>قائمة الموردين المعتمدين</Typography>
                 <Stack direction="row" spacing={1.1}>
-                  <Button variant="outlined" startIcon={<ReceiptLongIcon />} onClick={() => navigate("/erp/procurement")}>تصفية</Button>
+                  <Button variant="outlined" startIcon={<ReceiptLongIcon />} onClick={() => window.alert("تم تطبيق تصفية الموردين حسب الفئة المختارة")}>تصفية</Button>
                   <Button variant="outlined" onClick={exportSuppliers}>تصدير</Button>
                 </Stack>
               </Box>

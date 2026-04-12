@@ -70,7 +70,7 @@ export function ProcurementPage() {
         </Box>
         <Box sx={{ display: "flex", gap: 1.2, flexWrap: "wrap" }}>
           <Button variant="outlined" startIcon={<LocalShippingIcon />} onClick={() => navigate("/erp/inventory-detail")}>تتبع الشحنات</Button>
-          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/suppliers")}>طلب شراء جديد</Button>
+          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={() => window.alert("سيتم فتح نموذج طلب شراء جديد داخل صفحة المشتريات")}>طلب شراء جديد</Button>
         </Box>
       </Box>
 

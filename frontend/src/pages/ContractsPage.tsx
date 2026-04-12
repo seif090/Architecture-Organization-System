@@ -54,8 +54,8 @@ export function ContractsPage() {
           <Typography sx={{ color: "#6f7587", mt: 1 }}>تحكم في دورة حياة العقود والمستندات القانونية للمشاريع.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<UploadFileIcon />} sx={{ minWidth: 180 }} onClick={() => navigate("/erp/contracts")}>رفع عقد خارجي</Button>
-          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 180 }} onClick={() => navigate("/erp/contracts")}>إنشاء عقد جديد</Button>
+          <Button variant="outlined" startIcon={<UploadFileIcon />} sx={{ minWidth: 180 }} onClick={() => window.alert("سيتم فتح نموذج رفع عقد خارجي داخل صفحة العقود لاحقًا")}>رفع عقد خارجي</Button>
+          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 180 }} onClick={() => window.alert("سيتم فتح نموذج إنشاء عقد جديد داخل صفحة العقود لاحقًا")}>إنشاء عقد جديد</Button>
           <Button variant="outlined" startIcon={<DownloadIcon />} sx={{ minWidth: 160 }} onClick={exportContracts}>تصدير التقرير</Button>
         </Stack>
       </Box>
@@ -168,7 +168,7 @@ export function ContractsPage() {
               <Typography sx={{ opacity: 0.85, mb: 1 }}>مساحة توجيه سريعة</Typography>
               <Typography sx={{ fontSize: 22, fontWeight: 800, mb: 1 }}>ابدأ التوقيع الآن</Typography>
               <Typography sx={{ opacity: 0.82, mb: 2 }}>أرسل المستندات للأطراف المعنية وراقب الموافقات من مكان واحد.</Typography>
-              <Button variant="contained" sx={{ bgcolor: "#fc820c", color: "white" }} onClick={() => navigate("/erp/access-control")}>إرسال للتوقيع</Button>
+              <Button variant="contained" sx={{ bgcolor: "#fc820c", color: "white" }} onClick={() => window.alert("تم إرسال العقد للتوقيع بشكل مبدئي")}>إرسال للتوقيع</Button>
             </CardContent>
           </Card>
         </Stack>
@@ -195,7 +195,7 @@ export function ContractsPage() {
       </Card>
 
       <Box sx={{ position: "fixed", bottom: 22, right: 28 }}>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ minWidth: 230, py: 1.5, borderRadius: 2, bgcolor: "#a55a00" }} onClick={() => navigate("/erp/contracts") }>
+        <Button variant="contained" startIcon={<AddIcon />} sx={{ minWidth: 230, py: 1.5, borderRadius: 2, bgcolor: "#a55a00" }} onClick={() => window.alert("سيتم فتح مرفق جديد داخل العقود لاحقًا") }>
           إضافة ملف جديد
         </Button>
       </Box>

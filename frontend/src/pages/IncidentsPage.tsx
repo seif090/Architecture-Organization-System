@@ -4,7 +4,6 @@ import ForumIcon from "@mui/icons-material/Forum";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import { Box, Button, Card, CardContent, Chip, Divider, LinearProgress, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 const incidentItems = [
   {
@@ -44,8 +43,6 @@ const slaCards = [
 ];
 
 export function IncidentsPage() {
-  const navigate = useNavigate();
-
   return (
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
@@ -56,7 +53,7 @@ export function IncidentsPage() {
         </Box>
         <Stack direction="row" spacing={1.2}>
           <Button variant="outlined" startIcon={<LocalPhoneIcon />} onClick={() => { window.location.href = "tel:+201000000000"; }}>اتصال سريع</Button>
-          <Button variant="contained" startIcon={<ReportProblemIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/maintenance")}>تسجيل بلاغ جديد</Button>
+          <Button variant="contained" startIcon={<ReportProblemIcon />} sx={{ bgcolor: "#000666" }} onClick={() => window.alert("سيتم فتح نموذج تسجيل بلاغ جديد داخل مركز البلاغات لاحقًا")}>تسجيل بلاغ جديد</Button>
         </Stack>
       </Box>
 
@@ -134,9 +131,9 @@ export function IncidentsPage() {
               <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 20 }}>إجراءات سريعة</Typography>
               <Divider sx={{ my: 1.5 }} />
               <Stack spacing={1.2}>
-                <Button variant="outlined" startIcon={<SupportAgentIcon />} onClick={() => navigate("/erp/access-control")}>إسناد لفريق الدعم</Button>
-                <Button variant="outlined" startIcon={<AssignmentTurnedInIcon />} onClick={() => navigate("/erp/sla")}>إغلاق بلاغ</Button>
-                <Button variant="outlined" startIcon={<ReportProblemIcon />} onClick={() => navigate("/erp/sla")}>تصعيد للإدارة</Button>
+                <Button variant="outlined" startIcon={<SupportAgentIcon />} onClick={() => window.alert("تم إسناد البلاغ لفريق الدعم مبدئيًا")}>إسناد لفريق الدعم</Button>
+                <Button variant="outlined" startIcon={<AssignmentTurnedInIcon />} onClick={() => window.alert("تم إغلاق البلاغ مبدئيًا")}>إغلاق بلاغ</Button>
+                <Button variant="outlined" startIcon={<ReportProblemIcon />} onClick={() => window.alert("تم تصعيد البلاغ للإدارة مبدئيًا")}>تصعيد للإدارة</Button>
               </Stack>
             </CardContent>
           </Card>

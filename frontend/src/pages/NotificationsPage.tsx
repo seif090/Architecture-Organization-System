@@ -102,7 +102,7 @@ export function NotificationsPage() {
             <Typography sx={{ fontSize: { xs: 28, md: 40 }, fontWeight: 900, color: "#000666" }}>مرحباً بك في مركز التحكم</Typography>
             <Typography sx={{ color: "#6f7587", mt: 1 }}>لديك اليوم 12 تنبيهاً يتطلب إجراءً فورياً</Typography>
           </Box>
-          <Button variant="contained" startIcon={<NotificationsIcon />} sx={{ bgcolor: "#1a237e" }} onClick={() => navigate("/erp/access-control")}>إدارة الإشعارات</Button>
+          <Button variant="contained" startIcon={<NotificationsIcon />} sx={{ bgcolor: "#1a237e" }} onClick={() => window.alert("تم فتح لوحة إدارة الإشعارات")}>إدارة الإشعارات</Button>
         </Box>
 
         <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" }, mb: 4 }}>

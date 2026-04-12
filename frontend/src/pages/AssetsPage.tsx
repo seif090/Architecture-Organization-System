@@ -31,7 +31,7 @@ export function AssetsPage() {
           <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, color: "#000666", lineHeight: 1.1 }}>إدارة الأصول والمعدات</Typography>
           <Typography sx={{ color: "text.secondary", mt: 1 }}>تتبع، صيانة، وتوزيع الأصول عبر جميع المواقع الإنشائية.</Typography>
         </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/inventory")}>إضافة أصل جديد</Button>
+        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={() => window.alert("سيتم فتح نموذج إضافة أصل داخل شاشة الأصول لاحقًا")}>إضافة أصل جديد</Button>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
