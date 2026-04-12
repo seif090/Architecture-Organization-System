@@ -3,10 +3,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import WarningIcon from "@mui/icons-material/Warning";
-import { Alert, Box, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, Stack, TextField, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { api } from "../api";
 import { EmptyStateCard } from "../components/EmptyStateCard";
+import { FormDialogShell } from "../components/FormDialogShell";
 import { PageHero } from "../components/PageHero";
 import { StatCard } from "../components/StatCard";
 
@@ -148,22 +149,21 @@ export function InventoryManagementPage({ items, onRefresh }: { items: any[]; on
         </CardContent>
       </Card>
 
-      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{editingId ? "تعديل خامة" : "إضافة خامة"}</DialogTitle>
-        <DialogContent>
-          <Stack spacing={1.3} sx={{ mt: 1 }}>
-            <TextField label="اسم الخامة" value={form.name} onChange={(e) => setField("name", e.target.value)} fullWidth />
-            <TextField label="الوحدة" value={form.unit} onChange={(e) => setField("unit", e.target.value)} fullWidth />
-            <TextField label="الكمية" value={form.quantity} onChange={(e) => setField("quantity", e.target.value)} fullWidth />
-            <TextField label="الحد الأدنى" value={form.minQuantity} onChange={(e) => setField("minQuantity", e.target.value)} fullWidth />
-            <TextField label="المورد" value={form.supplier} onChange={(e) => setField("supplier", e.target.value)} fullWidth />
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <Button type="button" onClick={() => setOpen(false)}>إلغاء</Button>
-          <Button type="button" variant="contained" onClick={submit} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
-        </DialogActions>
-      </Dialog>
+      <FormDialogShell
+        open={open}
+        onClose={() => setOpen(false)}
+        onConfirm={submit}
+        title={editingId ? "تعديل خامة" : "إضافة خامة"}
+        loading={loading}
+      >
+        <Stack spacing={1.3} sx={{ mt: 1 }}>
+          <TextField label="اسم الخامة" value={form.name} onChange={(e) => setField("name", e.target.value)} fullWidth />
+          <TextField label="الوحدة" value={form.unit} onChange={(e) => setField("unit", e.target.value)} fullWidth />
+          <TextField label="الكمية" value={form.quantity} onChange={(e) => setField("quantity", e.target.value)} fullWidth />
+          <TextField label="الحد الأدنى" value={form.minQuantity} onChange={(e) => setField("minQuantity", e.target.value)} fullWidth />
+          <TextField label="المورد" value={form.supplier} onChange={(e) => setField("supplier", e.target.value)} fullWidth />
+        </Stack>
+      </FormDialogShell>
     </Stack>
   );
 }

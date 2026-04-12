@@ -6,9 +6,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
-import { Alert, Box, Button, Card, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, Chip, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { api } from "../api";
+import { FormDialogShell } from "../components/FormDialogShell";
 import { PageHero } from "../components/PageHero";
 
 type RecordForm = {
@@ -360,41 +361,39 @@ export function FinancePage({
         </Stack>
       </Box>
 
-      <Dialog open={openRecord} onClose={() => setOpenRecord(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{editingRecordId ? "تعديل قيد مالي" : "إضافة قيد مالي"}</DialogTitle>
-        <DialogContent>
-          <Stack spacing={1.4} sx={{ mt: 1 }}>
-            <TextField label="النوع (expense/revenue)" value={recordForm.recordType} onChange={(e) => setRecordForm((p) => ({ ...p, recordType: e.target.value }))} fullWidth />
-            <TextField label="رقم المشروع (اختياري)" value={recordForm.projectId} onChange={(e) => setRecordForm((p) => ({ ...p, projectId: e.target.value }))} fullWidth />
-            <TextField label="الوصف" value={recordForm.description} onChange={(e) => setRecordForm((p) => ({ ...p, description: e.target.value }))} fullWidth />
-            <TextField label="المبلغ" value={recordForm.amount} onChange={(e) => setRecordForm((p) => ({ ...p, amount: e.target.value }))} fullWidth />
-            <TextField label="تاريخ القيد" type="date" value={recordForm.recordDate} onChange={(e) => setRecordForm((p) => ({ ...p, recordDate: e.target.value }))} fullWidth slotProps={{ inputLabel: { shrink: true } }} />
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <Button type="button" onClick={() => setOpenRecord(false)}>إلغاء</Button>
-          <Button type="button" variant="contained" onClick={submitRecord} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
-        </DialogActions>
-      </Dialog>
+      <FormDialogShell
+        open={openRecord}
+        onClose={() => setOpenRecord(false)}
+        onConfirm={submitRecord}
+        title={editingRecordId ? "تعديل قيد مالي" : "إضافة قيد مالي"}
+        loading={loading}
+      >
+        <Stack spacing={1.4} sx={{ mt: 1 }}>
+          <TextField label="النوع (expense/revenue)" value={recordForm.recordType} onChange={(e) => setRecordForm((p) => ({ ...p, recordType: e.target.value }))} fullWidth />
+          <TextField label="رقم المشروع (اختياري)" value={recordForm.projectId} onChange={(e) => setRecordForm((p) => ({ ...p, projectId: e.target.value }))} fullWidth />
+          <TextField label="الوصف" value={recordForm.description} onChange={(e) => setRecordForm((p) => ({ ...p, description: e.target.value }))} fullWidth />
+          <TextField label="المبلغ" value={recordForm.amount} onChange={(e) => setRecordForm((p) => ({ ...p, amount: e.target.value }))} fullWidth />
+          <TextField label="تاريخ القيد" type="date" value={recordForm.recordDate} onChange={(e) => setRecordForm((p) => ({ ...p, recordDate: e.target.value }))} fullWidth slotProps={{ inputLabel: { shrink: true } }} />
+        </Stack>
+      </FormDialogShell>
 
-      <Dialog open={openInvoice} onClose={() => setOpenInvoice(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{editingInvoiceId ? "تعديل فاتورة" : "إضافة فاتورة"}</DialogTitle>
-        <DialogContent>
-          <Stack spacing={1.4} sx={{ mt: 1 }}>
-            <TextField label="رقم الفاتورة" value={invoiceForm.invoiceNo} onChange={(e) => setInvoiceForm((p) => ({ ...p, invoiceNo: e.target.value }))} fullWidth />
-            <TextField label="رقم العميل (اختياري)" value={invoiceForm.clientId} onChange={(e) => setInvoiceForm((p) => ({ ...p, clientId: e.target.value }))} fullWidth />
-            <TextField label="رقم المشروع (اختياري)" value={invoiceForm.projectId} onChange={(e) => setInvoiceForm((p) => ({ ...p, projectId: e.target.value }))} fullWidth />
-            <TextField label="الإجمالي" value={invoiceForm.total} onChange={(e) => setInvoiceForm((p) => ({ ...p, total: e.target.value }))} fullWidth />
-            <TextField label="المدفوع" value={invoiceForm.paid} onChange={(e) => setInvoiceForm((p) => ({ ...p, paid: e.target.value }))} fullWidth />
-            <TextField label="الحالة" value={invoiceForm.status} onChange={(e) => setInvoiceForm((p) => ({ ...p, status: e.target.value }))} fullWidth />
-            <TextField label="تاريخ الاستحقاق" type="date" value={invoiceForm.dueDate} onChange={(e) => setInvoiceForm((p) => ({ ...p, dueDate: e.target.value }))} fullWidth slotProps={{ inputLabel: { shrink: true } }} />
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <Button type="button" onClick={() => setOpenInvoice(false)}>إلغاء</Button>
-          <Button type="button" variant="contained" onClick={submitInvoice} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
-        </DialogActions>
-      </Dialog>
+      <FormDialogShell
+        open={openInvoice}
+        onClose={() => setOpenInvoice(false)}
+        onConfirm={submitInvoice}
+        title={editingInvoiceId ? "تعديل فاتورة" : "إضافة فاتورة"}
+        loading={loading}
+      >
+        <Stack spacing={1.4} sx={{ mt: 1 }}>
+          <TextField label="رقم الفاتورة" value={invoiceForm.invoiceNo} onChange={(e) => setInvoiceForm((p) => ({ ...p, invoiceNo: e.target.value }))} fullWidth />
+          <TextField label="رقم العميل (اختياري)" value={invoiceForm.clientId} onChange={(e) => setInvoiceForm((p) => ({ ...p, clientId: e.target.value }))} fullWidth />
+          <TextField label="رقم المشروع (اختياري)" value={invoiceForm.projectId} onChange={(e) => setInvoiceForm((p) => ({ ...p, projectId: e.target.value }))} fullWidth />
+          <TextField label="الإجمالي" value={invoiceForm.total} onChange={(e) => setInvoiceForm((p) => ({ ...p, total: e.target.value }))} fullWidth />
+          <TextField label="المدفوع" value={invoiceForm.paid} onChange={(e) => setInvoiceForm((p) => ({ ...p, paid: e.target.value }))} fullWidth />
+          <TextField label="الحالة" value={invoiceForm.status} onChange={(e) => setInvoiceForm((p) => ({ ...p, status: e.target.value }))} fullWidth />
+          <TextField label="تاريخ الاستحقاق" type="date" value={invoiceForm.dueDate} onChange={(e) => setInvoiceForm((p) => ({ ...p, dueDate: e.target.value }))} fullWidth slotProps={{ inputLabel: { shrink: true } }} />
+        </Stack>
+      </FormDialogShell>
     </Stack>
   );
 }

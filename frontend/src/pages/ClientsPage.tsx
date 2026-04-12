@@ -3,10 +3,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
-import { Alert, Avatar, Box, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Avatar, Box, Button, Card, CardContent, Stack, TextField, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { api } from "../api";
 import { EmptyStateCard } from "../components/EmptyStateCard";
+import { FormDialogShell } from "../components/FormDialogShell";
 import { PageHero } from "../components/PageHero";
 import { StatCard } from "../components/StatCard";
 
@@ -141,24 +142,21 @@ export function ClientsPage({ clients, onRefresh }: { clients: any[]; onRefresh:
         </CardContent>
       </Card>
 
-      <Dialog open={openCreate} onClose={() => setOpenCreate(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{editingId ? "تعديل العميل" : "إضافة عميل جديد"}</DialogTitle>
-        <DialogContent>
-          <Stack spacing={1.4} sx={{ mt: 1 }}>
-            <TextField label="الاسم" value={form.name} onChange={(e) => setField("name", e.target.value)} fullWidth required />
-            <TextField label="الهاتف" value={form.phone} onChange={(e) => setField("phone", e.target.value)} fullWidth required />
-            <TextField label="العنوان" value={form.address} onChange={(e) => setField("address", e.target.value)} fullWidth required />
-            <TextField label="ملاحظات" value={form.notes} onChange={(e) => setField("notes", e.target.value)} fullWidth multiline minRows={2} />
-            <TextField label="تفاعلات" value={form.interactions} onChange={(e) => setField("interactions", e.target.value)} fullWidth multiline minRows={2} />
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <Button type="button" onClick={() => setOpenCreate(false)}>إلغاء</Button>
-          <Button type="button" onClick={submit} variant="contained" disabled={loading} sx={{ bgcolor: "#000666" }}>
-            {loading ? "جاري الحفظ..." : "حفظ"}
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <FormDialogShell
+        open={openCreate}
+        onClose={() => setOpenCreate(false)}
+        onConfirm={submit}
+        title={editingId ? "تعديل العميل" : "إضافة عميل جديد"}
+        loading={loading}
+      >
+        <Stack spacing={1.4} sx={{ mt: 1 }}>
+          <TextField label="الاسم" value={form.name} onChange={(e) => setField("name", e.target.value)} fullWidth required />
+          <TextField label="الهاتف" value={form.phone} onChange={(e) => setField("phone", e.target.value)} fullWidth required />
+          <TextField label="العنوان" value={form.address} onChange={(e) => setField("address", e.target.value)} fullWidth required />
+          <TextField label="ملاحظات" value={form.notes} onChange={(e) => setField("notes", e.target.value)} fullWidth multiline minRows={2} />
+          <TextField label="تفاعلات" value={form.interactions} onChange={(e) => setField("interactions", e.target.value)} fullWidth multiline minRows={2} />
+        </Stack>
+      </FormDialogShell>
     </Stack>
   );
 }

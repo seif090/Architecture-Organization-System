@@ -3,10 +3,11 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import WorkIcon from "@mui/icons-material/Work";
-import { Alert, Box, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, Stack, TextField, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { api } from "../api";
 import { EmptyStateCard } from "../components/EmptyStateCard";
+import { FormDialogShell } from "../components/FormDialogShell";
 import { PageHero } from "../components/PageHero";
 import { StatCard } from "../components/StatCard";
 
@@ -149,24 +150,23 @@ export function ProjectsPage({ data, onRefresh }: { data: any[]; onRefresh: () =
         </CardContent>
       </Card>
 
-      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{editingId ? "تعديل مشروع" : "إضافة مشروع"}</DialogTitle>
-        <DialogContent>
-          <Stack spacing={1.4} sx={{ mt: 1 }}>
-            <TextField label="اسم المشروع" value={form.name} onChange={(e) => setField("name", e.target.value)} fullWidth />
-            <TextField label="النوع" value={form.type} onChange={(e) => setField("type", e.target.value)} fullWidth />
-            <TextField label="رقم العميل (اختياري)" value={form.clientId} onChange={(e) => setField("clientId", e.target.value)} fullWidth />
-            <TextField label="مدة المشروع بالأيام" value={form.durationDays} onChange={(e) => setField("durationDays", e.target.value)} fullWidth />
-            <TextField label="التكلفة المتوقعة" value={form.expectedCost} onChange={(e) => setField("expectedCost", e.target.value)} fullWidth />
-            <TextField label="التكلفة الفعلية" value={form.actualCost} onChange={(e) => setField("actualCost", e.target.value)} fullWidth />
-            <TextField label="الحالة" value={form.status} onChange={(e) => setField("status", e.target.value)} fullWidth />
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <Button type="button" onClick={() => setOpen(false)}>إلغاء</Button>
-          <Button type="button" variant="contained" onClick={submit} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
-        </DialogActions>
-      </Dialog>
+      <FormDialogShell
+        open={open}
+        onClose={() => setOpen(false)}
+        onConfirm={submit}
+        title={editingId ? "تعديل مشروع" : "إضافة مشروع"}
+        loading={loading}
+      >
+        <Stack spacing={1.4} sx={{ mt: 1 }}>
+          <TextField label="اسم المشروع" value={form.name} onChange={(e) => setField("name", e.target.value)} fullWidth />
+          <TextField label="النوع" value={form.type} onChange={(e) => setField("type", e.target.value)} fullWidth />
+          <TextField label="رقم العميل (اختياري)" value={form.clientId} onChange={(e) => setField("clientId", e.target.value)} fullWidth />
+          <TextField label="مدة المشروع بالأيام" value={form.durationDays} onChange={(e) => setField("durationDays", e.target.value)} fullWidth />
+          <TextField label="التكلفة المتوقعة" value={form.expectedCost} onChange={(e) => setField("expectedCost", e.target.value)} fullWidth />
+          <TextField label="التكلفة الفعلية" value={form.actualCost} onChange={(e) => setField("actualCost", e.target.value)} fullWidth />
+          <TextField label="الحالة" value={form.status} onChange={(e) => setField("status", e.target.value)} fullWidth />
+        </Stack>
+      </FormDialogShell>
     </Stack>
   );
 }

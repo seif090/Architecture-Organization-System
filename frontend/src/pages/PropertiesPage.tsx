@@ -4,10 +4,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import SellIcon from "@mui/icons-material/Sell";
-import { Alert, Box, Button, Card, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, Chip, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api";
+import { FormDialogShell } from "../components/FormDialogShell";
 
 type PropertyForm = {
   name: string;
@@ -343,42 +344,40 @@ export function PropertiesPage({
         ))}
       </Box>
 
-      <Dialog open={openProperty} onClose={() => setOpenProperty(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{editingPropertyId ? "تعديل عقار" : "إضافة عقار"}</DialogTitle>
-        <DialogContent>
-          <Stack spacing={1.3} sx={{ mt: 1 }}>
-            <TextField label="اسم العقار" value={propertyForm.name} onChange={(e) => setPropertyForm((p) => ({ ...p, name: e.target.value }))} fullWidth />
-            <TextField label="نوع العقار" value={propertyForm.propertyType} onChange={(e) => setPropertyForm((p) => ({ ...p, propertyType: e.target.value }))} fullWidth />
-            <TextField label="الحالة" value={propertyForm.status} onChange={(e) => setPropertyForm((p) => ({ ...p, status: e.target.value }))} fullWidth />
-            <TextField label="الموقع" value={propertyForm.location} onChange={(e) => setPropertyForm((p) => ({ ...p, location: e.target.value }))} fullWidth />
-            <TextField label="السعر" value={propertyForm.price} onChange={(e) => setPropertyForm((p) => ({ ...p, price: e.target.value }))} fullWidth />
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <Button type="button" onClick={() => setOpenProperty(false)}>إلغاء</Button>
-          <Button type="button" variant="contained" onClick={submitProperty} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
-        </DialogActions>
-      </Dialog>
+      <FormDialogShell
+        open={openProperty}
+        onClose={() => setOpenProperty(false)}
+        onConfirm={submitProperty}
+        title={editingPropertyId ? "تعديل عقار" : "إضافة عقار"}
+        loading={loading}
+      >
+        <Stack spacing={1.3} sx={{ mt: 1 }}>
+          <TextField label="اسم العقار" value={propertyForm.name} onChange={(e) => setPropertyForm((p) => ({ ...p, name: e.target.value }))} fullWidth />
+          <TextField label="نوع العقار" value={propertyForm.propertyType} onChange={(e) => setPropertyForm((p) => ({ ...p, propertyType: e.target.value }))} fullWidth />
+          <TextField label="الحالة" value={propertyForm.status} onChange={(e) => setPropertyForm((p) => ({ ...p, status: e.target.value }))} fullWidth />
+          <TextField label="الموقع" value={propertyForm.location} onChange={(e) => setPropertyForm((p) => ({ ...p, location: e.target.value }))} fullWidth />
+          <TextField label="السعر" value={propertyForm.price} onChange={(e) => setPropertyForm((p) => ({ ...p, price: e.target.value }))} fullWidth />
+        </Stack>
+      </FormDialogShell>
 
-      <Dialog open={openInstallment} onClose={() => setOpenInstallment(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{editingInstallmentId ? "تعديل قسط" : "إضافة قسط"}</DialogTitle>
-        <DialogContent>
-          <Stack spacing={1.3} sx={{ mt: 1 }}>
-            <TextField label="رقم العقار" value={installmentForm.propertyId} onChange={(e) => setInstallmentForm((p) => ({ ...p, propertyId: e.target.value }))} fullWidth />
-            <TextField label="اسم العميل" value={installmentForm.customerName} onChange={(e) => setInstallmentForm((p) => ({ ...p, customerName: e.target.value }))} fullWidth />
-            <TextField label="المبلغ" value={installmentForm.amount} onChange={(e) => setInstallmentForm((p) => ({ ...p, amount: e.target.value }))} fullWidth />
-            <TextField label="تاريخ الاستحقاق" type="date" value={installmentForm.dueDate} onChange={(e) => setInstallmentForm((p) => ({ ...p, dueDate: e.target.value }))} fullWidth slotProps={{ inputLabel: { shrink: true } }} />
-            <TextField select label="حالة الدفع" value={installmentForm.isPaid} onChange={(e) => setInstallmentForm((p) => ({ ...p, isPaid: e.target.value }))} fullWidth>
-              <MenuItem value="false">مستحق</MenuItem>
-              <MenuItem value="true">مدفوع</MenuItem>
-            </TextField>
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <Button type="button" onClick={() => setOpenInstallment(false)}>إلغاء</Button>
-          <Button type="button" variant="contained" onClick={submitInstallment} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
-        </DialogActions>
-      </Dialog>
+      <FormDialogShell
+        open={openInstallment}
+        onClose={() => setOpenInstallment(false)}
+        onConfirm={submitInstallment}
+        title={editingInstallmentId ? "تعديل قسط" : "إضافة قسط"}
+        loading={loading}
+      >
+        <Stack spacing={1.3} sx={{ mt: 1 }}>
+          <TextField label="رقم العقار" value={installmentForm.propertyId} onChange={(e) => setInstallmentForm((p) => ({ ...p, propertyId: e.target.value }))} fullWidth />
+          <TextField label="اسم العميل" value={installmentForm.customerName} onChange={(e) => setInstallmentForm((p) => ({ ...p, customerName: e.target.value }))} fullWidth />
+          <TextField label="المبلغ" value={installmentForm.amount} onChange={(e) => setInstallmentForm((p) => ({ ...p, amount: e.target.value }))} fullWidth />
+          <TextField label="تاريخ الاستحقاق" type="date" value={installmentForm.dueDate} onChange={(e) => setInstallmentForm((p) => ({ ...p, dueDate: e.target.value }))} fullWidth slotProps={{ inputLabel: { shrink: true } }} />
+          <TextField select label="حالة الدفع" value={installmentForm.isPaid} onChange={(e) => setInstallmentForm((p) => ({ ...p, isPaid: e.target.value }))} fullWidth>
+            <MenuItem value="false">مستحق</MenuItem>
+            <MenuItem value="true">مدفوع</MenuItem>
+          </TextField>
+        </Stack>
+      </FormDialogShell>
     </Stack>
   );
 }

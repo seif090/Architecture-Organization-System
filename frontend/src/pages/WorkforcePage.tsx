@@ -3,10 +3,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PaymentsIcon from "@mui/icons-material/Payments";
-import { Alert, Box, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, Stack, TextField, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { api } from "../api";
 import { EmptyStateCard } from "../components/EmptyStateCard";
+import { FormDialogShell } from "../components/FormDialogShell";
 import { PageHero } from "../components/PageHero";
 import { StatCard } from "../components/StatCard";
 
@@ -145,23 +146,22 @@ export function WorkforcePage({ data, onRefresh }: { data: any[]; onRefresh: () 
         </CardContent>
       </Card>
 
-      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{editingId ? "تعديل عامل" : "إضافة عامل"}</DialogTitle>
-        <DialogContent>
-          <Stack spacing={1.3} sx={{ mt: 1 }}>
-            <TextField label="الاسم" value={form.name} onChange={(e) => setField("name", e.target.value)} fullWidth />
-            <TextField label="النوع" value={form.workerType} onChange={(e) => setField("workerType", e.target.value)} fullWidth />
-            <TextField label="التخصص" value={form.specialization} onChange={(e) => setField("specialization", e.target.value)} fullWidth />
-            <TextField label="التقييم" value={form.rating} onChange={(e) => setField("rating", e.target.value)} fullWidth />
-            <TextField label="المستحقات" value={form.paymentDue} onChange={(e) => setField("paymentDue", e.target.value)} fullWidth />
-            <TextField label="الهاتف" value={form.phone} onChange={(e) => setField("phone", e.target.value)} fullWidth />
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <Button type="button" onClick={() => setOpen(false)}>إلغاء</Button>
-          <Button type="button" variant="contained" onClick={submit} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
-        </DialogActions>
-      </Dialog>
+      <FormDialogShell
+        open={open}
+        onClose={() => setOpen(false)}
+        onConfirm={submit}
+        title={editingId ? "تعديل عامل" : "إضافة عامل"}
+        loading={loading}
+      >
+        <Stack spacing={1.3} sx={{ mt: 1 }}>
+          <TextField label="الاسم" value={form.name} onChange={(e) => setField("name", e.target.value)} fullWidth />
+          <TextField label="النوع" value={form.workerType} onChange={(e) => setField("workerType", e.target.value)} fullWidth />
+          <TextField label="التخصص" value={form.specialization} onChange={(e) => setField("specialization", e.target.value)} fullWidth />
+          <TextField label="التقييم" value={form.rating} onChange={(e) => setField("rating", e.target.value)} fullWidth />
+          <TextField label="المستحقات" value={form.paymentDue} onChange={(e) => setField("paymentDue", e.target.value)} fullWidth />
+          <TextField label="الهاتف" value={form.phone} onChange={(e) => setField("phone", e.target.value)} fullWidth />
+        </Stack>
+      </FormDialogShell>
     </Stack>
   );
 }
