@@ -3,6 +3,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import DownloadIcon from "@mui/icons-material/Download";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const reportCards = [
   { title: "تقرير الإيرادات الشهرية", value: "42.8M", delta: "+12.4%", color: "#000666" },
@@ -25,6 +26,21 @@ const quickInsights = [
 ];
 
 export function ReportsPage() {
+  const navigate = useNavigate();
+
+  const exportReportSummary = () => {
+    const csv = [
+      "title,value,delta",
+      ...reportCards.map((card) => `${card.title},${card.value},${card.delta}`)
+    ].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "reports-summary.csv";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   return (
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
@@ -34,8 +50,8 @@ export function ReportsPage() {
           <Typography sx={{ color: "#6f7587", mt: 1 }}>لوحة مختصرة تجمع أهم مؤشرات المشاريع والمالية والمخزون والتشغيل.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<AssessmentIcon />}>عرض الملخص</Button>
-          <Button variant="contained" startIcon={<DownloadIcon />} sx={{ bgcolor: "#000666" }}>تصدير التقرير</Button>
+          <Button variant="outlined" startIcon={<AssessmentIcon />} onClick={() => navigate("/erp/dashboard")}>عرض الملخص</Button>
+          <Button variant="contained" startIcon={<DownloadIcon />} sx={{ bgcolor: "#000666" }} onClick={exportReportSummary}>تصدير التقرير</Button>
         </Stack>
       </Box>
 

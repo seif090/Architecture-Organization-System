@@ -6,6 +6,7 @@ import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import SellIcon from "@mui/icons-material/Sell";
 import { Alert, Box, Button, Card, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../api";
 
 type PropertyForm = {
@@ -51,9 +52,11 @@ export function PropertiesPage({
   installments: any[];
   onRefresh: () => Promise<void> | void;
 }) {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [filters, setFilters] = useState({ propertyType: "all", status: "all", search: "" });
 
   const [openProperty, setOpenProperty] = useState(false);
   const [openInstallment, setOpenInstallment] = useState(false);
@@ -73,7 +76,15 @@ export function PropertiesPage({
     indigo: "#000666"
   };
 
-  const visualRows = properties.slice(0, 6).map((property, idx) => {
+  const filteredProperties = properties.filter((property) => {
+    const byType = filters.propertyType === "all" || String(property.property_type || "").toLowerCase() === filters.propertyType.toLowerCase();
+    const byStatus = filters.status === "all" || String(property.status || "").toLowerCase() === filters.status.toLowerCase();
+    const search = filters.search.trim().toLowerCase();
+    const bySearch = !search || String(property.name || "").toLowerCase().includes(search) || String(property.location || "").toLowerCase().includes(search);
+    return byType && byStatus && bySearch;
+  });
+
+  const visualRows = filteredProperties.slice(0, 6).map((property, idx) => {
     const image = idx % 3 === 0
       ? "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=70"
       : idx % 3 === 1
@@ -81,6 +92,17 @@ export function PropertiesPage({
         : "https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1200&q=70";
     return { ...property, image };
   });
+
+  const reserveProperty = async (propertyId: number) => {
+    try {
+      setError("");
+      await api.patch(`/properties/${propertyId}`, { status: "محجوز" });
+      await onRefresh();
+      setSuccess("تم حجز الوحدة بنجاح");
+    } catch {
+      setError("تعذر حجز الوحدة");
+    }
+  };
 
   const openCreateProperty = () => {
     setEditingPropertyId(null);
@@ -228,23 +250,21 @@ export function PropertiesPage({
       </Box>
 
       <Box sx={{ p: 2, borderRadius: 3, bgcolor: "#f3f3f7", display: "grid", gap: 1.2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
-        <TextField select size="small" defaultValue="all" label="المشروع">
-          <MenuItem value="all">جميع المشاريع</MenuItem>
-          <MenuItem value="a">برج الجوهرة</MenuItem>
-          <MenuItem value="b">مجمع الزمرد</MenuItem>
+        <TextField size="small" label="بحث بالاسم/الموقع" value={filters.search} onChange={(e) => setFilters((prev) => ({ ...prev, search: e.target.value }))}>
         </TextField>
-        <TextField select size="small" defaultValue="all" label="نوع الوحدة">
+        <TextField select size="small" value={filters.propertyType} label="نوع الوحدة" onChange={(e) => setFilters((prev) => ({ ...prev, propertyType: e.target.value }))}>
           <MenuItem value="all">كل الأنواع</MenuItem>
-          <MenuItem value="apartment">شقة</MenuItem>
-          <MenuItem value="villa">فيلا</MenuItem>
+          <MenuItem value="شقة">شقة</MenuItem>
+          <MenuItem value="فيلا">فيلا</MenuItem>
+          <MenuItem value="مكتب">مكتب</MenuItem>
         </TextField>
-        <TextField select size="small" defaultValue="all" label="الحالة">
+        <TextField select size="small" value={filters.status} label="الحالة" onChange={(e) => setFilters((prev) => ({ ...prev, status: e.target.value }))}>
           <MenuItem value="all">الكل</MenuItem>
-          <MenuItem value="available">متاح</MenuItem>
-          <MenuItem value="reserved">محجوز</MenuItem>
-          <MenuItem value="sold">مباع</MenuItem>
+          <MenuItem value="متاح">متاح</MenuItem>
+          <MenuItem value="محجوز">محجوز</MenuItem>
+          <MenuItem value="مباع">مباع</MenuItem>
         </TextField>
-        <Button variant="contained" sx={{ bgcolor: palette.indigo }}>تصفية النتائج</Button>
+        <Button variant="contained" sx={{ bgcolor: palette.indigo }} onClick={() => setSuccess(`تم تطبيق التصفية على ${filteredProperties.length} عقار`)}>تصفية النتائج</Button>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(2, 1fr)", xl: "repeat(3, 1fr)" } }}>
@@ -269,7 +289,18 @@ export function PropertiesPage({
                   <Typography sx={{ fontSize: 12, color: "#7f8597" }}>أقرب قسط</Typography>
                   <Typography sx={{ color: "#000666", fontWeight: 800 }}>{installments[idx] ? `${Number(installments[idx].amount || 0).toLocaleString("ar-EG")} ج.م` : "—"}</Typography>
                 </Box>
-                <Button fullWidth variant={statusLabel === "مباع" ? "outlined" : "contained"} sx={{ bgcolor: statusLabel === "مباع" ? undefined : palette.indigo, color: statusLabel === "مباع" ? "#5e6478" : "white", borderColor: "#d4d8e7" }}>
+                <Button
+                  fullWidth
+                  variant={statusLabel === "مباع" ? "outlined" : "contained"}
+                  sx={{ bgcolor: statusLabel === "مباع" ? undefined : palette.indigo, color: statusLabel === "مباع" ? "#5e6478" : "white", borderColor: "#d4d8e7" }}
+                  onClick={() => {
+                    if (statusLabel === "مباع") {
+                      navigate("/erp/contracts");
+                    } else {
+                      reserveProperty(property.id);
+                    }
+                  }}
+                >
                   {statusLabel === "مباع" ? "عرض تفاصيل العقد" : "حجز الوحدة الآن"}
                 </Button>
                 <Stack direction="row" spacing={1} sx={{ mt: 1 }}>

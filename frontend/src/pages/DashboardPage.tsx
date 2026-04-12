@@ -3,10 +3,12 @@ import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { Box, Button, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 const colors = ["#000666", "#964900", "#1a237e", "#fc820c", "#4455aa"];
 
 export function DashboardPage({ data }: { data: any }) {
+  const navigate = useNavigate();
   const totals = data?.totals || { projects: 0, activeProjects: 0, clients: 0, expenses: 0, revenues: 0, totalProfit: 0 };
   const pipeline = data?.pipeline || [];
   const profitByProject = data?.profitByProject || [];
@@ -26,8 +28,8 @@ export function DashboardPage({ data }: { data: any }) {
           <Typography sx={{ color: "#6f7587", mt: 1 }}>ملخص الأداء التشغيلي والمالي والميداني عبر النظام بالكامل.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<InsightsIcon />} sx={{ borderColor: "#d7dcec", color: "#000666" }}>تقرير فوري</Button>
-          <Button variant="contained" startIcon={<TrendingUpIcon />} sx={{ bgcolor: "#000666" }}>عرض الأداء</Button>
+          <Button variant="outlined" startIcon={<InsightsIcon />} sx={{ borderColor: "#d7dcec", color: "#000666" }} onClick={() => navigate("/erp/reports")}>تقرير فوري</Button>
+          <Button variant="contained" startIcon={<TrendingUpIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/bi")}>عرض الأداء</Button>
         </Stack>
       </Box>
 

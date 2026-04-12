@@ -70,6 +70,36 @@ export function FinancePage({
   const [recordForm, setRecordForm] = useState<RecordForm>(emptyRecord);
   const [invoiceForm, setInvoiceForm] = useState<InvoiceForm>(emptyInvoice);
 
+  const exportFinanceReport = () => {
+    const headerRecords = "type,project,description,amount,date";
+    const recordsRows = records.map((r) => [
+      r.record_type,
+      r.project_name || "",
+      r.description || "",
+      Number(r.amount || 0),
+      String(r.record_date || "").slice(0, 10)
+    ].join(","));
+
+    const headerInvoices = "invoice_no,client,project,total,paid,status,due_date";
+    const invoicesRows = invoices.map((i) => [
+      i.invoice_no || "",
+      i.client_name || "",
+      i.project_name || "",
+      Number(i.total || 0),
+      Number(i.paid || 0),
+      i.status || "",
+      String(i.due_date || "").slice(0, 10)
+    ].join(","));
+
+    const csv = [headerRecords, ...recordsRows, "", headerInvoices, ...invoicesRows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "finance-report.csv";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   if (isViewer) {
     return (
       <Card sx={{ borderRadius: 3 }}>
@@ -221,7 +251,7 @@ export function FinancePage({
           <Typography sx={{ color: "#6f7587", mt: 1 }}>نظرة شاملة على التدفقات المالية والمصروفات الإنشائية.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<DownloadIcon />} sx={{ borderColor: "#d8dceb", color: "#000666" }}>تصدير التقرير</Button>
+          <Button variant="outlined" startIcon={<DownloadIcon />} sx={{ borderColor: "#d8dceb", color: "#000666" }} onClick={exportFinanceReport}>تصدير التقرير</Button>
           <Button variant="contained" startIcon={<AttachMoneyIcon />} sx={{ bgcolor: "#000666" }} onClick={openCreateRecord}>إضافة قيد مالي</Button>
           <Button variant="contained" startIcon={<ReceiptLongIcon />} sx={{ bgcolor: "#964900" }} onClick={openCreateInvoice}>إضافة فاتورة</Button>
         </Stack>

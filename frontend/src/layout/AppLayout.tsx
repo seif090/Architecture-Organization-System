@@ -17,7 +17,7 @@ import BuildIcon from "@mui/icons-material/Build";
 import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
 import WorkIcon from "@mui/icons-material/Work";
 import { AppBar, Avatar, Badge, Box, Button, Divider, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, Toolbar, Typography } from "@mui/material";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { api } from "../api";
 import type { DataScope } from "../types";
 import { useAuth } from "../auth/AuthContext";
@@ -55,6 +55,7 @@ export function AppLayout({
   onDataRefresh: () => void;
 }) {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const loadDemo = async () => {
     await api.post("/demo/load");
@@ -107,7 +108,13 @@ export function AppLayout({
         </Stack>
 
         <Divider sx={{ my: 2.4, borderColor: "rgba(255,255,255,0.15)" }} />
-        <Button variant="contained" sx={{ width: "100%", bgcolor: "#fc820c", color: "white", fontWeight: 800 }}>إضافة مشروع</Button>
+        <Button
+          variant="contained"
+          sx={{ width: "100%", bgcolor: "#fc820c", color: "white", fontWeight: 800 }}
+          onClick={() => navigate("/erp/projects")}
+        >
+          إضافة مشروع
+        </Button>
       </Box>
 
       <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
