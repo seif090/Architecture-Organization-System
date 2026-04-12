@@ -16,9 +16,14 @@ const loginSchema = z.object({
 const selfRegisterRoleSchema = z.enum(["project_manager", "accountant", "engineer", "viewer"] as const);
 
 const registerSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  password: z.string().min(6),
+  name: z.string().min(2, "الاسم يجب أن يكون حرفين على الأقل"),
+  email: z.string().email("صيغة البريد الإلكتروني غير صحيحة"),
+  password: z
+    .string()
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/,
+      "كلمة المرور يجب أن تكون 8 أحرف على الأقل وتحتوي على حرف كبير وحرف صغير ورقم ورمز خاص"
+    ),
   role: selfRegisterRoleSchema
 });
 
@@ -299,7 +304,7 @@ router.post("/auth/login", async (req, res) => {
 router.post("/auth/register", async (req, res) => {
   const parsed = registerSchema.safeParse(req.body);
   if (!parsed.success) {
-    return res.status(400).json({ message: "بيانات التسجيل غير صحيحة" });
+    return res.status(400).json({ message: parsed.error.issues[0]?.message || "بيانات التسجيل غير صحيحة" });
   }
 
   const { name, email, password, role } = parsed.data;

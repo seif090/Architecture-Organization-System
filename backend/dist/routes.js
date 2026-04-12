@@ -18,9 +18,11 @@ const loginSchema = zod_1.z.object({
 });
 const selfRegisterRoleSchema = zod_1.z.enum(["project_manager", "accountant", "engineer", "viewer"]);
 const registerSchema = zod_1.z.object({
-    name: zod_1.z.string().min(2),
-    email: zod_1.z.string().email(),
-    password: zod_1.z.string().min(6),
+    name: zod_1.z.string().min(2, "الاسم يجب أن يكون حرفين على الأقل"),
+    email: zod_1.z.string().email("صيغة البريد الإلكتروني غير صحيحة"),
+    password: zod_1.z
+        .string()
+        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/, "كلمة المرور يجب أن تكون 8 أحرف على الأقل وتحتوي على حرف كبير وحرف صغير ورقم ورمز خاص"),
     role: selfRegisterRoleSchema
 });
 const scopeToClause = (scope) => {
@@ -253,7 +255,7 @@ exports.router.post("/auth/login", async (req, res) => {
 exports.router.post("/auth/register", async (req, res) => {
     const parsed = registerSchema.safeParse(req.body);
     if (!parsed.success) {
-        return res.status(400).json({ message: "بيانات التسجيل غير صحيحة" });
+        return res.status(400).json({ message: parsed.error.issues[0]?.message || "بيانات التسجيل غير صحيحة" });
     }
     const { name, email, password, role } = parsed.data;
     const existing = await (0, db_1.query)("SELECT id FROM users WHERE email = $1", [email]);

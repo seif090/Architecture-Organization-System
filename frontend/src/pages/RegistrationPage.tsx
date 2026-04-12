@@ -35,20 +35,43 @@ export function RegistrationPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState<RegisterRole>("viewer");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError("");
+
+    if (!passwordPattern.test(password)) {
+      setError("كلمة المرور يجب أن تكون 8 أحرف على الأقل وتحتوي على حرف كبير وحرف صغير ورقم ورمز خاص");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("تأكيد كلمة المرور غير مطابق");
+      return;
+    }
+
     setLoading(true);
 
     try {
       await register(name, email, password, role);
       navigate("/erp/dashboard");
-    } catch {
-      setError("تعذر إنشاء الحساب. تأكد من البيانات أو أن البريد غير مستخدم");
+    } catch (err: any) {
+      const status = err?.response?.status;
+      const message = err?.response?.data?.message;
+
+      if (status === 409) {
+        setError("البريد الإلكتروني مستخدم بالفعل");
+      } else if (status === 400 && message) {
+        setError(String(message));
+      } else {
+        setError("تعذر إنشاء الحساب الآن، حاول مرة أخرى بعد قليل");
+      }
     } finally {
       setLoading(false);
     }
@@ -69,7 +92,23 @@ export function RegistrationPage() {
 
           <TextField label="الاسم الكامل" value={name} onChange={(e) => setName(e.target.value)} fullWidth required />
           <TextField label="البريد الإلكتروني" value={email} onChange={(e) => setEmail(e.target.value)} fullWidth required />
-          <TextField label="كلمة المرور" type="password" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth required />
+          <TextField
+            label="كلمة المرور"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            required
+            helperText="8+ أحرف، حرف كبير، حرف صغير، رقم، ورمز خاص"
+          />
+          <TextField
+            label="تأكيد كلمة المرور"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            fullWidth
+            required
+          />
 
           <FormControl>
             <FormLabel sx={{ color: "#000666", fontWeight: 700 }}>اختر الدور</FormLabel>
