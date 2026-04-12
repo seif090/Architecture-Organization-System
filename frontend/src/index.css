@@ -1,19 +1,47 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Manrope:wght@500;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Manrope:wght@500;700;800&display=swap");
 
 :root {
   direction: rtl;
+  --ui-bg-1: #f7f5f0;
+  --ui-bg-2: #eef2f4;
+  --ui-ink: #102234;
+  --ui-muted: #60717f;
+  --ui-accent: #cc7a24;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  background: #f1f4f9;
-  font-family: "IBM Plex Sans Arabic", sans-serif;
+  min-height: 100%;
+  font-family: "Cairo", "IBM Plex Sans Arabic", sans-serif;
+  color: var(--ui-ink);
+  background:
+    radial-gradient(1200px 560px at 100% -10%, rgba(204, 122, 36, 0.12), transparent 70%),
+    radial-gradient(900px 460px at 0% -20%, rgba(29, 93, 143, 0.12), transparent 70%),
+    linear-gradient(180deg, var(--ui-bg-1) 0%, var(--ui-bg-2) 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(16, 34, 52, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 34, 52, 0.03) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(circle at 50% 20%, black 25%, transparent 85%);
+  z-index: 0;
 }
 
 #root {
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+a {
+  color: inherit;
 }
