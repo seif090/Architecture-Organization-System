@@ -1,64 +1,133 @@
-import AddIcon from "@mui/icons-material/Add";
-import CallIcon from "@mui/icons-material/Call";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import NotesIcon from "@mui/icons-material/Notes";
-import WorkIcon from "@mui/icons-material/Work";
-import { Box, Button, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import TimelineIcon from "@mui/icons-material/Timeline";
+import { Avatar, Box, Button, Card, CardContent, Chip, LinearProgress, MenuItem, Stack, TextField, Typography } from "@mui/material";
 
 export function ClientsPage({ clients }: { clients: any[] }) {
-  const topClients = clients.slice(0, 6);
-  const totalInteractions = clients.reduce((sum, client) => sum + (client.interactions ? 1 : 0), 0);
+  const rows = clients.slice(0, 8);
+  const linkedProjects = clients.reduce((sum, c) => sum + Number(c.projects_count || 0), 0);
+  const paymentsExpected = linkedProjects * 2400;
+
+  const followUps = [
+    { time: "10:30 ص", title: rows[0]?.name || "أحمد منصور", note: "تأكيد موعد استلام الدفعة الثالثة.", tone: "#000666" },
+    { time: "01:15 م", title: rows[1]?.name || "سارة العتيبي", note: "إرسال العرض المالي المعدل للعميل.", tone: "#964900" },
+    { time: "04:00 م", title: "اجتماع لجنة المبيعات", note: "مراجعة تقارير العملاء الجدد لهذا الأسبوع.", tone: "#7f8597" }
+  ];
 
   return (
-    <Stack spacing={3}>
+    <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
         <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 13, mb: 0.5 }}>CRM</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة العملاء</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>ملفات العملاء، المشاريع المرتبطة، وسجل المتابعات.</Typography>
+          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>الرئيسية / إدارة العملاء</Typography>
+          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة العملاء والتعاقدات</Typography>
+          <Typography sx={{ color: "#6f7587", mt: 1 }}>تتبع رحلة العملاء والعقود والمهام التشغيلية في مكان واحد.</Typography>
         </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }}>إضافة عميل جديد</Button>
+        <Stack direction="row" spacing={1.2}>
+          <Button variant="outlined" sx={{ borderColor: "#d6d9e6", color: "#000666" }}>تصدير البيانات</Button>
+          <Button variant="contained" startIcon={<PersonAddAlt1Icon />} sx={{ bgcolor: "#000666" }}>إضافة عميل جديد</Button>
+        </Stack>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>إجمالي العملاء</Typography><Typography sx={{ color: "#000666", fontSize: 40, fontWeight: 900 }}>{clients.length}</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>متابعات نشطة</Typography><Typography sx={{ color: "#964900", fontSize: 40, fontWeight: 900 }}>{totalInteractions}</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3 }}><CardContent><Typography sx={{ color: "#7f8597" }}>مشاريع مرتبطة</Typography><Typography sx={{ color: "#000666", fontSize: 40, fontWeight: 900 }}>{clients.reduce((sum, c) => sum + Number(c.projects_count || 0), 0)}</Typography></CardContent></Card>
-        <Card sx={{ borderRadius: 3, bgcolor: "#000666", color: "white" }}><CardContent><Typography sx={{ color: "rgba(255,255,255,0.8)" }}>نسبة رضا العملاء</Typography><Typography sx={{ fontSize: 40, fontWeight: 900 }}>91%</Typography></CardContent></Card>
+        <Card sx={{ borderRadius: 3, borderInlineStart: "4px solid #000666" }}><CardContent><Typography sx={{ color: "#7f8597" }}>إجمالي العملاء</Typography><Typography sx={{ color: "#000666", fontSize: 38, fontWeight: 900 }}>{clients.length}</Typography></CardContent></Card>
+        <Card sx={{ borderRadius: 3, borderInlineStart: "4px solid #964900" }}><CardContent><Typography sx={{ color: "#7f8597" }}>العقود النشطة</Typography><Typography sx={{ color: "#000666", fontSize: 38, fontWeight: 900 }}>{rows.length}</Typography></CardContent></Card>
+        <Card sx={{ borderRadius: 3, borderInlineStart: "4px solid #5c1800" }}><CardContent><Typography sx={{ color: "#7f8597" }}>دفعات منتظرة</Typography><Typography sx={{ color: "#000666", fontSize: 38, fontWeight: 900 }}>{paymentsExpected.toLocaleString("ar-EG")} <Typography component="span" sx={{ fontSize: 14, fontWeight: 600 }}>ج.م</Typography></Typography></CardContent></Card>
+        <Card sx={{ borderRadius: 3, borderInlineStart: "4px solid #1a237e" }}><CardContent><Typography sx={{ color: "#7f8597" }}>متابعة اليوم</Typography><Typography sx={{ color: "#000666", fontSize: 38, fontWeight: 900 }}>{followUps.length}</Typography></CardContent></Card>
       </Box>
 
-      <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(2, 1fr)", xl: "repeat(3, 1fr)" } }}>
-        {topClients.map((client, index) => (
-          <Card key={client.id || `${client.name}-${index}`} sx={{ borderRadius: 3, boxShadow: "0 8px 32px rgba(0,6,102,0.06)" }}>
-            <CardContent>
-              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "start", gap: 2 }}>
-                <Box>
-                  <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 20 }}>{client.name}</Typography>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.8, mt: 0.7, color: "#7f8597" }}>
-                    <CallIcon sx={{ fontSize: 16 }} />
-                    <Typography sx={{ fontSize: 13 }}>{client.phone}</Typography>
+      <Box sx={{ p: 2, borderRadius: 3, bgcolor: "#f3f3f7", display: "grid", gap: 1.2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
+        <TextField select size="small" defaultValue="all" label="حالة العميل">
+          <MenuItem value="all">الكل</MenuItem>
+          <MenuItem value="active">نشط</MenuItem>
+          <MenuItem value="negotiation">مفاوضات</MenuItem>
+        </TextField>
+        <TextField select size="small" defaultValue="all" label="نوع العقد">
+          <MenuItem value="all">الكل</MenuItem>
+          <MenuItem value="residential">سكني</MenuItem>
+          <MenuItem value="commercial">تجاري</MenuItem>
+        </TextField>
+        <TextField select size="small" defaultValue="all" label="المشروع">
+          <MenuItem value="all">جميع المشاريع</MenuItem>
+          <MenuItem value="a">برج الجوهرة</MenuItem>
+          <MenuItem value="b">مجمع الروابي</MenuItem>
+        </TextField>
+        <Button startIcon={<FilterListIcon />} sx={{ bgcolor: "#eef0f6", color: "#000666", fontWeight: 800 }}>تصفية</Button>
+      </Box>
+
+      <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", xl: "1.8fr 1fr" } }}>
+        <Card sx={{ borderRadius: 3 }}>
+          <CardContent sx={{ p: 0 }}>
+            <Box sx={{ overflowX: "auto" }}>
+              <Box component="table" sx={{ width: "100%", minWidth: 760, borderCollapse: "collapse", textAlign: "right" }}>
+                <Box component="thead" sx={{ bgcolor: "#f8f9fc", color: "#7f8597", fontSize: 12 }}>
+                  <Box component="tr">
+                    {["العميل", "المشروع / الحالة", "التعاقد", "المسدد", ""].map((head) => (
+                      <Box key={head} component="th" sx={{ p: 2, textAlign: "right", fontWeight: 800 }}>{head}</Box>
+                    ))}
                   </Box>
                 </Box>
-                <Chip label={`مشاريع: ${client.projects_count || 0}`} size="small" sx={{ bgcolor: "#eef0f6", color: "#000666", fontWeight: 700 }} />
+                <Box component="tbody">
+                  {rows.map((client, idx) => {
+                    const contract = 120000 + idx * 45000;
+                    const paidPct = Math.min(100, 18 + idx * 13);
+                    return (
+                      <Box key={client.id || `${client.name}-${idx}`} component="tr" sx={{ borderBottom: "1px solid #f1f3f8" }}>
+                        <Box component="td" sx={{ p: 2 }}>
+                          <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
+                            <Avatar sx={{ bgcolor: idx % 2 === 0 ? "#e7ecff" : "#ffe8d7", color: "#000666", fontWeight: 900 }}>{String(client.name || "ع").slice(0, 1)}</Avatar>
+                            <Box>
+                              <Typography sx={{ color: "#000666", fontWeight: 800 }}>{client.name}</Typography>
+                              <Typography sx={{ fontSize: 12, color: "#9aa1b6" }}>{client.phone}</Typography>
+                            </Box>
+                          </Box>
+                        </Box>
+                        <Box component="td" sx={{ p: 2 }}>
+                          <Typography sx={{ color: "#000666", fontWeight: 700 }}>{client.address || "-"}</Typography>
+                          <Chip size="small" label={idx % 3 === 0 ? "نشط" : idx % 3 === 1 ? "مفاوضات" : "متأخر"} sx={{ mt: 0.5, bgcolor: idx % 3 === 0 ? "#e8f8ef" : idx % 3 === 1 ? "#fff1e2" : "#ffebee" }} />
+                        </Box>
+                        <Box component="td" sx={{ p: 2, fontWeight: 900, color: "#000666" }}>{contract.toLocaleString("ar-EG")} ج.م</Box>
+                        <Box component="td" sx={{ p: 2, minWidth: 180 }}>
+                          <LinearProgress variant="determinate" value={paidPct} sx={{ height: 6, borderRadius: 999, bgcolor: "#ebedf4", "& .MuiLinearProgress-bar": { bgcolor: "#000666" } }} />
+                          <Typography sx={{ mt: 0.8, fontSize: 11, color: "#000666", fontWeight: 800 }}>{paidPct}%</Typography>
+                        </Box>
+                        <Box component="td" sx={{ p: 2, textAlign: "left" }}><Button size="small"><MoreVertIcon /></Button></Box>
+                      </Box>
+                    );
+                  })}
+                </Box>
               </Box>
+            </Box>
+          </CardContent>
+        </Card>
 
-              <Box sx={{ display: "flex", alignItems: "center", gap: 0.8, mt: 1.2, color: "#7f8597" }}>
-                <LocationOnIcon sx={{ fontSize: 16 }} />
-                <Typography sx={{ fontSize: 13 }}>{client.address}</Typography>
-              </Box>
-
-              <Box sx={{ mt: 1.6, p: 1.2, borderRadius: 2, bgcolor: "#fafbff" }}>
-                <Typography sx={{ color: "#9aa1b6", fontSize: 12, display: "flex", alignItems: "center", gap: 0.6 }}><NotesIcon sx={{ fontSize: 14 }} />ملاحظات</Typography>
-                <Typography sx={{ color: "#000666", fontSize: 14, mt: 0.5 }}>{client.notes || "لا توجد ملاحظات"}</Typography>
-              </Box>
-
-              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 1.8 }}>
-                <Button variant="text" startIcon={<WorkIcon />} sx={{ color: "#000666" }}>عرض المشاريع</Button>
-                <Button variant="outlined">سجل التعامل</Button>
-              </Box>
+        <Stack spacing={2}>
+          <Card sx={{ borderRadius: 3 }}>
+            <CardContent>
+              <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 22, mb: 1.6, display: "flex", alignItems: "center", gap: 1 }}><TimelineIcon sx={{ color: "#964900" }} />سجل المتابعة القادمة</Typography>
+              <Stack spacing={1.4}>
+                {followUps.map((item) => (
+                  <Box key={`${item.title}-${item.time}`} sx={{ p: 1.6, borderRadius: 2, bgcolor: "#fafbff", borderInlineStart: `3px solid ${item.tone}` }}>
+                    <Typography sx={{ fontSize: 11, color: item.tone, fontWeight: 800 }}>{item.time}</Typography>
+                    <Typography sx={{ color: "#000666", fontWeight: 800, mt: 0.5 }}>{item.title}</Typography>
+                    <Typography sx={{ color: "#7f8597", fontSize: 12, mt: 0.5 }}>{item.note}</Typography>
+                  </Box>
+                ))}
+              </Stack>
             </CardContent>
           </Card>
-        ))}
+
+          <Card sx={{ borderRadius: 3, bgcolor: "#1a237e", color: "white" }}>
+            <CardContent>
+              <Typography sx={{ fontSize: 20, fontWeight: 900 }}>تحليل أداء المبيعات</Typography>
+              <Typography sx={{ mt: 1, color: "rgba(255,255,255,0.85)", fontSize: 13 }}>تم تحقيق 85% من المستهدف الشهري. تحتاج إلى 3 تعاقدات إضافية لإغلاق الهدف.</Typography>
+              <Box sx={{ mt: 1.8, bgcolor: "rgba(255,255,255,0.2)", height: 8, borderRadius: 999, overflow: "hidden" }}>
+                <Box sx={{ width: "85%", height: "100%", bgcolor: "#fc820c" }} />
+              </Box>
+              <Button sx={{ mt: 1.4, color: "white", p: 0, fontWeight: 800 }}>عرض التقرير التفصيلي</Button>
+            </CardContent>
+          </Card>
+        </Stack>
       </Box>
     </Stack>
   );
