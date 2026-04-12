@@ -5,6 +5,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { Avatar, Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const purchaseOrders = [
   {
@@ -57,6 +58,8 @@ const requestedMaterials = [
 ];
 
 export function ProcurementPage() {
+  const navigate = useNavigate();
+
   return (
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
@@ -66,8 +69,8 @@ export function ProcurementPage() {
           <Typography sx={{ color: "text.secondary", mt: 1 }}>متابعة أوامر الشراء، أداء الموردين، واحتياجات المواد الحرجة للمواقع النشطة.</Typography>
         </Box>
         <Box sx={{ display: "flex", gap: 1.2, flexWrap: "wrap" }}>
-          <Button variant="outlined" startIcon={<LocalShippingIcon />}>تتبع الشحنات</Button>
-          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }}>طلب شراء جديد</Button>
+          <Button variant="outlined" startIcon={<LocalShippingIcon />} onClick={() => navigate("/erp/inventory-detail")}>تتبع الشحنات</Button>
+          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/suppliers")}>طلب شراء جديد</Button>
         </Box>
       </Box>
 
@@ -159,7 +162,7 @@ export function ProcurementPage() {
         <CardContent>
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2.5, flexWrap: "wrap", gap: 1 }}>
             <Typography sx={{ color: "#000666", fontWeight: 800, fontSize: 18 }}>لوحة الموردين</Typography>
-            <Button variant="outlined" startIcon={<ArrowForwardIcon />}>عرض الكل</Button>
+            <Button variant="outlined" startIcon={<ArrowForwardIcon />} onClick={() => navigate("/erp/suppliers")}>عرض الكل</Button>
           </Box>
           <Box sx={{ display: "grid", gap: 1.4, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
             {suppliers.map((supplier) => (
@@ -189,7 +192,7 @@ export function ProcurementPage() {
             <Typography sx={{ fontSize: 20, fontWeight: 800 }}>إشعارات الموردين</Typography>
             <Typography sx={{ color: "rgba(255,255,255,0.8)", mt: 0.7 }}>هناك 3 أوامر شراء تحتاج اعتمادًا اليوم ومواد حرجة لمواقع نشطة.</Typography>
           </Box>
-          <Button variant="contained" startIcon={<LocalShippingIcon />} sx={{ bgcolor: "#fc820c", color: "white" }}>متابعة الطلبات</Button>
+          <Button variant="contained" startIcon={<LocalShippingIcon />} sx={{ bgcolor: "#fc820c", color: "white" }} onClick={() => navigate("/erp/inventory-detail")}>متابعة الطلبات</Button>
         </CardContent>
       </Card>
     </Stack>

@@ -113,7 +113,7 @@ export function EquipmentFaultsPage() {
                 <Button component={NavLink} to="/erp/incidents" variant="outlined" startIcon={<ReportProblemIcon />}>فتح بلاغ مرتبط</Button>
                 <Button component={NavLink} to="/erp/inventory-detail" variant="outlined" startIcon={<Inventory2Icon />}>حجز قطع الغيار</Button>
                 <Button component={NavLink} to="/erp/maintenance-detail" variant="outlined" startIcon={<BuildCircleIcon />}>فتح أمر صيانة</Button>
-                <Button variant="outlined" startIcon={<SpeedIcon />}>تحديث KPI الأعطال</Button>
+                <Button variant="outlined" startIcon={<SpeedIcon />} component={NavLink} to="/erp/sla">تحديث KPI الأعطال</Button>
               </Stack>
             </CardContent>
           </Card>

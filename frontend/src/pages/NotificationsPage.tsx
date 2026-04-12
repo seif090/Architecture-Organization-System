@@ -8,6 +8,8 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Box, Button, Card, CardContent, Chip, IconButton, LinearProgress, Stack, Typography } from "@mui/material";
+import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const summary = [
   { title: "المالية المستحقة", count: 4, label: "مطالبات اليوم", color: "#964900", progress: 75 },
@@ -60,6 +62,26 @@ const notifications = [
 ];
 
 export function NotificationsPage() {
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+  const [items, setItems] = useState(notifications);
+
+  const filteredItems = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) {
+      return items;
+    }
+    return items.filter((n) => n.title.toLowerCase().includes(q) || n.body.toLowerCase().includes(q) || n.severity.toLowerCase().includes(q));
+  }, [items, search]);
+
+  const removeNotification = (title: string) => {
+    setItems((prev) => prev.filter((n) => n.title !== title));
+  };
+
+  const markAllAsRead = () => {
+    window.alert("تم تعليم جميع الإشعارات كمقروءة");
+  };
+
   return (
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
@@ -69,8 +91,8 @@ export function NotificationsPage() {
           <Typography sx={{ color: "#6f7587", mt: 1 }}>متابعة فورية للتنبيهات الحرجة والمالية والتشغيلية.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<SearchIcon />}>بحث</Button>
-          <Button variant="contained" startIcon={<DoneAllIcon />} sx={{ bgcolor: "#000666" }}>تحديد الكل كمقروء</Button>
+          <Button variant="outlined" startIcon={<SearchIcon />} onClick={() => setSearch(window.prompt("ابحث في التنبيهات:", search) ?? search)}>بحث</Button>
+          <Button variant="contained" startIcon={<DoneAllIcon />} sx={{ bgcolor: "#000666" }} onClick={markAllAsRead}>تحديد الكل كمقروء</Button>
         </Stack>
       </Box>
 
@@ -80,7 +102,7 @@ export function NotificationsPage() {
             <Typography sx={{ fontSize: { xs: 28, md: 40 }, fontWeight: 900, color: "#000666" }}>مرحباً بك في مركز التحكم</Typography>
             <Typography sx={{ color: "#6f7587", mt: 1 }}>لديك اليوم 12 تنبيهاً يتطلب إجراءً فورياً</Typography>
           </Box>
-          <Button variant="contained" startIcon={<NotificationsIcon />} sx={{ bgcolor: "#1a237e" }}>إدارة الإشعارات</Button>
+          <Button variant="contained" startIcon={<NotificationsIcon />} sx={{ bgcolor: "#1a237e" }} onClick={() => navigate("/erp/access-control")}>إدارة الإشعارات</Button>
         </Box>
 
         <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" }, mb: 4 }}>
@@ -109,7 +131,7 @@ export function NotificationsPage() {
         </Box>
 
         <Stack spacing={2.2}>
-          {notifications.map((notification) => (
+          {filteredItems.map((notification) => (
             <Card key={notification.title} sx={{ borderRadius: 3, borderRight: `4px solid ${notification.color}`, boxShadow: "0 8px 32px rgba(0,6,102,0.06)" }}>
               <CardContent sx={{ p: 2.4 }}>
                 <Box sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}>
@@ -124,13 +146,24 @@ export function NotificationsPage() {
                     <Typography sx={{ mt: 0.8, color: "#6f7587", lineHeight: 1.9 }}>{notification.body}</Typography>
                     <Box sx={{ mt: 2, display: "flex", gap: 1.2, flexWrap: "wrap" }}>
                       {notification.actions.map((action, index) => (
-                        <Button key={action} variant={index === 0 ? "contained" : "text"} sx={{ bgcolor: index === 0 ? notification.color : "transparent", color: index === 0 ? "white" : "#6f7587" }}>
+                        <Button
+                          key={action}
+                          variant={index === 0 ? "contained" : "text"}
+                          sx={{ bgcolor: index === 0 ? notification.color : "transparent", color: index === 0 ? "white" : "#6f7587" }}
+                          onClick={() => {
+                            if (action.includes("شراء")) navigate("/erp/procurement");
+                            else if (action.includes("الحضور")) navigate("/erp/workforce");
+                            else if (action.includes("الفاتورة")) navigate("/erp/finance");
+                            else if (action.includes("الجدولة")) navigate("/erp/maintenance");
+                            else window.alert(`تم تنفيذ الإجراء: ${action}`);
+                          }}
+                        >
                           {action}
                         </Button>
                       ))}
                     </Box>
                   </Box>
-                  <IconButton><DeleteIcon /></IconButton>
+                  <IconButton onClick={() => removeNotification(notification.title)}><DeleteIcon /></IconButton>
                 </Box>
               </CardContent>
             </Card>
@@ -143,7 +176,7 @@ export function NotificationsPage() {
               <Typography sx={{ fontSize: 20, fontWeight: 800 }}>حالة التنبيهات اللحظية</Typography>
               <Typography sx={{ color: "rgba(255,255,255,0.8)", mt: 0.5 }}>المتابعة الفورية لمخاطر المشروع والمالية والمخزون.</Typography>
             </Box>
-            <Button variant="contained" sx={{ bgcolor: "#fc820c", color: "white" }}>الانتقال إلى الجدولة</Button>
+            <Button variant="contained" sx={{ bgcolor: "#fc820c", color: "white" }} onClick={() => navigate("/erp/maintenance")}>الانتقال إلى الجدولة</Button>
           </CardContent>
         </Card>
       </Box>

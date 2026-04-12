@@ -11,6 +11,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Box, Button, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const heatMapProjects = [
   { id: "#K-201", name: "برج المجد", progress: "85%", color: "#16a34a", icon: "verified" },
@@ -42,6 +43,21 @@ function FlexRow(props: { children: React.ReactNode; gap?: number; justifyConten
 }
 
 export function BusinessIntelligencePage() {
+  const navigate = useNavigate();
+
+  const exportBiReport = () => {
+    const csv = [
+      "project,date,type,amount,status",
+      ...transactions.map((t) => `${t.project},${t.date},${t.type},${t.amount},${t.status}`)
+    ].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "bi-report.csv";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   return (
     <Box sx={{ bgcolor: "#f6f7fb", minHeight: "100vh" }}>
       <Box
@@ -99,7 +115,7 @@ export function BusinessIntelligencePage() {
             </Stack>
 
             <Box sx={{ mt: "auto", pt: 2, borderTop: "1px solid #eef0f6" }}>
-              <Button fullWidth variant="contained" sx={{ bgcolor: "#964900", py: 1.2, mb: 2 }}>إضافة مشروع جديد</Button>
+              <Button fullWidth variant="contained" sx={{ bgcolor: "#964900", py: 1.2, mb: 2 }} onClick={() => navigate("/erp/projects")}>إضافة مشروع جديد</Button>
               <Stack spacing={0.4}>
                 <FlexRow gap={1.2} alignItems="center" sx={{ color: "#6e7286" }}><HelpIcon fontSize="small" /><Typography sx={{ fontSize: 14 }}>مساعدة</Typography></FlexRow>
                 <FlexRow gap={1.2} alignItems="center" sx={{ color: "#d32f2f" }}><LogoutIcon fontSize="small" /><Typography sx={{ fontSize: 14 }}>خروج</Typography></FlexRow>
@@ -115,8 +131,8 @@ export function BusinessIntelligencePage() {
               <Typography sx={{ color: "#6f7587" }}>نظرة عامة تحليلية على الأداء المالي والإنشائي للمجموعة</Typography>
             </Box>
             <FlexRow gap={1.2}>
-              <Button variant="outlined" startIcon={<CalendarMonthIcon />}>الربع الأخير 2023</Button>
-              <Button variant="contained" startIcon={<DownloadIcon />} sx={{ bgcolor: "#000666" }}>تصدير التقرير</Button>
+              <Button variant="outlined" startIcon={<CalendarMonthIcon />} onClick={() => navigate("/erp/reports")}>الربع الأخير 2023</Button>
+              <Button variant="contained" startIcon={<DownloadIcon />} sx={{ bgcolor: "#000666" }} onClick={exportBiReport}>تصدير التقرير</Button>
             </FlexRow>
           </Box>
 
@@ -256,7 +272,7 @@ export function BusinessIntelligencePage() {
             <CardContent sx={{ p: 0 }}>
               <Box sx={{ p: 2.5, borderBottom: "1px solid #eef0f6", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <Typography sx={{ fontWeight: 800, color: "#000666", fontSize: 18 }}>سجل العمليات المالية الحديثة</Typography>
-                <Button variant="text" sx={{ color: "#964900", fontWeight: 800 }}>عرض الكل</Button>
+                <Button variant="text" sx={{ color: "#964900", fontWeight: 800 }} onClick={() => navigate("/erp/finance")}>عرض الكل</Button>
               </Box>
               <Box sx={{ overflowX: "auto" }}>
                 <Box component="table" sx={{ width: "100%", borderCollapse: "collapse", minWidth: 720, textAlign: "right" }}>
@@ -297,6 +313,7 @@ export function BusinessIntelligencePage() {
       <Button
         variant="contained"
         sx={{ position: "fixed", bottom: 24, left: 24, bgcolor: "#fc820c", color: "white", borderRadius: 999, boxShadow: "0 16px 30px rgba(252, 130, 12, 0.28)", width: 58, height: 58, minWidth: 58 }}
+        onClick={() => navigate("/erp/projects")}
       >
         +
       </Button>

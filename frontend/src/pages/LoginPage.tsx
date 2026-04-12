@@ -78,14 +78,14 @@ export function LoginPage() {
                 <Checkbox size="small" defaultChecked />
                 <Typography sx={{ color: "#6f7587", fontSize: 13 }}>تذكرني لمدة 30 يومًا</Typography>
               </Box>
-              <Button variant="text" sx={{ color: "#964900", fontWeight: 800 }}>نسيت كلمة المرور؟</Button>
+              <Button variant="text" sx={{ color: "#964900", fontWeight: 800 }} onClick={() => window.alert("برجاء التواصل مع مسؤول النظام لإعادة تعيين كلمة المرور")}>نسيت كلمة المرور؟</Button>
             </Box>
 
             <Button type="submit" variant="contained" size="large" endIcon={<ArrowBackIcon />} sx={{ bgcolor: "#000666", height: 52, fontWeight: 800 }}>
               الدخول إلى النظام
             </Button>
 
-            <Button variant="outlined" startIcon={<MailIcon />} sx={{ borderColor: "#d7dceb", color: "#2a324d", height: 52 }}>
+            <Button variant="outlined" startIcon={<MailIcon />} sx={{ borderColor: "#d7dceb", color: "#2a324d", height: 52 }} onClick={() => window.alert("تسجيل Google Workspace سيتم تفعيله قريبًا") }>
               Login with Google Workspace
             </Button>
           </Stack>

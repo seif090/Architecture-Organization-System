@@ -3,6 +3,7 @@ import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const warehouseZones = [
   { name: "مخزن الأسمنت", location: "المنطقة A", total: "1,200", used: "850", status: "مستقر", color: "#000666" },
@@ -26,6 +27,8 @@ const movements = [
 ];
 
 export function InventoryDetailPage() {
+  const navigate = useNavigate();
+
   return (
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
@@ -35,8 +38,8 @@ export function InventoryDetailPage() {
           <Typography sx={{ color: "#6f7587", mt: 1 }}>مراجعة حالة المناطق التخزينية، نسب الامتلاء، وحركات الصرف والاستلام اليومية.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<SwapHorizIcon />}>نقل بين المخازن</Button>
-          <Button variant="contained" startIcon={<WarehouseIcon />} sx={{ bgcolor: "#000666" }}>إضافة مخزن فرعي</Button>
+          <Button variant="outlined" startIcon={<SwapHorizIcon />} onClick={() => navigate("/erp/inventory")}>نقل بين المخازن</Button>
+          <Button variant="contained" startIcon={<WarehouseIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/inventory")}>إضافة مخزن فرعي</Button>
         </Stack>
       </Box>
 
@@ -113,9 +116,9 @@ export function InventoryDetailPage() {
             <CardContent>
               <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 20 }}>إجراءات سريعة</Typography>
               <Stack spacing={1.2} sx={{ mt: 1.4 }}>
-                <Button variant="outlined" startIcon={<WarningAmberIcon />}>فتح تنبيه منخفض</Button>
-                <Button variant="outlined" startIcon={<SwapHorizIcon />}>تحويل بين المشاريع</Button>
-                <Button variant="outlined" startIcon={<WarehouseIcon />}>جرد مخزن فرعي</Button>
+                <Button variant="outlined" startIcon={<WarningAmberIcon />} onClick={() => navigate("/erp/notifications")}>فتح تنبيه منخفض</Button>
+                <Button variant="outlined" startIcon={<SwapHorizIcon />} onClick={() => navigate("/erp/projects")}>تحويل بين المشاريع</Button>
+                <Button variant="outlined" startIcon={<WarehouseIcon />} onClick={() => navigate("/erp/inventory")}>جرد مخزن فرعي</Button>
               </Stack>
             </CardContent>
           </Card>

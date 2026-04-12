@@ -4,6 +4,7 @@ import CarRepairIcon from "@mui/icons-material/CarRepair";
 import DevicesIcon from "@mui/icons-material/Devices";
 import HandymanIcon from "@mui/icons-material/Handyman";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const assets = [
   { name: "ونش برج 30 طن", code: "AST-1001", branch: "مشروع فيلا التجمع الخامس", status: "تشغيل", condition: 92, value: "850,000 ج.م", icon: <CarRepairIcon /> },
@@ -20,6 +21,8 @@ const categories = [
 ];
 
 export function AssetsPage() {
+  const navigate = useNavigate();
+
   return (
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
@@ -28,7 +31,7 @@ export function AssetsPage() {
           <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, color: "#000666", lineHeight: 1.1 }}>إدارة الأصول والمعدات</Typography>
           <Typography sx={{ color: "text.secondary", mt: 1 }}>تتبع، صيانة، وتوزيع الأصول عبر جميع المواقع الإنشائية.</Typography>
         </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }}>إضافة أصل جديد</Button>
+        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/inventory")}>إضافة أصل جديد</Button>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
@@ -80,7 +83,7 @@ export function AssetsPage() {
             <CardContent>
               <Typography sx={{ fontSize: 18, fontWeight: 800 }}>لوحة الصيانة</Typography>
               <Typography sx={{ opacity: 0.85, mt: 0.6 }}>يوجد 6 أصول تحتاج صيانة دورية هذا الأسبوع، وطلبان في انتظار الاعتماد.</Typography>
-              <Button variant="contained" sx={{ mt: 2, bgcolor: "#fc820c", color: "white" }}>جدولة الصيانة</Button>
+              <Button variant="contained" sx={{ mt: 2, bgcolor: "#fc820c", color: "white" }} onClick={() => navigate("/erp/maintenance-detail")}>جدولة الصيانة</Button>
             </CardContent>
           </Card>
 

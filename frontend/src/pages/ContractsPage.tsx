@@ -6,6 +6,7 @@ import GavelIcon from "@mui/icons-material/Gavel";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Box, Button, Card, CardContent, Chip, IconButton, LinearProgress, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const contractItems = [
   { id: "CT-8821", title: "عقد توريد مواد السباكة - المرحلة الثانية", status: "موقع", type: "PDF", date: "12 أكتوبر 2023", vendor: "شركة النيل للمقاولات", amount: "450,000 ج.م" },
@@ -27,6 +28,21 @@ const docs = [
 ];
 
 export function ContractsPage() {
+  const navigate = useNavigate();
+
+  const exportContracts = () => {
+    const csv = [
+      "id,title,status,type,date,vendor,amount",
+      ...contractItems.map((c) => `${c.id},${c.title},${c.status},${c.type},${c.date},${c.vendor},${c.amount}`)
+    ].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "contracts.csv";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   return (
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 2, flexWrap: "wrap" }}>
@@ -38,9 +54,9 @@ export function ContractsPage() {
           <Typography sx={{ color: "#6f7587", mt: 1 }}>تحكم في دورة حياة العقود والمستندات القانونية للمشاريع.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<UploadFileIcon />} sx={{ minWidth: 180 }}>رفع عقد خارجي</Button>
-          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 180 }}>إنشاء عقد جديد</Button>
-          <Button variant="outlined" startIcon={<DownloadIcon />} sx={{ minWidth: 160 }}>تصدير التقرير</Button>
+          <Button variant="outlined" startIcon={<UploadFileIcon />} sx={{ minWidth: 180 }} onClick={() => navigate("/erp/contracts")}>رفع عقد خارجي</Button>
+          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 180 }} onClick={() => navigate("/erp/contracts")}>إنشاء عقد جديد</Button>
+          <Button variant="outlined" startIcon={<DownloadIcon />} sx={{ minWidth: 160 }} onClick={exportContracts}>تصدير التقرير</Button>
         </Stack>
       </Box>
 
@@ -152,7 +168,7 @@ export function ContractsPage() {
               <Typography sx={{ opacity: 0.85, mb: 1 }}>مساحة توجيه سريعة</Typography>
               <Typography sx={{ fontSize: 22, fontWeight: 800, mb: 1 }}>ابدأ التوقيع الآن</Typography>
               <Typography sx={{ opacity: 0.82, mb: 2 }}>أرسل المستندات للأطراف المعنية وراقب الموافقات من مكان واحد.</Typography>
-              <Button variant="contained" sx={{ bgcolor: "#fc820c", color: "white" }}>إرسال للتوقيع</Button>
+              <Button variant="contained" sx={{ bgcolor: "#fc820c", color: "white" }} onClick={() => navigate("/erp/access-control")}>إرسال للتوقيع</Button>
             </CardContent>
           </Card>
         </Stack>
@@ -162,7 +178,7 @@ export function ContractsPage() {
         <CardContent>
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2, flexWrap: "wrap", gap: 1 }}>
             <Typography sx={{ color: "#101a6d", fontWeight: 700, fontSize: 18 }}>سجل الموافقات</Typography>
-            <Button variant="outlined" startIcon={<GavelIcon />}>عرض السجل الكامل</Button>
+            <Button variant="outlined" startIcon={<GavelIcon />} onClick={() => navigate("/erp/reports")}>عرض السجل الكامل</Button>
           </Box>
           <Stack spacing={1.2}>
             {tasks.map((task) => (
@@ -179,7 +195,7 @@ export function ContractsPage() {
       </Card>
 
       <Box sx={{ position: "fixed", bottom: 22, right: 28 }}>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ minWidth: 230, py: 1.5, borderRadius: 2, bgcolor: "#a55a00" }}>
+        <Button variant="contained" startIcon={<AddIcon />} sx={{ minWidth: 230, py: 1.5, borderRadius: 2, bgcolor: "#a55a00" }} onClick={() => navigate("/erp/contracts") }>
           إضافة ملف جديد
         </Button>
       </Box>

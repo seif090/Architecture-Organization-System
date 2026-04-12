@@ -3,6 +3,7 @@ import AlarmOnIcon from "@mui/icons-material/AlarmOn";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const slaSummary = [
   { title: "ضمن SLA", value: "86%", delta: "+4%", color: "#16a34a" },
@@ -26,6 +27,8 @@ const escalationRules = [
 ];
 
 export function SlaDashboardPage() {
+  const navigate = useNavigate();
+
   return (
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
@@ -35,8 +38,8 @@ export function SlaDashboardPage() {
           <Typography sx={{ color: "#6f7587", mt: 1 }}>متابعة زمن الاستجابة والإغلاق والتنبيهات التصعيدية على مستوى الإدارة.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<TimelineIcon />}>التحليل الزمني</Button>
-          <Button variant="contained" startIcon={<FlashOnIcon />} sx={{ bgcolor: "#000666" }}>فتح البلاغات الحرجة</Button>
+          <Button variant="outlined" startIcon={<TimelineIcon />} onClick={() => navigate("/erp/reports")}>التحليل الزمني</Button>
+          <Button variant="contained" startIcon={<FlashOnIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/incidents")}>فتح البلاغات الحرجة</Button>
         </Stack>
       </Box>
 
@@ -115,7 +118,7 @@ export function SlaDashboardPage() {
                   </Box>
                 ))}
               </Stack>
-              <Button fullWidth variant="outlined" startIcon={<AlarmOnIcon />} sx={{ mt: 2 }}>فتح التنبيهات الحرجة</Button>
+              <Button fullWidth variant="outlined" startIcon={<AlarmOnIcon />} sx={{ mt: 2 }} onClick={() => navigate("/erp/notifications")}>فتح التنبيهات الحرجة</Button>
             </CardContent>
           </Card>
         </Stack>

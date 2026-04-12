@@ -4,6 +4,7 @@ import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const requests = [
   { title: "بلاغ صيانة مضخة الخرسانة", location: "مشروع برج المجد", priority: "عاجل", status: "قيد التنفيذ", progress: 82 },
@@ -20,6 +21,8 @@ const maintenanceStats = [
 ];
 
 export function MaintenancePage() {
+  const navigate = useNavigate();
+
   return (
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
@@ -29,8 +32,8 @@ export function MaintenancePage() {
           <Typography sx={{ color: "#6f7587", mt: 1 }}>متابعة البلاغات، جداول الصيانة، وحالة تنفيذ الأعمال الفنية بالمواقع.</Typography>
         </Box>
         <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<NotificationsActiveIcon />}>البلاغات</Button>
-          <Button variant="contained" startIcon={<ConstructionIcon />} sx={{ bgcolor: "#000666" }}>إضافة طلب صيانة</Button>
+          <Button variant="outlined" startIcon={<NotificationsActiveIcon />} onClick={() => navigate("/erp/incidents")}>البلاغات</Button>
+          <Button variant="contained" startIcon={<ConstructionIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/maintenance-detail")}>إضافة طلب صيانة</Button>
         </Stack>
       </Box>
 
@@ -105,9 +108,9 @@ export function MaintenancePage() {
             <CardContent>
               <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 20, mb: 1.5 }}>إجراء سريع</Typography>
               <Stack spacing={1.2}>
-                <Button variant="outlined" startIcon={<BuildIcon />}>إحالة لفني</Button>
-                <Button variant="outlined" startIcon={<EventAvailableIcon />}>جدولة صيانة</Button>
-                <Button variant="outlined" startIcon={<ReportProblemIcon />}>تسجيل بلاغ عاجل</Button>
+                <Button variant="outlined" startIcon={<BuildIcon />} onClick={() => navigate("/erp/maintenance-detail")}>إحالة لفني</Button>
+                <Button variant="outlined" startIcon={<EventAvailableIcon />} onClick={() => navigate("/erp/maintenance-detail")}>جدولة صيانة</Button>
+                <Button variant="outlined" startIcon={<ReportProblemIcon />} onClick={() => navigate("/erp/incidents")}>تسجيل بلاغ عاجل</Button>
               </Stack>
             </CardContent>
           </Card>

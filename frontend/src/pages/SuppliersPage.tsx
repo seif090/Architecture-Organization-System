@@ -2,6 +2,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import StarIcon from "@mui/icons-material/Star";
 import { Avatar, Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const supplierRows = [
   { name: "مجموعة حديد الجزيرة", code: "V-9041", tags: ["حديد", "تسليح"], debt: "450,000 ر.س", rating: 4.9, status: "نشط" },
@@ -15,6 +16,21 @@ const activeContracts = [
 ];
 
 export function SuppliersPage() {
+  const navigate = useNavigate();
+
+  const exportSuppliers = () => {
+    const csv = [
+      "name,code,debt,rating,status",
+      ...supplierRows.map((s) => `${s.name},${s.code},${s.debt},${s.rating},${s.status}`)
+    ].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "suppliers.csv";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   return (
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
@@ -23,7 +39,7 @@ export function SuppliersPage() {
           <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة الموردين والشركاء</Typography>
           <Typography sx={{ color: "#6f7587", mt: 1 }}>نظام مراقبة الأداء المالي والتشغيلي لسلسلة التوريد الخاصة بالمشاريع الإنشائية.</Typography>
         </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 210 }}>إضافة مورد جديد</Button>
+        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 210 }} onClick={() => navigate("/erp/procurement")}>إضافة مورد جديد</Button>
       </Box>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "260px 1fr" } }}>
@@ -53,7 +69,7 @@ export function SuppliersPage() {
                   </Box>
                 ))}
               </Stack>
-              <Button fullWidth variant="outlined" sx={{ mt: 2, color: "white", borderColor: "rgba(255,255,255,0.35)" }}>عرض كافة العقود (14)</Button>
+              <Button fullWidth variant="outlined" sx={{ mt: 2, color: "white", borderColor: "rgba(255,255,255,0.35)" }} onClick={() => navigate("/erp/contracts")}>عرض كافة العقود (14)</Button>
             </CardContent>
           </Card>
         </Stack>
@@ -70,8 +86,8 @@ export function SuppliersPage() {
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1.8, flexWrap: "wrap", gap: 1 }}>
                 <Typography sx={{ color: "#000666", fontSize: 36, fontWeight: 900 }}>قائمة الموردين المعتمدين</Typography>
                 <Stack direction="row" spacing={1.1}>
-                  <Button variant="outlined" startIcon={<ReceiptLongIcon />}>تصفية</Button>
-                  <Button variant="outlined">تصدير</Button>
+                  <Button variant="outlined" startIcon={<ReceiptLongIcon />} onClick={() => navigate("/erp/procurement")}>تصفية</Button>
+                  <Button variant="outlined" onClick={exportSuppliers}>تصدير</Button>
                 </Stack>
               </Box>
 

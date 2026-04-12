@@ -135,8 +135,8 @@ export function MaintenanceDetailPage() {
               <Stack spacing={1.2} sx={{ mt: 1.4 }}>
                 <Button component={NavLink} to="/erp/incidents" variant="outlined" startIcon={<ReportProblemIcon />}>فتح البلاغ المرتبط</Button>
                 <Button component={NavLink} to="/erp/inventory-detail" variant="outlined" startIcon={<Inventory2Icon />}>حجز قطع غيار</Button>
-                <Button variant="outlined" startIcon={<ScheduleIcon />}>جدولة زيارة ميدانية</Button>
-                <Button variant="outlined" startIcon={<VerifiedIcon />}>اعتماد الإغلاق</Button>
+                <Button variant="outlined" startIcon={<ScheduleIcon />} component={NavLink} to="/erp/maintenance">جدولة زيارة ميدانية</Button>
+                <Button variant="outlined" startIcon={<VerifiedIcon />} component={NavLink} to="/erp/sla">اعتماد الإغلاق</Button>
               </Stack>
             </CardContent>
           </Card>
