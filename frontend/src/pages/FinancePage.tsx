@@ -6,11 +6,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
-import { Alert, Box, Button, Card, CardContent, Chip, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { api } from "../api";
 import { FormDialogShell } from "../components/FormDialogShell";
 import { PageHero } from "../components/PageHero";
+import { StatusChip } from "../components/StatusChip";
 
 type RecordForm = {
   recordType: string;
@@ -295,7 +296,7 @@ export function FinancePage({
                     <Typography sx={{ fontSize: 12, color: "#7f8597" }}>{record.description} · {record.record_date}</Typography>
                   </Box>
                   <Box sx={{ textAlign: "left" }}>
-                    <Chip label={record.record_type === "revenue" ? "إيراد" : "مصروف"} size="small" sx={{ bgcolor: record.record_type === "revenue" ? "#e8f8ef" : "#ffebee" }} />
+                    <StatusChip label={record.record_type === "revenue" ? "إيراد" : "مصروف"} size="small" />
                     <Typography sx={{ mt: 0.6, color: "#000666", fontWeight: 900 }}>{Number(record.amount).toLocaleString("ar-EG")} ج.م</Typography>
                     <Stack direction="row" spacing={0.7} sx={{ mt: 0.8 }}>
                       <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditRecord(record)}>تعديل</Button>
@@ -346,7 +347,7 @@ export function FinancePage({
                       </Box>
                       <Box sx={{ textAlign: "left" }}>
                         <Typography sx={{ color: "#000666", fontWeight: 900 }}>{Number(invoice.total).toLocaleString("ar-EG")} ج.م</Typography>
-                        <Chip size="small" label={invoice.status} sx={{ mt: 0.5, bgcolor: invoice.status === "مدفوعة" ? "#e8f8ef" : "#fff1e2" }} />
+                        <StatusChip size="small" label={invoice.status} sx={{ mt: 0.5 }} />
                         <Stack direction="row" spacing={0.7} sx={{ mt: 0.8 }}>
                           <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditInvoice(invoice)}>تعديل</Button>
                           <Button type="button" size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeInvoice(invoice.id)}>حذف</Button>

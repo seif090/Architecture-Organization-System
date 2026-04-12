@@ -7,6 +7,7 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Box, Button, Card, CardContent, Chip, IconButton, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { StatusChip } from "../components/StatusChip";
 
 const contractItems = [
   { id: "CT-8821", title: "عقد توريد مواد السباكة - المرحلة الثانية", status: "موقع", type: "PDF", date: "12 أكتوبر 2023", vendor: "شركة النيل للمقاولات", amount: "450,000 ج.م" },
@@ -118,7 +119,7 @@ export function ContractsPage() {
                       <Typography sx={{ color: "text.secondary", fontSize: 13, mt: 0.4 }}>{item.vendor}</Typography>
                     </Box>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-                      <Chip size="small" label={item.status} sx={{ bgcolor: item.status === "موقع" ? "#e8f8ef" : item.status === "تحت المراجعة" ? "#fff1e2" : "#e7ecff" }} />
+                      <StatusChip size="small" label={item.status} />
                       <Typography sx={{ color: "#101a6d", fontWeight: 700 }}>{item.amount}</Typography>
                     </Stack>
                   </Box>
@@ -187,7 +188,7 @@ export function ContractsPage() {
                   <Typography sx={{ fontWeight: 700 }}>{task.title}</Typography>
                   <Typography sx={{ fontSize: 13, color: "text.secondary" }}>{task.meta}</Typography>
                 </Box>
-                <Chip label={task.status} size="small" />
+                <StatusChip label={task.status} size="small" />
               </Box>
             ))}
           </Stack>

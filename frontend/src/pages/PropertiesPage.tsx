@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api";
 import { FormDialogShell } from "../components/FormDialogShell";
+import { StatusChip } from "../components/StatusChip";
 
 type PropertyForm = {
   name: string;
@@ -271,11 +272,10 @@ export function PropertiesPage({
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(2, 1fr)", xl: "repeat(3, 1fr)" } }}>
         {visualRows.map((property, idx) => {
           const statusLabel = property.status || "متاح";
-          const statusBg = statusLabel === "متاح" ? "#16a34a" : statusLabel === "محجوز" ? "#d97706" : "#be123c";
           return (
             <Card key={property.id || `${property.name}-${idx}`} sx={{ borderRadius: 3, overflow: "hidden", border: `1px solid ${palette.border}` }}>
               <Box sx={{ height: 210, position: "relative", backgroundImage: `url(${property.image})`, backgroundPosition: "center", backgroundSize: "cover" }}>
-                <Chip label={statusLabel} size="small" sx={{ position: "absolute", top: 12, right: 12, bgcolor: statusBg, color: "white", fontWeight: 800 }} />
+                <StatusChip label={statusLabel} size="small" sx={{ position: "absolute", top: 12, right: 12 }} />
                 <Box sx={{ position: "absolute", insetInline: 12, bottom: 12, p: 1.1, borderRadius: 2, bgcolor: "rgba(0,0,0,0.45)", color: "white" }}>
                   <Typography sx={{ fontSize: 12, opacity: 0.82 }}>{property.location || "-"}</Typography>
                   <Typography sx={{ fontWeight: 800 }}>{property.name}</Typography>
@@ -326,7 +326,7 @@ export function PropertiesPage({
                   <Typography sx={{ color: "#000666", fontWeight: 800 }}>{Number(item.amount || 0).toLocaleString("ar-EG")} ج.م</Typography>
                 </Box>
                 <Box sx={{ textAlign: "left" }}>
-                  <Chip label={item.is_paid ? "مدفوع" : "مستحق"} size="small" sx={{ bgcolor: item.is_paid ? "#e8f8ef" : "#fff1e2" }} />
+                  <StatusChip label={item.is_paid ? "مدفوع" : "مستحق"} size="small" />
                   <Stack direction="row" spacing={1} sx={{ mt: 0.8 }}>
                     <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditInstallment(item)}>تعديل</Button>
                     <Button type="button" size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeInstallment(item.id)}>حذف</Button>

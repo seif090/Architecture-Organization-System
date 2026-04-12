@@ -5,6 +5,7 @@ import InsertChartIcon from "@mui/icons-material/InsertChart";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
+import { StatusChip } from "../components/StatusChip";
 
 const reportCards = [
   { title: "تقرير الإيرادات الشهرية", value: "42.8M", delta: "+12.4%", color: "#000666" },
@@ -87,7 +88,7 @@ export function ReportsPage() {
                       <Typography sx={{ color: "#000666", fontWeight: 800 }}>{report.name}</Typography>
                       <Typography sx={{ color: "#7f8597", fontSize: 13, mt: 0.4 }}>{report.scope}</Typography>
                     </Box>
-                    <Chip label={report.status} size="small" sx={{ bgcolor: report.status === "جاهز" ? "#e8f8ef" : "#fff1e2" }} />
+                    <StatusChip label={report.status} size="small" />
                   </Box>
                   <Box sx={{ mt: 1.2 }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.7 }}>

@@ -13,6 +13,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Box, Button, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
+import { StatusChip } from "../components/StatusChip";
 
 const heatMapProjects = [
   { id: "#K-201", name: "برج المجد", progress: "85%", color: "#16a34a", icon: "verified" },
@@ -303,7 +304,7 @@ export function BusinessIntelligencePage() {
                         <Box component="td" sx={{ p: 2.2, color: "#6e7286", fontSize: 13 }}>{row.date}</Box>
                         <Box component="td" sx={{ p: 2.2 }}><Chip label={row.type} size="small" sx={{ bgcolor: "#eef0f6", fontWeight: 700 }} /></Box>
                         <Box component="td" sx={{ p: 2.2, color: "#000666", fontWeight: 900 }}>{row.amount}</Box>
-                        <Box component="td" sx={{ p: 2.2 }}><Chip label={row.status} size="small" sx={{ bgcolor: row.status === "تم الدفع" ? "#e8f8ef" : "#fff1e2", color: row.status === "تم الدفع" ? "#0d8a43" : "#c46a00", fontWeight: 800 }} /></Box>
+                        <Box component="td" sx={{ p: 2.2 }}><StatusChip label={row.status} size="small" /></Box>
                       </Box>
                     ))}
                   </Box>
