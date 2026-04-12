@@ -8,6 +8,7 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  LinearProgress,
   Radio,
   RadioGroup,
   Stack,
@@ -28,6 +29,29 @@ const roleOptions: Array<{ value: RegisterRole; label: string }> = [
   { value: "viewer", label: "مشاهد" }
 ];
 
+function getPasswordStrength(value: string): { score: number; label: string; color: string } {
+  if (!value) {
+    return { score: 0, label: "", color: "#c7ccdd" };
+  }
+
+  let score = 0;
+  if (value.length >= 8) score += 20;
+  if (/[a-z]/.test(value)) score += 20;
+  if (/[A-Z]/.test(value)) score += 20;
+  if (/\d/.test(value)) score += 20;
+  if (/[^A-Za-z0-9]/.test(value)) score += 20;
+
+  if (score < 60) {
+    return { score, label: "ضعيف", color: "#d32f2f" };
+  }
+
+  if (score < 100) {
+    return { score, label: "متوسط", color: "#d97706" };
+  }
+
+  return { score, label: "قوي", color: "#16a34a" };
+}
+
 export function RegistrationPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -41,6 +65,7 @@ export function RegistrationPage() {
   const [loading, setLoading] = useState(false);
 
   const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+  const passwordStrength = getPasswordStrength(password);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -101,6 +126,26 @@ export function RegistrationPage() {
             required
             helperText="8+ أحرف، حرف كبير، حرف صغير، رقم، ورمز خاص"
           />
+
+          {password && (
+            <Box sx={{ mt: -0.6 }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.6 }}>
+                <Typography sx={{ fontSize: 12, color: "#6f7587" }}>قوة كلمة المرور</Typography>
+                <Typography sx={{ fontSize: 12, fontWeight: 800, color: passwordStrength.color }}>{passwordStrength.label}</Typography>
+              </Box>
+              <LinearProgress
+                variant="determinate"
+                value={passwordStrength.score}
+                sx={{
+                  height: 8,
+                  borderRadius: 999,
+                  bgcolor: "#eceef5",
+                  "& .MuiLinearProgress-bar": { bgcolor: passwordStrength.color }
+                }}
+              />
+            </Box>
+          )}
+
           <TextField
             label="تأكيد كلمة المرور"
             type="password"
