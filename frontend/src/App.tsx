@@ -119,9 +119,9 @@ function ERPApp() {
           <Route path="inventory-detail" element={<InventoryDetailPage />} />
           <Route
             path="finance"
-            element={<FinancePage isViewer={user?.role === "viewer"} records={finance.records} invoices={finance.invoices} />}
+            element={<FinancePage isViewer={user?.role === "viewer"} records={finance.records} invoices={finance.invoices} onRefresh={loadAll} />}
           />
-          <Route path="properties" element={<PropertiesPage properties={properties.properties} installments={properties.installments} />} />
+          <Route path="properties" element={<PropertiesPage properties={properties.properties} installments={properties.installments} onRefresh={loadAll} />} />
         </Route>
         <Route path="*" element={<Navigate to="/erp/dashboard" replace />} />
       </Routes>

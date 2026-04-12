@@ -1,20 +1,75 @@
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import DownloadIcon from "@mui/icons-material/Download";
+import EditIcon from "@mui/icons-material/Edit";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import DeleteIcon from "@mui/icons-material/Delete";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
-import { Box, Button, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
+import { useState } from "react";
+import { api } from "../api";
+
+type RecordForm = {
+  recordType: string;
+  projectId: string;
+  description: string;
+  amount: string;
+  recordDate: string;
+};
+
+type InvoiceForm = {
+  invoiceNo: string;
+  clientId: string;
+  projectId: string;
+  total: string;
+  paid: string;
+  status: string;
+  dueDate: string;
+};
+
+const today = new Date().toISOString().slice(0, 10);
+
+const emptyRecord: RecordForm = {
+  recordType: "expense",
+  projectId: "",
+  description: "",
+  amount: "0",
+  recordDate: today
+};
+
+const emptyInvoice: InvoiceForm = {
+  invoiceNo: "",
+  clientId: "",
+  projectId: "",
+  total: "0",
+  paid: "0",
+  status: "مستحقة",
+  dueDate: today
+};
 
 export function FinancePage({
   records,
   invoices,
-  isViewer
+  isViewer,
+  onRefresh
 }: {
   records: any[];
   invoices: any[];
   isViewer: boolean;
+  onRefresh: () => Promise<void> | void;
 }) {
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [openRecord, setOpenRecord] = useState(false);
+  const [openInvoice, setOpenInvoice] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [editingRecordId, setEditingRecordId] = useState<number | null>(null);
+  const [editingInvoiceId, setEditingInvoiceId] = useState<number | null>(null);
+  const [recordForm, setRecordForm] = useState<RecordForm>(emptyRecord);
+  const [invoiceForm, setInvoiceForm] = useState<InvoiceForm>(emptyInvoice);
+
   if (isViewer) {
     return (
       <Card sx={{ borderRadius: 3 }}>
@@ -31,6 +86,132 @@ export function FinancePage({
   const net = revenues - expenses;
   const chartPoints = [48, 58, 72, 66, 84, 74];
 
+  const openCreateRecord = () => {
+    setEditingRecordId(null);
+    setRecordForm(emptyRecord);
+    setOpenRecord(true);
+  };
+
+  const openEditRecord = (row: any) => {
+    setEditingRecordId(row.id);
+    setRecordForm({
+      recordType: row.record_type || "expense",
+      projectId: row.project_id ? String(row.project_id) : "",
+      description: row.description || "",
+      amount: String(row.amount || 0),
+      recordDate: String(row.record_date || today).slice(0, 10)
+    });
+    setOpenRecord(true);
+  };
+
+  const openCreateInvoice = () => {
+    setEditingInvoiceId(null);
+    setInvoiceForm(emptyInvoice);
+    setOpenInvoice(true);
+  };
+
+  const openEditInvoice = (row: any) => {
+    setEditingInvoiceId(row.id);
+    setInvoiceForm({
+      invoiceNo: row.invoice_no || "",
+      clientId: row.client_id ? String(row.client_id) : "",
+      projectId: row.project_id ? String(row.project_id) : "",
+      total: String(row.total || 0),
+      paid: String(row.paid || 0),
+      status: row.status || "مستحقة",
+      dueDate: String(row.due_date || today).slice(0, 10)
+    });
+    setOpenInvoice(true);
+  };
+
+  const submitRecord = async () => {
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    const payload = {
+      recordType: recordForm.recordType,
+      projectId: recordForm.projectId ? Number(recordForm.projectId) : null,
+      description: recordForm.description,
+      amount: Number(recordForm.amount),
+      recordDate: recordForm.recordDate
+    };
+
+    try {
+      if (editingRecordId) {
+        await api.patch(`/finance/records/${editingRecordId}`, payload);
+        setSuccess("تم تحديث القيد المالي");
+      } else {
+        await api.post("/finance/records", payload);
+        setSuccess("تمت إضافة القيد المالي");
+      }
+      await onRefresh();
+      setOpenRecord(false);
+    } catch {
+      setError("تعذر حفظ القيد المالي");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const submitInvoice = async () => {
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    const payload = {
+      invoiceNo: invoiceForm.invoiceNo,
+      clientId: invoiceForm.clientId ? Number(invoiceForm.clientId) : null,
+      projectId: invoiceForm.projectId ? Number(invoiceForm.projectId) : null,
+      total: Number(invoiceForm.total),
+      paid: Number(invoiceForm.paid),
+      status: invoiceForm.status,
+      dueDate: invoiceForm.dueDate
+    };
+
+    try {
+      if (editingInvoiceId) {
+        await api.patch(`/finance/invoices/${editingInvoiceId}`, payload);
+        setSuccess("تم تحديث الفاتورة");
+      } else {
+        await api.post("/finance/invoices", payload);
+        setSuccess("تمت إضافة الفاتورة");
+      }
+      await onRefresh();
+      setOpenInvoice(false);
+    } catch {
+      setError("تعذر حفظ الفاتورة");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeRecord = async (id: number) => {
+    if (!window.confirm("هل تريد حذف القيد المالي؟")) {
+      return;
+    }
+    try {
+      await api.delete(`/finance/records/${id}`);
+      await onRefresh();
+      setSuccess("تم حذف القيد المالي");
+    } catch {
+      setError("تعذر حذف القيد المالي");
+    }
+  };
+
+  const removeInvoice = async (id: number) => {
+    if (!window.confirm("هل تريد حذف الفاتورة؟")) {
+      return;
+    }
+    try {
+      await api.delete(`/finance/invoices/${id}`);
+      await onRefresh();
+      setSuccess("تم حذف الفاتورة");
+    } catch {
+      setError("تعذر حذف الفاتورة");
+    }
+  };
+
   return (
     <Stack spacing={3.2}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 2 }}>
@@ -41,9 +222,13 @@ export function FinancePage({
         </Box>
         <Stack direction="row" spacing={1.2}>
           <Button variant="outlined" startIcon={<DownloadIcon />} sx={{ borderColor: "#d8dceb", color: "#000666" }}>تصدير التقرير</Button>
-          <Button variant="contained" startIcon={<AttachMoneyIcon />} sx={{ bgcolor: "#000666" }}>إضافة قيد مالي</Button>
+          <Button variant="contained" startIcon={<AttachMoneyIcon />} sx={{ bgcolor: "#000666" }} onClick={openCreateRecord}>إضافة قيد مالي</Button>
+          <Button variant="contained" startIcon={<ReceiptLongIcon />} sx={{ bgcolor: "#964900" }} onClick={openCreateInvoice}>إضافة فاتورة</Button>
         </Stack>
       </Box>
+
+      {error && <Alert severity="error">{error}</Alert>}
+      {success && <Alert severity="success">{success}</Alert>}
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
         <Card sx={{ borderRadius: 3 }}><CardContent><TrendingUpIcon sx={{ color: "#16a34a" }} /><Typography sx={{ color: "#7f8597" }}>الإيرادات</Typography><Typography sx={{ color: "#000666", fontSize: 34, fontWeight: 900 }}>{revenues.toLocaleString("ar-EG")} ج.م</Typography></CardContent></Card>
@@ -80,6 +265,10 @@ export function FinancePage({
                   <Box sx={{ textAlign: "left" }}>
                     <Chip label={record.record_type === "revenue" ? "إيراد" : "مصروف"} size="small" sx={{ bgcolor: record.record_type === "revenue" ? "#e8f8ef" : "#ffebee" }} />
                     <Typography sx={{ mt: 0.6, color: "#000666", fontWeight: 900 }}>{Number(record.amount).toLocaleString("ar-EG")} ج.م</Typography>
+                    <Stack direction="row" spacing={0.7} sx={{ mt: 0.8 }}>
+                      <Button size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditRecord(record)}>تعديل</Button>
+                      <Button size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeRecord(record.id)}>حذف</Button>
+                    </Stack>
                   </Box>
                 </Box>
               ))}
@@ -126,6 +315,10 @@ export function FinancePage({
                       <Box sx={{ textAlign: "left" }}>
                         <Typography sx={{ color: "#000666", fontWeight: 900 }}>{Number(invoice.total).toLocaleString("ar-EG")} ج.م</Typography>
                         <Chip size="small" label={invoice.status} sx={{ mt: 0.5, bgcolor: invoice.status === "مدفوعة" ? "#e8f8ef" : "#fff1e2" }} />
+                        <Stack direction="row" spacing={0.7} sx={{ mt: 0.8 }}>
+                          <Button size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEditInvoice(invoice)}>تعديل</Button>
+                          <Button size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => removeInvoice(invoice.id)}>حذف</Button>
+                        </Stack>
                       </Box>
                     </Box>
                   </Box>
@@ -135,6 +328,42 @@ export function FinancePage({
           </Card>
         </Stack>
       </Box>
+
+      <Dialog open={openRecord} onClose={() => setOpenRecord(false)} fullWidth maxWidth="sm">
+        <DialogTitle>{editingRecordId ? "تعديل قيد مالي" : "إضافة قيد مالي"}</DialogTitle>
+        <DialogContent>
+          <Stack spacing={1.4} sx={{ mt: 1 }}>
+            <TextField label="النوع (expense/revenue)" value={recordForm.recordType} onChange={(e) => setRecordForm((p) => ({ ...p, recordType: e.target.value }))} fullWidth />
+            <TextField label="رقم المشروع (اختياري)" value={recordForm.projectId} onChange={(e) => setRecordForm((p) => ({ ...p, projectId: e.target.value }))} fullWidth />
+            <TextField label="الوصف" value={recordForm.description} onChange={(e) => setRecordForm((p) => ({ ...p, description: e.target.value }))} fullWidth />
+            <TextField label="المبلغ" value={recordForm.amount} onChange={(e) => setRecordForm((p) => ({ ...p, amount: e.target.value }))} fullWidth />
+            <TextField label="تاريخ القيد" type="date" value={recordForm.recordDate} onChange={(e) => setRecordForm((p) => ({ ...p, recordDate: e.target.value }))} fullWidth slotProps={{ inputLabel: { shrink: true } }} />
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenRecord(false)}>إلغاء</Button>
+          <Button variant="contained" onClick={submitRecord} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={openInvoice} onClose={() => setOpenInvoice(false)} fullWidth maxWidth="sm">
+        <DialogTitle>{editingInvoiceId ? "تعديل فاتورة" : "إضافة فاتورة"}</DialogTitle>
+        <DialogContent>
+          <Stack spacing={1.4} sx={{ mt: 1 }}>
+            <TextField label="رقم الفاتورة" value={invoiceForm.invoiceNo} onChange={(e) => setInvoiceForm((p) => ({ ...p, invoiceNo: e.target.value }))} fullWidth />
+            <TextField label="رقم العميل (اختياري)" value={invoiceForm.clientId} onChange={(e) => setInvoiceForm((p) => ({ ...p, clientId: e.target.value }))} fullWidth />
+            <TextField label="رقم المشروع (اختياري)" value={invoiceForm.projectId} onChange={(e) => setInvoiceForm((p) => ({ ...p, projectId: e.target.value }))} fullWidth />
+            <TextField label="الإجمالي" value={invoiceForm.total} onChange={(e) => setInvoiceForm((p) => ({ ...p, total: e.target.value }))} fullWidth />
+            <TextField label="المدفوع" value={invoiceForm.paid} onChange={(e) => setInvoiceForm((p) => ({ ...p, paid: e.target.value }))} fullWidth />
+            <TextField label="الحالة" value={invoiceForm.status} onChange={(e) => setInvoiceForm((p) => ({ ...p, status: e.target.value }))} fullWidth />
+            <TextField label="تاريخ الاستحقاق" type="date" value={invoiceForm.dueDate} onChange={(e) => setInvoiceForm((p) => ({ ...p, dueDate: e.target.value }))} fullWidth slotProps={{ inputLabel: { shrink: true } }} />
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenInvoice(false)}>إلغاء</Button>
+          <Button variant="contained" onClick={submitInvoice} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
+        </DialogActions>
+      </Dialog>
     </Stack>
   );
 }
