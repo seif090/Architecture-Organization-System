@@ -2,7 +2,6 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import DownloadIcon from "@mui/icons-material/Download";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 
 const reportCards = [
