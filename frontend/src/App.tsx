@@ -37,22 +37,31 @@ function ERPApp() {
   const [dashboard, setDashboard] = useState<any>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [clients, setClients] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
+  const [workforce, setWorkforce] = useState<any[]>([]);
+  const [inventory, setInventory] = useState<any[]>([]);
   const [finance, setFinance] = useState<{ records: any[]; invoices: any[] }>({ records: [], invoices: [] });
   const [properties, setProperties] = useState<{ properties: any[]; installments: any[] }>({ properties: [], installments: [] });
   const { user } = useAuth();
 
   const loadAll = async () => {
-    const [dashData, projectsData, clientsData, financeData, propertiesData] = await Promise.all([
-      fetchByScope<any>("/dashboard", scope),
-      fetchByScope<any[]>("/projects", scope),
-      fetchByScope<any[]>("/clients", scope),
+    const [dashData, projectsData, clientsData, usersData, workforceData, inventoryData, financeData, propertiesData] = await Promise.all([
+      fetchByScope<any>("/dashboard", scope).catch(() => null),
+      fetchByScope<any[]>("/projects", scope).catch(() => []),
+      fetchByScope<any[]>("/clients", scope).catch(() => []),
+      fetchByScope<any[]>("/users", scope).catch(() => []),
+      fetchByScope<any[]>("/workforce", scope).catch(() => []),
+      fetchByScope<any[]>("/inventory", scope).catch(() => []),
       fetchByScope<{ records: any[]; invoices: any[] }>("/finance", scope).catch(() => ({ records: [], invoices: [] })),
-      fetchByScope<{ properties: any[]; installments: any[] }>("/properties", scope)
+      fetchByScope<{ properties: any[]; installments: any[] }>("/properties", scope).catch(() => ({ properties: [], installments: [] }))
     ]);
 
     setDashboard(dashData);
     setProjects(projectsData);
     setClients(clientsData);
+    setUsers(usersData);
+    setWorkforce(workforceData);
+    setInventory(inventoryData);
     setFinance(financeData);
     setProperties(propertiesData);
   };
@@ -93,8 +102,8 @@ function ERPApp() {
           <Route path="projects" element={<ProjectsPage data={projects} onRefresh={loadAll} />} />
           <Route path="procurement" element={<ProcurementPage />} />
           <Route path="suppliers" element={<SuppliersPage />} />
-          <Route path="workforce" element={<WorkforcePage />} />
-          <Route path="users/new" element={<AddUserPage />} />
+          <Route path="workforce" element={<WorkforcePage data={workforce} onRefresh={loadAll} />} />
+          <Route path="users/new" element={<AddUserPage onCreated={loadAll} />} />
           <Route path="assets" element={<AssetsPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
           <Route path="reports" element={<ReportsPage />} />
@@ -103,10 +112,10 @@ function ERPApp() {
           <Route path="equipment-faults" element={<EquipmentFaultsPage />} />
           <Route path="incidents" element={<IncidentsPage />} />
           <Route path="sla" element={<SlaDashboardPage />} />
-          <Route path="access-control" element={<AccessControlPage />} />
+          <Route path="access-control" element={<AccessControlPage users={users} onRefresh={loadAll} />} />
           <Route path="contracts" element={<ContractsPage />} />
-          <Route path="clients" element={<ClientsPage clients={clients} />} />
-          <Route path="inventory" element={<InventoryManagementPage />} />
+          <Route path="clients" element={<ClientsPage clients={clients} onRefresh={loadAll} />} />
+          <Route path="inventory" element={<InventoryManagementPage items={inventory} onRefresh={loadAll} />} />
           <Route path="inventory-detail" element={<InventoryDetailPage />} />
           <Route
             path="finance"
