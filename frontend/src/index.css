@@ -45,3 +45,36 @@ body::before {
 a {
   color: inherit;
 }
+
+.erp-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: right;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.erp-table thead {
+  background: #f2f4f6;
+  color: #5f6b76;
+  font-size: 13px;
+}
+
+.erp-table th {
+  text-align: right;
+  font-weight: 800;
+}
+
+.erp-table th,
+.erp-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #edf0f3;
+}
+
+.erp-table tbody tr {
+  transition: background-color 120ms ease;
+}
+
+.erp-table tbody tr:hover {
+  background: #fafbfc;
+}

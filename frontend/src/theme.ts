@@ -139,6 +139,35 @@ export const appTheme = createTheme({
         }
       }
     },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#f2f4f6"
+        }
+      }
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          borderBottom: "1px solid #edf0f3",
+          color: "#243746",
+          paddingTop: 12,
+          paddingBottom: 12
+        },
+        head: {
+          color: "#5f6b76",
+          fontWeight: 800,
+          fontSize: 13
+        }
+      }
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          transition: "background-color 120ms ease"
+        }
+      }
+    },
     MuiTypography: {
       styleOverrides: {
         h4: {

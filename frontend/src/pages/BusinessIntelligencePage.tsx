@@ -279,7 +279,7 @@ export function BusinessIntelligencePage() {
                 <Button variant="text" sx={{ color: "#964900", fontWeight: 800 }} onClick={() => navigate("/erp/finance")}>عرض الكل</Button>
               </Box>
               <Box sx={{ overflowX: "auto" }}>
-                <Box component="table" sx={{ width: "100%", borderCollapse: "collapse", minWidth: 720, textAlign: "right" }}>
+                <Box component="table" className="erp-table" sx={{ minWidth: 720 }}>
                   <Box component="thead" sx={{ bgcolor: "#f3f4f8", color: "#6e7286", fontSize: 12 }}>
                     <Box component="tr">
                       {[

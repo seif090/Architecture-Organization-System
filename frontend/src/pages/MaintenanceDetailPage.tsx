@@ -147,7 +147,7 @@ export function MaintenanceDetailPage() {
         <CardContent>
           <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: 34, mb: 2 }}>قطع الغيار المطلوبة الآن</Typography>
           <Box sx={{ overflowX: "auto" }}>
-            <Box component="table" sx={{ width: "100%", minWidth: 720, borderCollapse: "collapse", textAlign: "right" }}>
+            <Box component="table" className="erp-table" sx={{ minWidth: 720 }}>
               <Box component="thead" sx={{ bgcolor: "#f3f4f8", color: "#7f8597", fontSize: 13 }}>
                 <Box component="tr">
                   {['القطعة', 'المخزن', 'الكمية'].map((head) => (
