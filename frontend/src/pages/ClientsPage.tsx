@@ -150,8 +150,8 @@ export function ClientsPage({ clients, onRefresh }: { clients: any[]; onRefresh:
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenCreate(false)}>إلغاء</Button>
-          <Button onClick={submit} variant="contained" disabled={loading} sx={{ bgcolor: "#000666" }}>
+          <Button type="button" onClick={() => setOpenCreate(false)}>إلغاء</Button>
+          <Button type="button" onClick={submit} variant="contained" disabled={loading} sx={{ bgcolor: "#000666" }}>
             {loading ? "جاري الحفظ..." : "حفظ"}
           </Button>
         </DialogActions>

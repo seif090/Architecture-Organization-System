@@ -68,6 +68,7 @@ export function AccessControlPage({ users, onRefresh }: { users: any[]; onRefres
           <Typography sx={{ color: "#111a6a", fontWeight: 900, fontSize: { xs: 28, md: 40 }, lineHeight: 1.1 }}>إدارة المستخدمين والصلاحيات</Typography>
         </Box>
         <Button
+          type="button"
           variant="contained"
           startIcon={<GroupAddIcon />}
           onClick={() => navigate("/erp/users/new")}
@@ -120,6 +121,7 @@ export function AccessControlPage({ users, onRefresh }: { users: any[]; onRefres
                     <TableCell>
                       <Stack direction="row" spacing={1}>
                         <Button
+                          type="button"
                           size="small"
                           variant="outlined"
                           startIcon={<SaveIcon />}
@@ -129,6 +131,7 @@ export function AccessControlPage({ users, onRefresh }: { users: any[]; onRefres
                           حفظ
                         </Button>
                         <Button
+                          type="button"
                           size="small"
                           color="error"
                           variant="outlined"

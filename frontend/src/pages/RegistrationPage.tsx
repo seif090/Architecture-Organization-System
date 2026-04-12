@@ -168,7 +168,7 @@ export function RegistrationPage() {
             {loading ? "جاري إنشاء الحساب..." : "إنشاء الحساب"}
           </Button>
 
-          <Button variant="outlined" startIcon={<ArrowBackIcon />} sx={{ borderColor: "#d7dceb", color: "#2a324d", height: 52 }} onClick={() => navigate("/login")}>
+          <Button type="button" variant="outlined" startIcon={<ArrowBackIcon />} sx={{ borderColor: "#d7dceb", color: "#2a324d", height: 52 }} onClick={() => navigate("/login")}>
             العودة لتسجيل الدخول
           </Button>
         </Stack>

@@ -159,8 +159,8 @@ export function ProjectsPage({ data, onRefresh }: { data: any[]; onRefresh: () =
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>إلغاء</Button>
-          <Button variant="contained" onClick={submit} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
+          <Button type="button" onClick={() => setOpen(false)}>إلغاء</Button>
+          <Button type="button" variant="contained" onClick={submit} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
         </DialogActions>
       </Dialog>
     </Stack>

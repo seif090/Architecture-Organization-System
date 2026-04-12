@@ -371,8 +371,8 @@ export function FinancePage({
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenRecord(false)}>إلغاء</Button>
-          <Button variant="contained" onClick={submitRecord} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
+          <Button type="button" onClick={() => setOpenRecord(false)}>إلغاء</Button>
+          <Button type="button" variant="contained" onClick={submitRecord} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
         </DialogActions>
       </Dialog>
 
@@ -390,8 +390,8 @@ export function FinancePage({
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenInvoice(false)}>إلغاء</Button>
-          <Button variant="contained" onClick={submitInvoice} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
+          <Button type="button" onClick={() => setOpenInvoice(false)}>إلغاء</Button>
+          <Button type="button" variant="contained" onClick={submitInvoice} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
         </DialogActions>
       </Dialog>
     </Stack>

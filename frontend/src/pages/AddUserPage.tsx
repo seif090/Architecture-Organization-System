@@ -86,7 +86,7 @@ export function AddUserPage({ onCreated }: { onCreated: () => Promise<void> | vo
             </TextField>
 
             <Stack direction="row" spacing={1.2}>
-              <Button variant="text" onClick={() => navigate("/erp/access-control")}>إلغاء</Button>
+              <Button type="button" variant="text" onClick={() => navigate("/erp/access-control")}>إلغاء</Button>
               <Button type="submit" variant="contained" startIcon={<SaveIcon />} disabled={loading} sx={{ bgcolor: "#000666" }}>
                 {loading ? "جاري الحفظ..." : "حفظ المستخدم"}
               </Button>

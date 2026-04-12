@@ -355,8 +355,8 @@ export function PropertiesPage({
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenProperty(false)}>إلغاء</Button>
-          <Button variant="contained" onClick={submitProperty} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
+          <Button type="button" onClick={() => setOpenProperty(false)}>إلغاء</Button>
+          <Button type="button" variant="contained" onClick={submitProperty} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
         </DialogActions>
       </Dialog>
 
@@ -375,8 +375,8 @@ export function PropertiesPage({
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenInstallment(false)}>إلغاء</Button>
-          <Button variant="contained" onClick={submitInstallment} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
+          <Button type="button" onClick={() => setOpenInstallment(false)}>إلغاء</Button>
+          <Button type="button" variant="contained" onClick={submitInstallment} disabled={loading} sx={{ bgcolor: "#000666" }}>{loading ? "جاري الحفظ..." : "حفظ"}</Button>
         </DialogActions>
       </Dialog>
     </Stack>
