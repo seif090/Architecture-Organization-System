@@ -178,7 +178,7 @@ export function BusinessIntelligencePage() {
                     <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}><Box sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: "#964900" }} /><Typography sx={{ fontSize: 12, fontWeight: 700 }}>التشطيبات</Typography></Box>
                   </FlexRow>
                 </Box>
-                <Box sx={{ minHeight: 320, display: "flex", alignItems: "flex-end", gap: 1.6, position: "relative" }}>
+                <Box sx={{ height: 320, display: "flex", alignItems: "flex-end", gap: 1.6, position: "relative" }}>
                   <Box sx={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "space-between", pointerEvents: "none" }}>
                     {[1, 2, 3, 4].map((item) => <Box key={item} sx={{ borderBottom: "1px solid rgba(198,197,212,0.35)", height: 0 }} />)}
                   </Box>
