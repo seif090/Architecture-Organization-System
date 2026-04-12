@@ -12,6 +12,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Box, Button, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { PageHero } from "../components/PageHero";
 
 const heatMapProjects = [
   { id: "#K-201", name: "برج المجد", progress: "85%", color: "#16a34a", icon: "verified" },
@@ -125,15 +126,18 @@ export function BusinessIntelligencePage() {
         </Box>
 
         <Box sx={{ p: { xs: 2, md: 4 }, minWidth: 0 }}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap", mb: 5 }}>
-            <Box>
-              <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1, mb: 0.8 }}>لوحة استخبارات الأعمال</Typography>
-              <Typography sx={{ color: "#6f7587" }}>نظرة عامة تحليلية على الأداء المالي والإنشائي للمجموعة</Typography>
-            </Box>
-            <FlexRow gap={1.2}>
-              <Button variant="outlined" startIcon={<CalendarMonthIcon />} onClick={() => navigate("/erp/reports")}>الربع الأخير 2023</Button>
-              <Button variant="contained" startIcon={<DownloadIcon />} sx={{ bgcolor: "#000666" }} onClick={exportBiReport}>تصدير التقرير</Button>
-            </FlexRow>
+          <Box sx={{ mb: 5 }}>
+            <PageHero
+              eyebrow="استخبارات الأعمال"
+              title="لوحة استخبارات الأعمال"
+              subtitle="نظرة عامة تحليلية على الأداء المالي والإنشائي للمجموعة."
+              actions={(
+                <>
+                  <Button type="button" variant="outlined" startIcon={<CalendarMonthIcon />} onClick={() => navigate("/erp/reports")}>الربع الأخير 2023</Button>
+                  <Button type="button" variant="contained" startIcon={<DownloadIcon />} onClick={exportBiReport}>تصدير التقرير</Button>
+                </>
+              )}
+            />
           </Box>
 
           <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" }, mb: 5 }}>

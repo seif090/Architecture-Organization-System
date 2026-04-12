@@ -4,6 +4,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { PageHero } from "../components/PageHero";
 
 const reportCards = [
   { title: "تقرير الإيرادات الشهرية", value: "42.8M", delta: "+12.4%", color: "#000666" },
@@ -43,17 +44,17 @@ export function ReportsPage() {
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>التقارير / التحليلات</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>مركز التقارير التنفيذية</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>لوحة مختصرة تجمع أهم مؤشرات المشاريع والمالية والمخزون والتشغيل.</Typography>
-        </Box>
-        <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<AssessmentIcon />} onClick={() => navigate("/erp/dashboard")}>عرض الملخص</Button>
-          <Button variant="contained" startIcon={<DownloadIcon />} sx={{ bgcolor: "#000666" }} onClick={exportReportSummary}>تصدير التقرير</Button>
-        </Stack>
-      </Box>
+      <PageHero
+        eyebrow="التقارير / التحليلات"
+        title="مركز التقارير التنفيذية"
+        subtitle="لوحة مختصرة تجمع أهم مؤشرات المشاريع والمالية والمخزون والتشغيل."
+        actions={(
+          <>
+            <Button type="button" variant="outlined" startIcon={<AssessmentIcon />} onClick={() => navigate("/erp/dashboard")}>عرض الملخص</Button>
+            <Button type="button" variant="contained" startIcon={<DownloadIcon />} onClick={exportReportSummary}>تصدير التقرير</Button>
+          </>
+        )}
+      />
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
         {reportCards.map((card, index) => (

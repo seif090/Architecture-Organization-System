@@ -9,6 +9,7 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { Alert, Box, Button, Card, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { api } from "../api";
+import { PageHero } from "../components/PageHero";
 
 type RecordForm = {
   recordType: string;
@@ -244,18 +245,18 @@ export function FinancePage({
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 2 }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>المالية / الحسابات</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة الحسابات والمصروفات</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>نظرة شاملة على التدفقات المالية والمصروفات الإنشائية.</Typography>
-        </Box>
-        <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<DownloadIcon />} sx={{ borderColor: "#d8dceb", color: "#000666" }} onClick={exportFinanceReport}>تصدير التقرير</Button>
-          <Button variant="contained" startIcon={<AttachMoneyIcon />} sx={{ bgcolor: "#000666" }} onClick={openCreateRecord}>إضافة قيد مالي</Button>
-          <Button variant="contained" startIcon={<ReceiptLongIcon />} sx={{ bgcolor: "#964900" }} onClick={openCreateInvoice}>إضافة فاتورة</Button>
-        </Stack>
-      </Box>
+      <PageHero
+        eyebrow="المالية / الحسابات"
+        title="إدارة الحسابات والمصروفات"
+        subtitle="نظرة شاملة على التدفقات المالية والمصروفات الإنشائية."
+        actions={(
+          <>
+            <Button type="button" variant="outlined" startIcon={<DownloadIcon />} onClick={exportFinanceReport}>تصدير التقرير</Button>
+            <Button type="button" variant="contained" startIcon={<AttachMoneyIcon />} onClick={openCreateRecord}>إضافة قيد مالي</Button>
+            <Button type="button" variant="contained" color="secondary" startIcon={<ReceiptLongIcon />} onClick={openCreateInvoice}>إضافة فاتورة</Button>
+          </>
+        )}
+      />
 
       {error && <Alert severity="error">{error}</Alert>}
       {success && <Alert severity="success">{success}</Alert>}
