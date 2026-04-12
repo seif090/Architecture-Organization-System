@@ -22,10 +22,15 @@ const AccessControlPage = lazy(() => import("./pages/AccessControlPage").then((m
 const ContractsPage = lazy(() => import("./pages/ContractsPage").then((m) => ({ default: m.ContractsPage })));
 const ClientsPage = lazy(() => import("./pages/ClientsPage").then((m) => ({ default: m.ClientsPage })));
 const InventoryManagementPage = lazy(() => import("./pages/InventoryManagementPage").then((m) => ({ default: m.InventoryManagementPage })));
+const InventoryDetailPage = lazy(() => import("./pages/InventoryDetailPage").then((m) => ({ default: m.InventoryDetailPage })));
 const FinancePage = lazy(() => import("./pages/FinancePage").then((m) => ({ default: m.FinancePage })));
 const PropertiesPage = lazy(() => import("./pages/PropertiesPage").then((m) => ({ default: m.PropertiesPage })));
 const ReportsPage = lazy(() => import("./pages/ReportsPage").then((m) => ({ default: m.ReportsPage })));
 const MaintenancePage = lazy(() => import("./pages/MaintenancePage").then((m) => ({ default: m.MaintenancePage })));
+const MaintenanceDetailPage = lazy(() => import("./pages/MaintenanceDetailPage").then((m) => ({ default: m.MaintenanceDetailPage })));
+const EquipmentFaultsPage = lazy(() => import("./pages/EquipmentFaultsPage").then((m) => ({ default: m.EquipmentFaultsPage })));
+const IncidentsPage = lazy(() => import("./pages/IncidentsPage").then((m) => ({ default: m.IncidentsPage })));
+const SlaDashboardPage = lazy(() => import("./pages/SlaDashboardPage").then((m) => ({ default: m.SlaDashboardPage })));
 
 function ERPApp() {
   const [scope, setScope] = useState<DataScope>("all");
@@ -93,10 +98,15 @@ function ERPApp() {
           <Route path="notifications" element={<NotificationsPage />} />
           <Route path="reports" element={<ReportsPage />} />
           <Route path="maintenance" element={<MaintenancePage />} />
+          <Route path="maintenance-detail" element={<MaintenanceDetailPage />} />
+          <Route path="equipment-faults" element={<EquipmentFaultsPage />} />
+          <Route path="incidents" element={<IncidentsPage />} />
+          <Route path="sla" element={<SlaDashboardPage />} />
           <Route path="access-control" element={<AccessControlPage />} />
           <Route path="contracts" element={<ContractsPage />} />
           <Route path="clients" element={<ClientsPage clients={clients} />} />
           <Route path="inventory" element={<InventoryManagementPage />} />
+          <Route path="inventory-detail" element={<InventoryDetailPage />} />
           <Route
             path="finance"
             element={<FinancePage isViewer={user?.role === "viewer"} records={finance.records} invoices={finance.invoices} />}
