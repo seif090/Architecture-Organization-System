@@ -4,6 +4,7 @@ import ForumIcon from "@mui/icons-material/Forum";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import { Box, Button, Card, CardContent, Chip, Divider, LinearProgress, Stack, Typography } from "@mui/material";
+import { StatusChip } from "../components/StatusChip";
 
 const incidentItems = [
   {
@@ -89,8 +90,8 @@ export function IncidentsPage() {
                       <Typography sx={{ color: "#7f8597", fontSize: 12, mt: 0.4 }}>{incident.site} · {incident.assignee}</Typography>
                     </Box>
                     <Box sx={{ textAlign: "left" }}>
-                      <Chip label={incident.priority} size="small" sx={{ bgcolor: incident.priority === "عاجل" ? "#ffebee" : incident.priority === "متوسط" ? "#fff1e2" : "#eef0f6" }} />
-                      <Typography sx={{ mt: 0.8, color: "#000666", fontWeight: 800 }}>{incident.status}</Typography>
+                      <StatusChip label={incident.priority} size="small" />
+                      <StatusChip label={incident.status} size="small" sx={{ mt: 0.8 }} />
                     </Box>
                   </Box>
                   <Box sx={{ mt: 1.2 }}>

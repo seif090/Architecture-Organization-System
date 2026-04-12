@@ -3,8 +3,9 @@ import BuildIcon from "@mui/icons-material/Build";
 import CarRepairIcon from "@mui/icons-material/CarRepair";
 import DevicesIcon from "@mui/icons-material/Devices";
 import HandymanIcon from "@mui/icons-material/Handyman";
-import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { StatusChip } from "../components/StatusChip";
 
 const assets = [
   { name: "ونش برج 30 طن", code: "AST-1001", branch: "مشروع فيلا التجمع الخامس", status: "تشغيل", condition: 92, value: "850,000 ج.م", icon: <CarRepairIcon /> },
@@ -59,7 +60,7 @@ export function AssetsPage() {
                     </Box>
                     <Box sx={{ textAlign: "left" }}>
                       <Typography sx={{ fontWeight: 900, color: "#000666" }}>{asset.value}</Typography>
-                      <Chip label={asset.status} size="small" sx={{ mt: 0.5 }} />
+                      <StatusChip label={asset.status} size="small" sx={{ mt: 0.5 }} />
                     </Box>
                   </Box>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1.4, mt: 1.4 }}>

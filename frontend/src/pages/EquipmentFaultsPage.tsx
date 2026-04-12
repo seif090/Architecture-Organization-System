@@ -5,6 +5,7 @@ import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturi
 import SpeedIcon from "@mui/icons-material/Speed";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { StatusChip } from "../components/StatusChip";
 
 const faultCards = [
   { title: "أعطال نشطة", value: "12", color: "#000666" },
@@ -73,7 +74,7 @@ export function EquipmentFaultsPage() {
                       <Typography sx={{ color: "#7f8597", fontSize: 13, mt: 0.4 }}>{fault.site} · {fault.type} · {fault.owner}</Typography>
                     </Box>
                     <Box sx={{ textAlign: "left" }}>
-                      <Chip label={fault.status} size="small" sx={{ bgcolor: fault.status === "حرج" ? "#ffebee" : fault.status === "تحت المعالجة" ? "#fff1e2" : fault.status === "مكتمل" ? "#e8f8ef" : "#eef0f6" }} />
+                      <StatusChip label={fault.status} size="small" />
                       <Typography sx={{ mt: 0.8, color: "#000666", fontWeight: 800 }}>{fault.progress}%</Typography>
                     </Box>
                   </Box>

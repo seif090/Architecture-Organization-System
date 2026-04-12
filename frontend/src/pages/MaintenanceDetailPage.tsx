@@ -5,6 +5,7 @@ import ScheduleIcon from "@mui/icons-material/Schedule";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { StatusChip } from "../components/StatusChip";
 
 const maintenanceJobs = [
   {
@@ -92,7 +93,7 @@ export function MaintenanceDetailPage() {
                       <Typography sx={{ color: "#7f8597", fontSize: 12, mt: 0.4 }}>الفني المسؤول: {job.technician}</Typography>
                     </Box>
                     <Box sx={{ textAlign: "left" }}>
-                      <Chip label={job.status} size="small" sx={{ bgcolor: job.status === "عاجل" ? "#ffebee" : job.status === "قيد العمل" ? "#fff1e2" : "#eef0f6" }} />
+                      <StatusChip label={job.status} size="small" />
                       <Typography sx={{ mt: 0.8, color: "#000666", fontWeight: 800 }}>{job.nextStep}</Typography>
                     </Box>
                   </Box>

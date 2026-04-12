@@ -5,6 +5,7 @@ import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { StatusChip } from "../components/StatusChip";
 
 const requests = [
   { title: "بلاغ صيانة مضخة الخرسانة", location: "مشروع برج المجد", priority: "عاجل", status: "قيد التنفيذ", progress: 82 },
@@ -68,8 +69,8 @@ export function MaintenancePage() {
                       <Typography sx={{ color: "#7f8597", fontSize: 13, mt: 0.4 }}>{request.location}</Typography>
                     </Box>
                     <Box sx={{ textAlign: "left" }}>
-                      <Chip label={request.priority} size="small" sx={{ bgcolor: request.priority === "عاجل" ? "#ffebee" : request.priority === "متوسط" ? "#fff1e2" : "#eef0f6" }} />
-                      <Typography sx={{ mt: 0.8, color: "#000666", fontWeight: 800 }}>{request.status}</Typography>
+                      <StatusChip label={request.priority} size="small" />
+                      <StatusChip label={request.status} size="small" sx={{ mt: 0.8 }} />
                     </Box>
                   </Box>
                   <Box sx={{ mt: 1.2 }}>

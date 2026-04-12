@@ -4,6 +4,7 @@ import FlashOnIcon from "@mui/icons-material/FlashOn";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { StatusChip } from "../components/StatusChip";
 
 const slaSummary = [
   { title: "ضمن SLA", value: "86%", delta: "+4%", color: "#16a34a" },
@@ -74,7 +75,7 @@ export function SlaDashboardPage() {
                       <Typography sx={{ color: "#000666", fontWeight: 800 }}>{row.name}</Typography>
                       <Typography sx={{ color: "#7f8597", fontSize: 13, mt: 0.4 }}>الهدف: {row.target} · الفعلي: {row.actual}</Typography>
                     </Box>
-                    <Chip label={row.status} size="small" sx={{ bgcolor: row.status === "خطر" ? "#ffebee" : row.status === "جيد" ? "#e8f8ef" : "#fff1e2" }} />
+                    <StatusChip label={row.status} size="small" />
                   </Box>
                   <Box sx={{ mt: 1.2 }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.7 }}>

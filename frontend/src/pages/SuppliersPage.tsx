@@ -3,6 +3,7 @@ import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import StarIcon from "@mui/icons-material/Star";
 import { Avatar, Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { StatusChip } from "../components/StatusChip";
 
 const supplierRows = [
   { name: "مجموعة حديد الجزيرة", code: "V-9041", tags: ["حديد", "تسليح"], debt: "450,000 ر.س", rating: 4.9, status: "نشط" },
@@ -62,7 +63,7 @@ export function SuppliersPage() {
                   <Box key={contract.title} sx={{ p: 1.4, borderRadius: 2, bgcolor: "rgba(255,255,255,0.08)" }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <Typography sx={{ fontWeight: 800 }}>{contract.title}</Typography>
-                      <Chip size="small" label={contract.severity} sx={{ bgcolor: contract.severity === "عاجل" ? "#fc820c" : "#8b94c9", color: "white" }} />
+                      <StatusChip size="small" label={contract.severity} />
                     </Box>
                     <Typography sx={{ opacity: 0.85, fontSize: 13, mt: 0.5 }}>{contract.subtitle}</Typography>
                     <LinearProgress variant="determinate" value={contract.progress} sx={{ mt: 1.4, height: 6, borderRadius: 999, bgcolor: "rgba(255,255,255,0.2)", "& .MuiLinearProgress-bar": { bgcolor: "#fc820c" } }} />
@@ -133,7 +134,7 @@ export function SuppliersPage() {
                         </Box>
                         <Box component="td" sx={{ p: 2, color: "#000666", fontWeight: 800 }}>{supplier.debt}</Box>
                         <Box component="td" sx={{ p: 2 }}><Typography sx={{ color: "#000666", fontWeight: 900 }}><StarIcon sx={{ color: "#fc820c", fontSize: 16, verticalAlign: "middle", ml: 0.4 }} />{supplier.rating}</Typography></Box>
-                        <Box component="td" sx={{ p: 2 }}><Chip label={supplier.status} size="small" sx={{ bgcolor: supplier.status === "نشط" ? "#d8f4df" : "#fff1e2" }} /></Box>
+                        <Box component="td" sx={{ p: 2 }}><StatusChip label={supplier.status} size="small" /></Box>
                       </Box>
                     ))}
                   </Box>

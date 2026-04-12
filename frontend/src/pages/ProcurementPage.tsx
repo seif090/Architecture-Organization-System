@@ -6,6 +6,7 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { Avatar, Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { StatusChip } from "../components/StatusChip";
 
 const purchaseOrders = [
   {
@@ -104,8 +105,8 @@ export function ProcurementPage() {
                   <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 1.3, gap: 1, flexWrap: "wrap" }}>
                     <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
                       <Chip label={order.code} size="small" variant="outlined" />
-                      <Chip label={order.status} size="small" sx={{ bgcolor: order.status === "موافق عليه" ? "#e8f8ef" : order.status === "قيد الاعتماد" ? "#fff1e2" : "#eef0f6" }} />
-                      <Chip label={order.priority} size="small" sx={{ bgcolor: order.priority === "عاجل" ? "#ffebee" : "#eef0f6" }} />
+                      <StatusChip label={order.status} size="small" />
+                      <StatusChip label={order.priority} size="small" />
                     </Box>
                     <Box sx={{ minWidth: 160 }}>
                       <LinearProgress variant="determinate" value={order.progress} sx={{ height: 7, borderRadius: 999, bgcolor: "#eceef5", "& .MuiLinearProgress-bar": { bgcolor: "#000666" } }} />

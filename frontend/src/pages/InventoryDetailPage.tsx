@@ -4,6 +4,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { StatusChip } from "../components/StatusChip";
 
 const warehouseZones = [
   { name: "مخزن الأسمنت", location: "المنطقة A", total: "1,200", used: "850", status: "مستقر", color: "#000666" },
@@ -80,7 +81,7 @@ export function InventoryDetailPage() {
                         <Typography sx={{ color: "#000666", fontWeight: 800 }}>{zone.name}</Typography>
                         <Typography sx={{ color: "#7f8597", fontSize: 13, mt: 0.4 }}>{zone.location} · المستخدم {zone.used} من {zone.total}</Typography>
                       </Box>
-                      <Chip label={zone.status} size="small" sx={{ bgcolor: zone.status === "مزدحم" ? "#fff1e2" : zone.status === "منخفض" ? "#e8f8ef" : "#eef0f6" }} />
+                      <StatusChip label={zone.status} size="small" />
                     </Box>
                     <Box sx={{ mt: 1.2 }}>
                       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.7 }}>
@@ -105,7 +106,10 @@ export function InventoryDetailPage() {
                   <Box key={alert.item} sx={{ p: 1.2, borderRadius: 2, bgcolor: "rgba(255,255,255,0.08)" }}>
                     <Typography sx={{ fontWeight: 800, color: "#fc820c" }}>{alert.item}</Typography>
                     <Typography sx={{ fontSize: 13, color: "rgba(255,255,255,0.88)", mt: 0.4 }}>{alert.project}</Typography>
-                    <Typography sx={{ fontSize: 12, color: "rgba(255,255,255,0.72)", mt: 0.4 }}>المتبقي {alert.remaining} · الحالة {alert.severity}</Typography>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.8, mt: 0.6 }}>
+                      <Typography sx={{ fontSize: 12, color: "rgba(255,255,255,0.72)" }}>المتبقي {alert.remaining}</Typography>
+                      <StatusChip label={alert.severity} size="small" sx={{ bgcolor: "rgba(255,255,255,0.18)", color: "white", borderColor: "rgba(255,255,255,0.28)" }} />
+                    </Box>
                   </Box>
                 ))}
               </Stack>
