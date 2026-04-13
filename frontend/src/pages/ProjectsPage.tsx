@@ -3,6 +3,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import WorkIcon from "@mui/icons-material/Work";
+import axios from "axios";
 import { Alert, Box, Button, Card, CardContent, Stack, TextField, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { api } from "../api";
@@ -31,7 +32,15 @@ const emptyForm: ProjectForm = {
   status: "نشط"
 };
 
-export function ProjectsPage({ data, onRefresh }: { data: any[]; onRefresh: () => Promise<void> | void }) {
+export function ProjectsPage({
+  data,
+  onRefresh,
+  canManageProjects = true
+}: {
+  data: any[];
+  onRefresh: () => Promise<void> | void;
+  canManageProjects?: boolean;
+}) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,6 +52,16 @@ export function ProjectsPage({ data, onRefresh }: { data: any[]; onRefresh: () =
 
   const setField = (key: keyof ProjectForm, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const parseNumber = (value: string) => {
+    const trimmed = value.trim();
+    if (!trimmed) {
+      return null;
+    }
+
+    const parsed = Number(trimmed);
+    return Number.isFinite(parsed) ? parsed : null;
   };
 
   const openCreate = () => {
@@ -68,17 +87,44 @@ export function ProjectsPage({ data, onRefresh }: { data: any[]; onRefresh: () =
   const submit = async () => {
     setError("");
     setSuccess("");
+
+    if (!form.name.trim() || !form.type.trim()) {
+      setError("اسم المشروع والنوع مطلوبان");
+      return;
+    }
+
+    const durationDays = parseNumber(form.durationDays);
+    const expectedCost = parseNumber(form.expectedCost);
+    const actualCost = parseNumber(form.actualCost) ?? 0;
+    const clientId = parseNumber(form.clientId);
+
+    if (durationDays === null || durationDays <= 0) {
+      setError("أدخل مدة مشروع صحيحة بالأيام");
+      return;
+    }
+
+    if (expectedCost === null || expectedCost <= 0) {
+      setError("أدخل تكلفة متوقعة صحيحة");
+      return;
+    }
+
     setLoading(true);
 
     const payload = {
       name: form.name,
       type: form.type,
-      clientId: form.clientId ? Number(form.clientId) : null,
-      durationDays: Number(form.durationDays),
-      expectedCost: Number(form.expectedCost),
-      actualCost: Number(form.actualCost || 0),
+      clientId: clientId ?? null,
+      durationDays,
+      expectedCost,
+      actualCost: actualCost < 0 ? 0 : actualCost,
       status: form.status
     };
+
+    if (!canManageProjects) {
+      setError("ليس لديك صلاحية حفظ أو تعديل المشاريع");
+      setLoading(false);
+      return;
+    }
 
     try {
       if (editingId) {
@@ -90,8 +136,13 @@ export function ProjectsPage({ data, onRefresh }: { data: any[]; onRefresh: () =
       }
       await onRefresh();
       setOpen(false);
-    } catch {
-      setError("تعذر حفظ بيانات المشروع");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const message = err.response?.data?.message;
+        setError(typeof message === "string" && message.trim() ? message : "تعذر حفظ بيانات المشروع");
+      } else {
+        setError("تعذر حفظ بيانات المشروع");
+      }
     } finally {
       setLoading(false);
     }
@@ -113,11 +164,15 @@ export function ProjectsPage({ data, onRefresh }: { data: any[]; onRefresh: () =
 
   return (
     <Stack spacing={3.2}>
+      {!canManageProjects && (
+        <Alert severity="info">الحفظ والتعديل والحذف متاحون فقط لمدير النظام أو مدير المشروع أو المهندس.</Alert>
+      )}
+
       <PageHero
         eyebrow="المشاريع"
         title="إدارة المشاريع"
         subtitle="متابعة حالة كل مشروع وتكاليفه وربطه بالعميل والفريق."
-        actions={<Button type="button" variant="contained" startIcon={<AddIcon />} onClick={openCreate}>إضافة مشروع</Button>}
+        actions={<Button type="button" variant="contained" startIcon={<AddIcon />} onClick={openCreate} disabled={!canManageProjects}>إضافة مشروع</Button>}
       />
 
       {error && <Alert severity="error">{error}</Alert>}
@@ -141,8 +196,8 @@ export function ProjectsPage({ data, onRefresh }: { data: any[]; onRefresh: () =
                   <Typography sx={{ color: "#7f8597", fontSize: 13 }}>{row.type} · {row.status} · {row.expected_cost} </Typography>
                 </Box>
                 <Stack direction="row" spacing={1}>
-                  <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEdit(row)}>تعديل</Button>
-                  <Button type="button" size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => deleteProject(row.id)}>حذف</Button>
+                  <Button type="button" size="small" variant="outlined" startIcon={<EditIcon />} onClick={() => openEdit(row)} disabled={!canManageProjects}>تعديل</Button>
+                  <Button type="button" size="small" variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => deleteProject(row.id)} disabled={!canManageProjects}>حذف</Button>
                 </Stack>
               </Box>
             ))}
@@ -156,14 +211,15 @@ export function ProjectsPage({ data, onRefresh }: { data: any[]; onRefresh: () =
         onConfirm={submit}
         title={editingId ? "تعديل مشروع" : "إضافة مشروع"}
         loading={loading}
+        confirmDisabled={!canManageProjects}
       >
         <Stack spacing={1.4} sx={{ mt: 1 }}>
           <TextField label="اسم المشروع" value={form.name} onChange={(e) => setField("name", e.target.value)} fullWidth />
           <TextField label="النوع" value={form.type} onChange={(e) => setField("type", e.target.value)} fullWidth />
           <TextField label="رقم العميل (اختياري)" value={form.clientId} onChange={(e) => setField("clientId", e.target.value)} fullWidth />
-          <TextField label="مدة المشروع بالأيام" value={form.durationDays} onChange={(e) => setField("durationDays", e.target.value)} fullWidth />
-          <TextField label="التكلفة المتوقعة" value={form.expectedCost} onChange={(e) => setField("expectedCost", e.target.value)} fullWidth />
-          <TextField label="التكلفة الفعلية" value={form.actualCost} onChange={(e) => setField("actualCost", e.target.value)} fullWidth />
+          <TextField type="number" label="مدة المشروع بالأيام" value={form.durationDays} onChange={(e) => setField("durationDays", e.target.value)} fullWidth slotProps={{ htmlInput: { min: 1 } }} />
+          <TextField type="number" label="التكلفة المتوقعة" value={form.expectedCost} onChange={(e) => setField("expectedCost", e.target.value)} fullWidth slotProps={{ htmlInput: { min: 1 } }} />
+          <TextField type="number" label="التكلفة الفعلية" value={form.actualCost} onChange={(e) => setField("actualCost", e.target.value)} fullWidth slotProps={{ htmlInput: { min: 0 } }} />
           <TextField label="الحالة" value={form.status} onChange={(e) => setField("status", e.target.value)} fullWidth />
         </Stack>
       </FormDialogShell>

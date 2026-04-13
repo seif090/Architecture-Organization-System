@@ -101,7 +101,7 @@ function ERPApp() {
           <Route index element={<DashboardPage data={dashboard} />} />
           <Route path="bi" element={<BusinessIntelligencePage />} />
           <Route path="dashboard" element={<DashboardPage data={dashboard} />} />
-          <Route path="projects" element={<ProjectsPage data={projects} onRefresh={loadAll} />} />
+          <Route path="projects" element={<ProjectsPage data={projects} onRefresh={loadAll} canManageProjects={user?.role !== "viewer"} />} />
           <Route path="procurement" element={<ProcurementPage />} />
           <Route path="suppliers" element={<SuppliersPage />} />
           <Route path="workforce" element={<WorkforcePage data={workforce} onRefresh={loadAll} />} />

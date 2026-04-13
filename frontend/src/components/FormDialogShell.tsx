@@ -8,6 +8,7 @@ type FormDialogShellProps = {
   onConfirm: () => void;
   children: ReactNode;
   loading?: boolean;
+  confirmDisabled?: boolean;
   confirmText?: string;
   loadingText?: string;
   cancelText?: string;
@@ -20,6 +21,7 @@ export function FormDialogShell({
   onConfirm,
   children,
   loading = false,
+  confirmDisabled = false,
   confirmText = "حفظ",
   loadingText = "جاري الحفظ...",
   cancelText = "إلغاء"
@@ -30,7 +32,7 @@ export function FormDialogShell({
       <DialogContent>{children}</DialogContent>
       <DialogActions sx={{ px: 3, pb: 2 }}>
         <Button type="button" onClick={onClose}>{cancelText}</Button>
-        <Button type="button" variant="contained" onClick={onConfirm} disabled={loading}>
+        <Button type="button" variant="contained" onClick={onConfirm} disabled={loading || confirmDisabled}>
           {loading ? loadingText : confirmText}
         </Button>
       </DialogActions>
