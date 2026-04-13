@@ -6,6 +6,7 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { Avatar, Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { HighlightCtaCard } from "../components/HighlightCtaCard";
 import { StatusChip } from "../components/StatusChip";
 
 const purchaseOrders = [
@@ -187,15 +188,13 @@ export function ProcurementPage() {
         </CardContent>
       </Card>
 
-      <Card sx={{ borderRadius: 3, bgcolor: "#000666", color: "white" }}>
-        <CardContent sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
-          <Box>
-            <Typography sx={{ fontSize: 20, fontWeight: 800 }}>إشعارات الموردين</Typography>
-            <Typography sx={{ color: "rgba(255,255,255,0.8)", mt: 0.7 }}>هناك 3 أوامر شراء تحتاج اعتمادًا اليوم ومواد حرجة لمواقع نشطة.</Typography>
-          </Box>
-          <Button variant="contained" startIcon={<LocalShippingIcon />} sx={{ bgcolor: "#fc820c", color: "white" }} onClick={() => navigate("/erp/inventory-detail")}>متابعة الطلبات</Button>
-        </CardContent>
-      </Card>
+      <HighlightCtaCard
+        title="إشعارات الموردين"
+        description="هناك 3 أوامر شراء تحتاج اعتمادًا اليوم ومواد حرجة لمواقع نشطة."
+        actionLabel="متابعة الطلبات"
+        actionIcon={<LocalShippingIcon />}
+        onAction={() => navigate("/erp/inventory-detail")}
+      />
     </Stack>
   );
 }

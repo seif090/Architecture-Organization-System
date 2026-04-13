@@ -10,6 +10,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Box, Button, Card, CardContent, Chip, IconButton, LinearProgress, Stack, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { HighlightCtaCard } from "../components/HighlightCtaCard";
 
 const summary = [
   { title: "المالية المستحقة", count: 4, label: "مطالبات اليوم", color: "#964900", progress: 75 },
@@ -174,15 +175,14 @@ export function NotificationsPage() {
           ))}
         </Stack>
 
-        <Card sx={{ borderRadius: 3, mt: 4, bgcolor: "#000666", color: "white" }}>
-          <CardContent sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
-            <Box>
-              <Typography sx={{ fontSize: 20, fontWeight: 800 }}>حالة التنبيهات اللحظية</Typography>
-              <Typography sx={{ color: "rgba(255,255,255,0.8)", mt: 0.5 }}>المتابعة الفورية لمخاطر المشروع والمالية والمخزون.</Typography>
-            </Box>
-            <Button type="button" variant="contained" sx={{ bgcolor: "#fc820c", color: "white" }} onClick={() => navigate("/erp/maintenance")}>الانتقال إلى الجدولة</Button>
-          </CardContent>
-        </Card>
+        <Box sx={{ mt: 4 }}>
+          <HighlightCtaCard
+          title="حالة التنبيهات اللحظية"
+          description="المتابعة الفورية لمخاطر المشروع والمالية والمخزون."
+          actionLabel="الانتقال إلى الجدولة"
+          onAction={() => navigate("/erp/maintenance")}
+          />
+        </Box>
       </Box>
     </Stack>
   );

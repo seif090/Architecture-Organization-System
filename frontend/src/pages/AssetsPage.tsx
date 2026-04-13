@@ -5,6 +5,7 @@ import DevicesIcon from "@mui/icons-material/Devices";
 import HandymanIcon from "@mui/icons-material/Handyman";
 import { Box, Button, Card, CardContent, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { HighlightCtaCard } from "../components/HighlightCtaCard";
 import { StatusChip } from "../components/StatusChip";
 
 const assets = [
@@ -80,13 +81,12 @@ export function AssetsPage() {
         </Card>
 
         <Stack spacing={2}>
-          <Card sx={{ borderRadius: 3, bgcolor: "#000666", color: "white" }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 18, fontWeight: 800 }}>لوحة الصيانة</Typography>
-              <Typography sx={{ opacity: 0.85, mt: 0.6 }}>يوجد 6 أصول تحتاج صيانة دورية هذا الأسبوع، وطلبان في انتظار الاعتماد.</Typography>
-              <Button variant="contained" sx={{ mt: 2, bgcolor: "#fc820c", color: "white" }} onClick={() => navigate("/erp/maintenance-detail")}>جدولة الصيانة</Button>
-            </CardContent>
-          </Card>
+          <HighlightCtaCard
+            title="لوحة الصيانة"
+            description="يوجد 6 أصول تحتاج صيانة دورية هذا الأسبوع، وطلبان في انتظار الاعتماد."
+            actionLabel="جدولة الصيانة"
+            onAction={() => navigate("/erp/maintenance-detail")}
+          />
 
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
