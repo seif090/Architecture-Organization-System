@@ -7,6 +7,7 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Box, Button, Card, CardContent, Chip, IconButton, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { HighlightCtaCard } from "../components/HighlightCtaCard";
 import { StatusChip } from "../components/StatusChip";
 
 const contractItems = [
@@ -164,14 +165,12 @@ export function ContractsPage() {
             </CardContent>
           </Card>
 
-          <Card sx={{ borderRadius: 3, bgcolor: "#101a6d", color: "white" }}>
-            <CardContent>
-              <Typography sx={{ opacity: 0.85, mb: 1 }}>مساحة توجيه سريعة</Typography>
-              <Typography sx={{ fontSize: 22, fontWeight: 800, mb: 1 }}>ابدأ التوقيع الآن</Typography>
-              <Typography sx={{ opacity: 0.82, mb: 2 }}>أرسل المستندات للأطراف المعنية وراقب الموافقات من مكان واحد.</Typography>
-              <Button variant="contained" sx={{ bgcolor: "#fc820c", color: "white" }} onClick={() => window.alert("تم إرسال العقد للتوقيع بشكل مبدئي")}>إرسال للتوقيع</Button>
-            </CardContent>
-          </Card>
+          <HighlightCtaCard
+            title="ابدأ التوقيع الآن"
+            description="أرسل المستندات للأطراف المعنية وراقب الموافقات من مكان واحد."
+            actionLabel="إرسال للتوقيع"
+            onAction={() => window.alert("تم إرسال العقد للتوقيع بشكل مبدئي")}
+          />
         </Stack>
       </Box>
 

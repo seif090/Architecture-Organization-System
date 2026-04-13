@@ -4,6 +4,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { HighlightListCard } from "../components/HighlightListCard";
 import { PageHero } from "../components/PageHero";
 import { StatusChip } from "../components/StatusChip";
 
@@ -104,18 +105,7 @@ export function ReportsPage() {
         </Card>
 
         <Stack spacing={2}>
-          <Card sx={{ borderRadius: 3, bgcolor: "#000666", color: "white" }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 20, fontWeight: 900 }}>Insights سريعة</Typography>
-              <Stack spacing={1.2} sx={{ mt: 1.5 }}>
-                {quickInsights.map((item) => (
-                  <Box key={item} sx={{ p: 1.2, borderRadius: 2, bgcolor: "rgba(255,255,255,0.08)" }}>
-                    <Typography sx={{ fontSize: 13, color: "rgba(255,255,255,0.88)" }}>{item}</Typography>
-                  </Box>
-                ))}
-              </Stack>
-            </CardContent>
-          </Card>
+          <HighlightListCard title="Insights سريعة" items={quickInsights} />
 
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>

@@ -4,6 +4,7 @@ import FlashOnIcon from "@mui/icons-material/FlashOn";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { HighlightListCard } from "../components/HighlightListCard";
 import { StatusChip } from "../components/StatusChip";
 
 const slaSummary = [
@@ -91,18 +92,7 @@ export function SlaDashboardPage() {
         </Card>
 
         <Stack spacing={2}>
-          <Card sx={{ borderRadius: 3, bgcolor: "#000666", color: "white" }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 20, fontWeight: 900 }}>قواعد التصعيد</Typography>
-              <Stack spacing={1.2} sx={{ mt: 1.4 }}>
-                {escalationRules.map((rule) => (
-                  <Box key={rule} sx={{ p: 1.2, borderRadius: 2, bgcolor: "rgba(255,255,255,0.08)" }}>
-                    <Typography sx={{ fontSize: 13, color: "rgba(255,255,255,0.92)" }}>{rule}</Typography>
-                  </Box>
-                ))}
-              </Stack>
-            </CardContent>
-          </Card>
+          <HighlightListCard title="قواعد التصعيد" items={escalationRules} />
 
           <Card sx={{ borderRadius: 3 }}>
             <CardContent>
