@@ -138,8 +138,18 @@ export function ProjectsPage({
       setOpen(false);
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        const message = err.response?.data?.message;
-        setError(typeof message === "string" && message.trim() ? message : "تعذر حفظ بيانات المشروع");
+        const responseMessage = err.response?.data?.message;
+        const responseError = err.response?.data?.error;
+
+        if (typeof responseMessage === "string" && responseMessage.trim()) {
+          setError(responseMessage);
+        } else if (typeof responseError === "string" && responseError.trim()) {
+          setError(responseError);
+        } else if (!err.response) {
+          setError("تعذر الاتصال بالخادم. تحقق من عنوان API أو من تسجيل الدخول.");
+        } else {
+          setError(`تعذر حفظ بيانات المشروع (${err.response.status})`);
+        }
       } else {
         setError("تعذر حفظ بيانات المشروع");
       }

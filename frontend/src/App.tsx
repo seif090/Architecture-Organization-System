@@ -44,6 +44,7 @@ function ERPApp() {
   const [finance, setFinance] = useState<{ records: any[]; invoices: any[] }>({ records: [], invoices: [] });
   const [properties, setProperties] = useState<{ properties: any[]; installments: any[] }>({ properties: [], installments: [] });
   const { user } = useAuth();
+  const canManageProjects = user ? ["admin", "project_manager", "engineer"].includes(user.role) : false;
 
   const loadAll = async () => {
     const [dashData, projectsData, clientsData, usersData, workforceData, inventoryData, financeData, propertiesData] = await Promise.all([
@@ -101,7 +102,7 @@ function ERPApp() {
           <Route index element={<DashboardPage data={dashboard} />} />
           <Route path="bi" element={<BusinessIntelligencePage />} />
           <Route path="dashboard" element={<DashboardPage data={dashboard} />} />
-          <Route path="projects" element={<ProjectsPage data={projects} onRefresh={loadAll} canManageProjects={user?.role !== "viewer"} />} />
+          <Route path="projects" element={<ProjectsPage data={projects} onRefresh={loadAll} canManageProjects={canManageProjects} />} />
           <Route path="procurement" element={<ProcurementPage />} />
           <Route path="suppliers" element={<SuppliersPage />} />
           <Route path="workforce" element={<WorkforcePage data={workforce} onRefresh={loadAll} />} />
