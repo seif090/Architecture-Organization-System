@@ -4,6 +4,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { PageHero } from "../components/PageHero";
 import { QuickActionsCard } from "../components/QuickActionsCard";
 import { StatusChip } from "../components/StatusChip";
 
@@ -33,17 +34,17 @@ export function InventoryDetailPage() {
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>المخازن / التفاصيل التشغيلية</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>المخازن التفصيلية</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>مراجعة حالة المناطق التخزينية، نسب الامتلاء، وحركات الصرف والاستلام اليومية.</Typography>
-        </Box>
-        <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<SwapHorizIcon />} onClick={() => navigate("/erp/inventory")}>نقل بين المخازن</Button>
-          <Button variant="contained" startIcon={<WarehouseIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/inventory")}>إضافة مخزن فرعي</Button>
-        </Stack>
-      </Box>
+      <PageHero
+        eyebrow="المخازن / التفاصيل التشغيلية"
+        title="المخازن التفصيلية"
+        subtitle="مراجعة حالة المناطق التخزينية، نسب الامتلاء، وحركات الصرف والاستلام اليومية."
+        actions={(
+          <>
+            <Button variant="outlined" startIcon={<SwapHorizIcon />} onClick={() => navigate("/erp/inventory")}>نقل بين المخازن</Button>
+            <Button variant="contained" startIcon={<WarehouseIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/inventory")}>إضافة مخزن فرعي</Button>
+          </>
+        )}
+      />
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
         {[

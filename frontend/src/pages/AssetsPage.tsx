@@ -6,6 +6,7 @@ import HandymanIcon from "@mui/icons-material/Handyman";
 import { Box, Button, Card, CardContent, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { HighlightCtaCard } from "../components/HighlightCtaCard";
+import { PageHero } from "../components/PageHero";
 import { StatusChip } from "../components/StatusChip";
 
 const assets = [
@@ -27,14 +28,12 @@ export function AssetsPage() {
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>الأصول / التشغيل</Typography>
-          <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, color: "#000666", lineHeight: 1.1 }}>إدارة الأصول والمعدات</Typography>
-          <Typography sx={{ color: "text.secondary", mt: 1 }}>تتبع، صيانة، وتوزيع الأصول عبر جميع المواقع الإنشائية.</Typography>
-        </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={() => window.alert("سيتم فتح نموذج إضافة أصل داخل شاشة الأصول لاحقًا")}>إضافة أصل جديد</Button>
-      </Box>
+      <PageHero
+        eyebrow="الأصول / التشغيل"
+        title="إدارة الأصول والمعدات"
+        subtitle="تتبع، صيانة، وتوزيع الأصول عبر جميع المواقع الإنشائية."
+        actions={<Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={() => window.alert("سيتم فتح نموذج إضافة أصل داخل شاشة الأصول لاحقًا")}>إضافة أصل جديد</Button>}
+      />
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
         {categories.map((category, idx) => (

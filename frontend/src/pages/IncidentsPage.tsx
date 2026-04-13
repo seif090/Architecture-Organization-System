@@ -6,6 +6,7 @@ import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { ProcessFlowCard } from "../components/ProcessFlowCard";
 import { QuickActionsCard } from "../components/QuickActionsCard";
+import { PageHero } from "../components/PageHero";
 import { StatusChip } from "../components/StatusChip";
 
 const incidentItems = [
@@ -55,17 +56,17 @@ const serviceFlow = [
 export function IncidentsPage() {
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>التشغيل / مركز البلاغات</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>مركز البلاغات والمتابعة</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>متابعة البلاغات من الاستقبال حتى الإغلاق مع مؤشرات SLA والتعيين.</Typography>
-        </Box>
-        <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<LocalPhoneIcon />} onClick={() => { window.location.href = "tel:+201000000000"; }}>اتصال سريع</Button>
-          <Button variant="contained" startIcon={<ReportProblemIcon />} sx={{ bgcolor: "#000666" }} onClick={() => window.alert("سيتم فتح نموذج تسجيل بلاغ جديد داخل مركز البلاغات لاحقًا")}>تسجيل بلاغ جديد</Button>
-        </Stack>
-      </Box>
+      <PageHero
+        eyebrow="التشغيل / مركز البلاغات"
+        title="مركز البلاغات والمتابعة"
+        subtitle="متابعة البلاغات من الاستقبال حتى الإغلاق مع مؤشرات SLA والتعيين."
+        actions={(
+          <>
+            <Button variant="outlined" startIcon={<LocalPhoneIcon />} onClick={() => { window.location.href = "tel:+201000000000"; }}>اتصال سريع</Button>
+            <Button variant="contained" startIcon={<ReportProblemIcon />} sx={{ bgcolor: "#000666" }} onClick={() => window.alert("سيتم فتح نموذج تسجيل بلاغ جديد داخل مركز البلاغات لاحقًا")}>تسجيل بلاغ جديد</Button>
+          </>
+        )}
+      />
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
         {slaCards.map((card) => (

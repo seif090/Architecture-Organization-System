@@ -5,6 +5,7 @@ import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturi
 import SpeedIcon from "@mui/icons-material/Speed";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { PageHero } from "../components/PageHero";
 import { ProcessFlowCard } from "../components/ProcessFlowCard";
 import { QuickActionsCard } from "../components/QuickActionsCard";
 import { StatusChip } from "../components/StatusChip";
@@ -40,17 +41,17 @@ const operationFlow = [
 export function EquipmentFaultsPage() {
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>الصيانة / أعطال المعدات</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>لوحة أعطال المعدات</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>متابعة الأعطال الحرجة، حالة المعالجة، والقطع المطلوبة من المخازن المرتبطة مباشرة.</Typography>
-        </Box>
-        <Stack direction="row" spacing={1.2}>
-          <Button component={NavLink} to="/erp/incidents" variant="outlined" startIcon={<ReportProblemIcon />}>البلاغات</Button>
-          <Button component={NavLink} to="/erp/maintenance-detail" variant="contained" startIcon={<BuildCircleIcon />} sx={{ bgcolor: "#000666" }}>أوامر الصيانة</Button>
-        </Stack>
-      </Box>
+      <PageHero
+        eyebrow="الصيانة / أعطال المعدات"
+        title="لوحة أعطال المعدات"
+        subtitle="متابعة الأعطال الحرجة، حالة المعالجة، والقطع المطلوبة من المخازن المرتبطة مباشرة."
+        actions={(
+          <>
+            <Button component={NavLink} to="/erp/incidents" variant="outlined" startIcon={<ReportProblemIcon />}>البلاغات</Button>
+            <Button component={NavLink} to="/erp/maintenance-detail" variant="contained" startIcon={<BuildCircleIcon />} sx={{ bgcolor: "#000666" }}>أوامر الصيانة</Button>
+          </>
+        )}
+      />
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
         {faultCards.map((card) => (

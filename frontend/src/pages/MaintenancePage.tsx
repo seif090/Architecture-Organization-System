@@ -5,6 +5,7 @@ import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { PageHero } from "../components/PageHero";
 import { StatusChip } from "../components/StatusChip";
 import { QuickActionsCard } from "../components/QuickActionsCard";
 
@@ -27,17 +28,17 @@ export function MaintenancePage() {
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>الصيانة / البلاغات التشغيلية</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>مركز الصيانة والتشغيل</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>متابعة البلاغات، جداول الصيانة، وحالة تنفيذ الأعمال الفنية بالمواقع.</Typography>
-        </Box>
-        <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<NotificationsActiveIcon />} onClick={() => navigate("/erp/incidents")}>البلاغات</Button>
-          <Button variant="contained" startIcon={<ConstructionIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/maintenance-detail")}>إضافة طلب صيانة</Button>
-        </Stack>
-      </Box>
+      <PageHero
+        eyebrow="الصيانة / البلاغات التشغيلية"
+        title="مركز الصيانة والتشغيل"
+        subtitle="متابعة البلاغات، جداول الصيانة، وحالة تنفيذ الأعمال الفنية بالمواقع."
+        actions={(
+          <>
+            <Button variant="outlined" startIcon={<NotificationsActiveIcon />} onClick={() => navigate("/erp/incidents")}>البلاغات</Button>
+            <Button variant="contained" startIcon={<ConstructionIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/maintenance-detail")}>إضافة طلب صيانة</Button>
+          </>
+        )}
+      />
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
         {maintenanceStats.map((item) => (
