@@ -5,6 +5,7 @@ import TimelineIcon from "@mui/icons-material/Timeline";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { HighlightListCard } from "../components/HighlightListCard";
+import { PageHero } from "../components/PageHero";
 import { StatusChip } from "../components/StatusChip";
 
 const slaSummary = [
@@ -33,17 +34,17 @@ export function SlaDashboardPage() {
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>البلاغات / SLA</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>لوحة متابعة SLA للبلاغات</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>متابعة زمن الاستجابة والإغلاق والتنبيهات التصعيدية على مستوى الإدارة.</Typography>
-        </Box>
-        <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<TimelineIcon />} onClick={() => navigate("/erp/reports")}>التحليل الزمني</Button>
-          <Button variant="contained" startIcon={<FlashOnIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/incidents")}>فتح البلاغات الحرجة</Button>
-        </Stack>
-      </Box>
+      <PageHero
+        eyebrow="البلاغات / SLA"
+        title="لوحة متابعة SLA للبلاغات"
+        subtitle="متابعة زمن الاستجابة والإغلاق والتنبيهات التصعيدية على مستوى الإدارة."
+        actions={(
+          <>
+            <Button variant="outlined" startIcon={<TimelineIcon />} onClick={() => navigate("/erp/reports")}>التحليل الزمني</Button>
+            <Button variant="contained" startIcon={<FlashOnIcon />} sx={{ bgcolor: "#000666" }} onClick={() => navigate("/erp/incidents")}>فتح البلاغات الحرجة</Button>
+          </>
+        )}
+      />
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
         {slaSummary.map((item) => (

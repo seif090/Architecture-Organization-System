@@ -7,6 +7,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { Avatar, Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { HighlightCtaCard } from "../components/HighlightCtaCard";
+import { PageHero } from "../components/PageHero";
 import { StatusChip } from "../components/StatusChip";
 
 const purchaseOrders = [
@@ -64,17 +65,17 @@ export function ProcurementPage() {
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>المشتريات الاستراتيجية</Typography>
-          <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, color: "#000666", lineHeight: 1.1 }}>إدارة المشتريات</Typography>
-          <Typography sx={{ color: "text.secondary", mt: 1 }}>متابعة أوامر الشراء، أداء الموردين، واحتياجات المواد الحرجة للمواقع النشطة.</Typography>
-        </Box>
-        <Box sx={{ display: "flex", gap: 1.2, flexWrap: "wrap" }}>
-          <Button variant="outlined" startIcon={<LocalShippingIcon />} onClick={() => navigate("/erp/inventory-detail")}>تتبع الشحنات</Button>
-          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={() => window.alert("سيتم فتح نموذج طلب شراء جديد داخل صفحة المشتريات")}>طلب شراء جديد</Button>
-        </Box>
-      </Box>
+      <PageHero
+        eyebrow="المشتريات الاستراتيجية"
+        title="إدارة المشتريات"
+        subtitle="متابعة أوامر الشراء، أداء الموردين، واحتياجات المواد الحرجة للمواقع النشطة."
+        actions={(
+          <>
+            <Button variant="outlined" startIcon={<LocalShippingIcon />} onClick={() => navigate("/erp/inventory-detail")}>تتبع الشحنات</Button>
+            <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666" }} onClick={() => window.alert("سيتم فتح نموذج طلب شراء جديد داخل صفحة المشتريات")}>طلب شراء جديد</Button>
+          </>
+        )}
+      />
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" } }}>
         <Card sx={{ borderInlineStart: "4px solid #000666" }}><CardContent><Typography sx={{ color: "#7f8597" }}>إجمالي المشتريات (الشهر)</Typography><Typography sx={{ fontSize: 34, fontWeight: 900, color: "#000666" }}>450,230 ر.س</Typography></CardContent></Card>

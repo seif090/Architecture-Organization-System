@@ -3,6 +3,7 @@ import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import StarIcon from "@mui/icons-material/Star";
 import { Avatar, Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { PageHero } from "../components/PageHero";
 import { StatusChip } from "../components/StatusChip";
 
 const supplierRows = [
@@ -34,14 +35,12 @@ export function SuppliersPage() {
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>إدارة الموارد والتوريد</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة الموردين والشركاء</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>نظام مراقبة الأداء المالي والتشغيلي لسلسلة التوريد الخاصة بالمشاريع الإنشائية.</Typography>
-        </Box>
-        <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 210 }} onClick={() => window.alert("سيتم فتح نموذج إضافة مورد داخل شاشة الموردين لاحقًا")}>إضافة مورد جديد</Button>
-      </Box>
+      <PageHero
+        eyebrow="إدارة الموارد والتوريد"
+        title="إدارة الموردين والشركاء"
+        subtitle="نظام مراقبة الأداء المالي والتشغيلي لسلسلة التوريد الخاصة بالمشاريع الإنشائية."
+        actions={<Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 210 }} onClick={() => window.alert("سيتم فتح نموذج إضافة مورد داخل شاشة الموردين لاحقًا")}>إضافة مورد جديد</Button>}
+      />
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "260px 1fr" } }}>
         <Stack spacing={2}>

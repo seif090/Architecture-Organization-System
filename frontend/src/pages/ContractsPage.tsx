@@ -8,6 +8,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Box, Button, Card, CardContent, Chip, IconButton, LinearProgress, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { HighlightCtaCard } from "../components/HighlightCtaCard";
+import { PageHero } from "../components/PageHero";
 import { StatusChip } from "../components/StatusChip";
 
 const contractItems = [
@@ -47,20 +48,18 @@ export function ContractsPage() {
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 2, flexWrap: "wrap" }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>الرئيسية / إدارة العقود القانونية</Typography>
-          <Typography sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 900, lineHeight: 1.1, color: "#000666" }}>
-            إدارة العقود والمستندات
-          </Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>تحكم في دورة حياة العقود والمستندات القانونية للمشاريع.</Typography>
-        </Box>
-        <Stack direction="row" spacing={1.2}>
-          <Button variant="outlined" startIcon={<UploadFileIcon />} sx={{ minWidth: 180 }} onClick={() => window.alert("سيتم فتح نموذج رفع عقد خارجي داخل صفحة العقود لاحقًا")}>رفع عقد خارجي</Button>
-          <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 180 }} onClick={() => window.alert("سيتم فتح نموذج إنشاء عقد جديد داخل صفحة العقود لاحقًا")}>إنشاء عقد جديد</Button>
-          <Button variant="outlined" startIcon={<DownloadIcon />} sx={{ minWidth: 160 }} onClick={exportContracts}>تصدير التقرير</Button>
-        </Stack>
-      </Box>
+      <PageHero
+        eyebrow="الرئيسية / إدارة العقود القانونية"
+        title="إدارة العقود والمستندات"
+        subtitle="تحكم في دورة حياة العقود والمستندات القانونية للمشاريع."
+        actions={(
+          <>
+            <Button variant="outlined" startIcon={<UploadFileIcon />} sx={{ minWidth: 180 }} onClick={() => window.alert("سيتم فتح نموذج رفع عقد خارجي داخل صفحة العقود لاحقًا")}>رفع عقد خارجي</Button>
+            <Button variant="contained" startIcon={<AddIcon />} sx={{ bgcolor: "#000666", minWidth: 180 }} onClick={() => window.alert("سيتم فتح نموذج إنشاء عقد جديد داخل صفحة العقود لاحقًا")}>إنشاء عقد جديد</Button>
+            <Button variant="outlined" startIcon={<DownloadIcon />} sx={{ minWidth: 160 }} onClick={exportContracts}>تصدير التقرير</Button>
+          </>
+        )}
+      />
 
       <Box sx={{ display: "grid", gap: 1.6, gridTemplateColumns: { xs: "1fr", md: "repeat(4, minmax(180px, 1fr))" } }}>
         <Card sx={{ borderInlineStart: "4px solid #000666" }}><CardContent><Typography color="text.secondary">إجمالي العقود</Typography><Typography sx={{ fontSize: 38, fontWeight: 900, color: "#000666" }}>1,248</Typography></CardContent></Card>
