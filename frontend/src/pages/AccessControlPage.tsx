@@ -5,6 +5,7 @@ import { Alert, Box, Button, Card, CardContent, MenuItem, Select, Stack, Table, 
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api";
+import { PageHero } from "../components/PageHero";
 
 const roleLabels: Record<string, string> = {
   admin: "مدير النظام",
@@ -62,21 +63,11 @@ export function AccessControlPage({ users, onRefresh }: { users: any[]; onRefres
 
   return (
     <Stack spacing={3}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 1.2 }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>الإعدادات / الصلاحيات</Typography>
-          <Typography sx={{ color: "#111a6a", fontWeight: 900, fontSize: { xs: 28, md: 40 }, lineHeight: 1.1 }}>إدارة المستخدمين والصلاحيات</Typography>
-        </Box>
-        <Button
-          type="button"
-          variant="contained"
-          startIcon={<GroupAddIcon />}
-          onClick={() => navigate("/erp/users/new")}
-          sx={{ bgcolor: "#000666" }}
-        >
-          إضافة مستخدم جديد
-        </Button>
-      </Box>
+      <PageHero
+        eyebrow="الإعدادات / الصلاحيات"
+        title="إدارة المستخدمين والصلاحيات"
+        actions={<Button type="button" variant="contained" startIcon={<GroupAddIcon />} onClick={() => navigate("/erp/users/new")} sx={{ bgcolor: "#000666" }}>إضافة مستخدم جديد</Button>}
+      />
 
       {error && <Alert severity="error">{error}</Alert>}
       {success && <Alert severity="success">{success}</Alert>}

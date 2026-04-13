@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api";
 import { FormDialogShell } from "../components/FormDialogShell";
+import { PageHero } from "../components/PageHero";
 import { StatusChip } from "../components/StatusChip";
 
 type PropertyForm = {
@@ -230,19 +231,20 @@ export function PropertiesPage({
 
   return (
     <Stack spacing={3.2}>
-      <Box>
-        <Typography sx={{ color: "#a1a8c9", fontSize: 13, mb: 0.5 }}>إدارة العقارات</Typography>
-        <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>إدارة الوحدات العقارية</Typography>
-        <Typography sx={{ color: "#6f7587", mt: 1 }}>تصفح المحفظة العقارية، وتتبع حالة البيع والتحصيل وإدارة الحجوزات المباشرة.</Typography>
-      </Box>
+      <PageHero
+        eyebrow="إدارة العقارات"
+        title="إدارة الوحدات العقارية"
+        subtitle="تصفح المحفظة العقارية، وتتبع حالة البيع والتحصيل وإدارة الحجوزات المباشرة."
+        actions={(
+          <>
+            <Button variant="contained" sx={{ bgcolor: "#000666" }} onClick={openCreateProperty}>إضافة عقار</Button>
+            <Button variant="contained" sx={{ bgcolor: "#964900" }} onClick={openCreateInstallment}>إضافة قسط</Button>
+          </>
+        )}
+      />
 
       {error && <Alert severity="error">{error}</Alert>}
       {success && <Alert severity="success">{success}</Alert>}
-
-      <Stack direction={{ xs: "column", md: "row" }} spacing={1.2}>
-        <Button variant="contained" sx={{ bgcolor: "#000666" }} onClick={openCreateProperty}>إضافة عقار</Button>
-        <Button variant="contained" sx={{ bgcolor: "#964900" }} onClick={openCreateInstallment}>إضافة قسط</Button>
-      </Stack>
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
         <Card sx={{ borderRadius: 3 }}><CardContent><CheckCircleIcon sx={{ color: "#16a34a" }} /><Typography sx={{ color: "#7f8597" }}>وحدات متاحة</Typography><Typography sx={{ color: "#000666", fontSize: 34, fontWeight: 900 }}>{available}</Typography></CardContent></Card>

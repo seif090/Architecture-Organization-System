@@ -11,6 +11,7 @@ import { Box, Button, Card, CardContent, Chip, IconButton, LinearProgress, Stack
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HighlightCtaCard } from "../components/HighlightCtaCard";
+import { PageHero } from "../components/PageHero";
 
 const summary = [
   { title: "المالية المستحقة", count: 4, label: "مطالبات اليوم", color: "#964900", progress: 75 },
@@ -88,17 +89,17 @@ export function NotificationsPage() {
 
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>مركز التنبيهات والتحديثات</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>مركز التنبيهات</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>متابعة فورية للتنبيهات الحرجة والمالية والتشغيلية.</Typography>
-        </Box>
-        <Stack direction="row" spacing={1.2}>
-          <Button type="button" variant="outlined" startIcon={<SearchIcon />} onClick={() => setSearch(window.prompt("ابحث في التنبيهات:", search) ?? search)}>بحث</Button>
-          <Button type="button" variant="contained" startIcon={<DoneAllIcon />} sx={{ bgcolor: "#000666" }} onClick={markAllAsRead}>تحديد الكل كمقروء</Button>
-        </Stack>
-      </Box>
+      <PageHero
+        eyebrow="مركز التنبيهات والتحديثات"
+        title="مركز التنبيهات"
+        subtitle="متابعة فورية للتنبيهات الحرجة والمالية والتشغيلية."
+        actions={(
+          <>
+            <Button type="button" variant="outlined" startIcon={<SearchIcon />} onClick={() => setSearch(window.prompt("ابحث في التنبيهات:", search) ?? search)}>بحث</Button>
+            <Button type="button" variant="contained" startIcon={<DoneAllIcon />} sx={{ bgcolor: "#000666" }} onClick={markAllAsRead}>تحديد الكل كمقروء</Button>
+          </>
+        )}
+      />
 
       <Box>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap", mb: 4 }}>
@@ -177,10 +178,10 @@ export function NotificationsPage() {
 
         <Box sx={{ mt: 4 }}>
           <HighlightCtaCard
-          title="حالة التنبيهات اللحظية"
-          description="المتابعة الفورية لمخاطر المشروع والمالية والمخزون."
-          actionLabel="الانتقال إلى الجدولة"
-          onAction={() => navigate("/erp/maintenance")}
+            title="حالة التنبيهات اللحظية"
+            description="المتابعة الفورية لمخاطر المشروع والمالية والمخزون."
+            actionLabel="الانتقال إلى الجدولة"
+            onAction={() => navigate("/erp/maintenance")}
           />
         </Box>
       </Box>

@@ -5,6 +5,7 @@ import ScheduleIcon from "@mui/icons-material/Schedule";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Box, Button, Card, CardContent, Chip, LinearProgress, Stack, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { PageHero } from "../components/PageHero";
 import { ProcessFlowCard } from "../components/ProcessFlowCard";
 import { QuickActionsCard } from "../components/QuickActionsCard";
 import { StatusChip } from "../components/StatusChip";
@@ -53,17 +54,17 @@ const opsLoop = [
 export function MaintenanceDetailPage() {
   return (
     <Stack spacing={3.2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
-        <Box>
-          <Typography sx={{ color: "#a1a8c9", fontSize: 12, mb: 0.5 }}>الصيانة / التفاصيل التشغيلية</Typography>
-          <Typography sx={{ color: "#000666", fontWeight: 900, fontSize: { xs: 30, md: 42 }, lineHeight: 1.1 }}>الصيانة التفصيلية</Typography>
-          <Typography sx={{ color: "#6f7587", mt: 1 }}>متابعة أوامر العمل وربطها مباشرة بالبلاغات المفتوحة وقطع الغيار في المخازن.</Typography>
-        </Box>
-        <Stack direction="row" spacing={1.2}>
-          <Button component={NavLink} to="/erp/incidents" variant="outlined" startIcon={<ReportProblemIcon />}>العودة للبلاغات</Button>
-          <Button component={NavLink} to="/erp/inventory-detail" variant="contained" startIcon={<Inventory2Icon />} sx={{ bgcolor: "#000666" }}>عرض المخازن</Button>
-        </Stack>
-      </Box>
+      <PageHero
+        eyebrow="الصيانة / التفاصيل التشغيلية"
+        title="الصيانة التفصيلية"
+        subtitle="متابعة أوامر العمل وربطها مباشرة بالبلاغات المفتوحة وقطع الغيار في المخازن."
+        actions={(
+          <>
+            <Button component={NavLink} to="/erp/incidents" variant="outlined" startIcon={<ReportProblemIcon />}>العودة للبلاغات</Button>
+            <Button component={NavLink} to="/erp/inventory-detail" variant="contained" startIcon={<Inventory2Icon />} sx={{ bgcolor: "#000666" }}>عرض المخازن</Button>
+          </>
+        )}
+      />
 
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" } }}>
         {[
